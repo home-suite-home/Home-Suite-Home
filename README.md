@@ -6,6 +6,6 @@
   ## Team Members
   * Matthew Dowdy
   * Andres Graterol 
-  * Wyatt Vining
+  * Wyatt Vining - wv040
   * David Crumley - daviejones
   * Nathan Moulton
