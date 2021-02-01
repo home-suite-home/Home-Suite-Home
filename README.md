@@ -7,5 +7,5 @@
   * Matthew Dowdy
   * Andres Graterol 
   * Wyatt Vining
-  * David Crumley
+  * David Crumley - daviejones
   * Nathan Moulton
