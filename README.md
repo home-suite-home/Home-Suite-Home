@@ -16,3 +16,6 @@
 * [Product Backlog](https://trello.com/b/BFcwvt3p/project)
 * [Sprint Backlog](https://trello.com/b/BFcwvt3p/project)
 * [Requirements](artifacts/requirements.md)
+
+## Task Allocation 
+Andres Graterol (graterollin) - 
