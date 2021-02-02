@@ -18,5 +18,5 @@
 * [Requirements](artifacts/requirements.md)
 
 ## Task Allocation 
-Andres Graterol (graterollin) - 
+Andres Graterol (graterollin) 
 David Crumley (daviejones) - velocity chart
