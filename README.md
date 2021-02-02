@@ -19,3 +19,4 @@
 
 ## Task Allocation 
 Andres Graterol (graterollin) - 
+David Crumley (daviejones) - velocity chart
