@@ -8,7 +8,7 @@
   * Andres Graterol - graterollin
   * Wyatt Vining - wv040
   * David Crumley - daviejones
-  * Nathan Moulton
+  * Nathan Moulton - NathanM117
 
 # Sprint 1
 
