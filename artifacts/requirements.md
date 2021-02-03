@@ -10,3 +10,8 @@
 |      005       |    DEV 002    |   The velocity chart shall have a column for the actual amount of story points to completed during the sprint   |   The velocity chart has a column for the actual amount of story points to completed during the sprint   |    1   | Necessary | Verified |
 |      006       |    DEV 002    |   The velocity chart will have a y-axis that consists of the number of story points planned for the sprint   |   The velocity chart has a y-axis consisting of the number of story points planned for the sprint   |    1   | Necessary | Verified |
 |      007       |    DEV 002    |   The velocity chart will have an x-axis that consists of the sprint number   |   The velocity chart has an x-axis consisting of the sprint number   |    1   | Necessary | Verified |
+|      008       |    DEV 003    |   The developers shall set up a virtual linux environment   |   All developers can run and push a simple "hello, world" program   |    1   | Necessary | Verified |
+|      009       |               |             |                     |    1    | Necessary | Verified |
+|      010       |               |             |                     |    1    | Necessary | Verified |
+|      011       |               |             |                     |    1    | Necessary | Verified |
+|      012       |               |             |                     |    1    | Necessary | Verified |
