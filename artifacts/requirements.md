@@ -12,6 +12,6 @@
 |      007       |    DEV 002    |   The velocity chart will have an x-axis that consists of the sprint number   |   The velocity chart has an x-axis consisting of the sprint number   |    1   | Necessary | Verified |
 |      008       |    DEV 003    |   The developers shall set up a virtual linux environment   |   All developers can run and push a simple "hello, world" program   |    1   | Necessary | Verified |
 |      009       |    DEV 004    |   The requirements chart shall have columns for: Requirement ID, User Story ID, Requirement, Acceptance Criteria, Efffort, Priority, and Status   |   The requirements chart has columns for the specified elements   |    1    | Necessary | Verified |
-|      010       |               |             |                     |    1    | Necessary | Verified |
-|      011       |               |             |                     |    1    | Necessary | Verified |
-|      012       |               |             |                     |    1    | Necessary | Verified |
+|      010       |    DEV 005    |   The trello board shall reflect the product backlog   |   The trello board contains the product backlog   |    1    | Necessary | Verified |
+|      011       |    DEV 005    |   The trello board shall reflect the sprint backlog   |   The trello board contains the sprint backlog   |    1    | Necessary | Verified |
+|      012       |    DEV 005    |   The trello board shall contain columns for keeping updates such as: planning, working, testing, and done   |   The trello board contains columns for planning, working, testing, and done   |    1    | Necessary | Verified |
