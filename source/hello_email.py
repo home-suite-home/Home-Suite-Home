@@ -9,7 +9,7 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
 sender_email = "home.suite.home.testing@gmail.com"
-reciever_email = "dc1422852@gmail.com"
+reciever_email = "<user email here>" # update this to the user's email
 password = "homesuite"
 
 message = MIMEMultipart("alternative")
