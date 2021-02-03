@@ -20,7 +20,7 @@ html = """\
 <html>
     <body>
         <p>Congratulations!<br>
-            You have completed the seyup and can start monitoring
+            You have completed the setup and can start monitoring
             you're property using <a href="https://github.com/home-suite-home/Home-Suite-Home"> the best open-source home sensor suite available</a>
         </p>
     </body>
