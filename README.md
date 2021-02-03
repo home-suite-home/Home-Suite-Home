@@ -19,5 +19,5 @@
 * [Velocity Chart](https://docs.google.com/spreadsheets/d/1tpRyT-jUgHkrLnwx5NcxtOvh3uGg8ddGYrl60E0q6DA/edit#gid=0)
 
 ## Task Allocation 
-* Andres Graterol (graterollin) - 
+* Andres Graterol (graterollin) - requirement chart 
 * David Crumley (daviejones) - velocity chart
