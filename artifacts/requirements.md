@@ -2,7 +2,7 @@
 
 | Requirement ID | User Story ID | Requirement | Acceptance Criteria | Effort | Priority | Status |
 |----------------|---------------|-------------|---------------------|--------|----------|--------|
-|      000       |               |             |                     |    1   | Necessary | Verified |
+|      000       |    DEV 001    |   The burndown chart shall contain an "ideal line" of 45 degrees  |   The "ideal line" is present and is at a downward 45 degree slope from the top left of the chart   |    1   | Necessary | Verified |
 |      001       |               |             |                     |    1   | Necessary | Verified |
 |      002       |               |             |                     |    1   | Necessary | Verified |
 |      003       |               |             |                     |    1   | Necessary | Verified |
