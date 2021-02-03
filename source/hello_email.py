@@ -1,3 +1,9 @@
+'''
+an initial version of the confirmation email
+that will be sent to users at the completion of setup
+'''
+
+
 import smtplib, ssl
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
