@@ -1,7 +1,16 @@
 '''
 an initial version of the confirmation email
 that will be sent to users at the completion of setup
+- email must be a gmail account
+
+for testing purposes:
+    * for testing this code, the email will be sent to the
+      following email address:
+
+    - recipient email: home.suite.home.test.user@gmail.com
+    - recipient pw:    homeuser
 '''
+
 
 
 import smtplib, ssl
@@ -9,7 +18,7 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
 sender_email = "home.suite.home.testing@gmail.com"
-reciever_email = "<user email here>" # update this to the user's email
+reciever_email = "home.suite.home.test.user@gmail.com"
 password = "homesuite"
 
 message = MIMEMultipart("alternative")
