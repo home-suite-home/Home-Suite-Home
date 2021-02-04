@@ -21,3 +21,4 @@
 ## Task Allocation 
 * Andres Graterol (graterollin) - requirement chart 
 * David Crumley (daviejones) - velocity chart
+* Matthew Dowdy (dowdyma1) - burndown chart
