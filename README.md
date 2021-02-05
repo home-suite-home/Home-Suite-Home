@@ -22,4 +22,5 @@
 * Andres Graterol (graterollin) - requirement chart 
 * David Crumley (daviejones) - velocity chart
 * Matthew Dowdy (dowdyma1) - burndown chart
+* Wyatt Vining (wv040) - Trello Board
 * Nathan Moulton (NathanM117) - product backlog
