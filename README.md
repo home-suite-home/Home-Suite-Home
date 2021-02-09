@@ -34,6 +34,13 @@
 * [Requirements](artifacts/requirements.md)
 * [Velocity Chart](https://docs.google.com/spreadsheets/d/1tpRyT-jUgHkrLnwx5NcxtOvh3uGg8ddGYrl60E0q6DA/edit#gid=0)
 * [Burndown Chart for Sprint 1](https://docs.google.com/spreadsheets/d/1tpRyT-jUgHkrLnwx5NcxtOvh3uGg8ddGYrl60E0q6DA/edit#gid=2030454987)
-* [Design Doc]
+* [Design Doc](artifacts/architecture.md)
+
+## Task Allocation
+* Andres Graterol (graterollin) 
+* David Crumley (daviejones) - Architecture/Class Diagrams
+* Matthew Dowdy (dowdyma1)
+* Wyatt Vining (wv040)
+* Nathan Moulton (NathanM117)
 
 
