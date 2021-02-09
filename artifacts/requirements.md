@@ -25,6 +25,6 @@
 |      020       |    DEV 009    |   The class diagram shall include a table that relates each class to one or more user stories   |   The class diagram includes a table that relates each class to one or more user stories   |  2        | Necessary | Verified |
 |      021       |    DEV 010    |   The complete design document shall include elaboration for business rules, resource management, security, performance, scalability, interoperability, internationalization/localization, input/output, error processing, fault tolerance, architectural feasability, overengineering, build-vs-buy decisions, reuse, and chang strategy   |   The complete design document has all fields covered and is shown in github   |  4        | Necessary | Verified |
 |      022       |    DEV 011    |   The temperature sensor hooked up to the ESP8266 shall output data on a web browser   |   The sensor value information can be viewed from a web browser within the Local Area Network   |  2        | Necessary | Verified |
-|      022       |               |            |                      |          |           |        |
-|      022       |               |            |                      |          |           |        |
+|      023       |      011      |   The user interface shall be able to register a user's email information   |   The user will receive an email confirmation   |    4    | Necessary | Verified |
+|      024       |               |            |                      |          |           |        |
 |      022       |               |            |                      |          |           |        |
