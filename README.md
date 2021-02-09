@@ -34,7 +34,7 @@
 * [Requirements](artifacts/requirements.md)
 * [Velocity Chart](https://docs.google.com/spreadsheets/d/1tpRyT-jUgHkrLnwx5NcxtOvh3uGg8ddGYrl60E0q6DA/edit#gid=0)
 * [Burndown Chart for Sprint 1](https://docs.google.com/spreadsheets/d/1tpRyT-jUgHkrLnwx5NcxtOvh3uGg8ddGYrl60E0q6DA/edit#gid=2030454987)
-* [System Archite](artifacts/architecture.md)
+* [System Architecture](artifacts/architecture.md)
 
 ## Task Allocation
 * Andres Graterol (graterollin) 
