@@ -23,7 +23,7 @@
 |      018       |    DEV 009    |   The UML class diagram shall display the classes along with the interactions between them   |   The UML class diagram displays the classes along with the interactions between them   |    2     | Necessary | Verified |
 |      019       |    DEV 009    |   Each UML diagram shall be accompanied by a brief description explaining what the elements are and why they are in the diagram   |   Each UML diagram is accompanied by a brief description explaining what the elements are and why they are in the diagram   |    2    | Necessary | Verified |
 |      020       |    DEV 009    |   The class diagram shall include a table that relates each class to one or more user stories   |   The class diagram includes a table that relates each class to one or more user stories   |  2        | Necessary | Verified |
-|      021       |               |            |                      |          |           |        |
+|      021       |    DEV 010    |   The complete design document shall include elaboration for business rules, resource management, security, performance, scalability, interoperability, internationalization/localization, input/output, error processing, fault tolerance, architectural feasability, overengineering, build-vs-buy decisions, reuse, and chang strategy   |   The complete design document has all fields covered and is shown in github   |  4        | Necessary | Verified |
 |      022       |               |            |                      |          |           |        |
 |      022       |               |            |                      |          |           |        |
 |      022       |               |            |                      |          |           |        |
