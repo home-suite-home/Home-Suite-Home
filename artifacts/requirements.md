@@ -16,8 +16,8 @@
 |      011       |    DEV 005    |   The trello board shall reflect the sprint backlog   |   The trello board contains the sprint backlog   |    1    | Necessary | Verified |
 |      012       |    DEV 005    |   The trello board shall contain columns for keeping updates such as: planning, working, testing, and done   |   The trello board contains columns for planning, working, testing, and done   |    1    | Necessary | Verified |
 |      013       |    DEV 006    |   The developers shall create a smtp hello world program    |   When the script is run an email is created and sent out   |   2   | Necessary | Verified |  
-|      014       |    DEV 007    |   New burndown and velocity charts shall be made for sprint 2   |   The new sprint 2 burndown and velocity charts have been created, and are available to access from github   |     1    | Necessary |  Verified  |
-|      015       |               |            |                      |          |           |        |
+|      014       |    DEV 007    |   New burndown and velocity charts shall be made for sprint 2   |   The new sprint 2 burndown and velocity charts have been created, and are available to access from github   |     1    | Necessary |  Verified |
+|      015       |    DEV 008    |   The architecture diagram shall contain context, container, and component diagrams    |   The architecture diagram is comprised of context, container, and component diagrams   |     3     | Necessary | Verified |
 |      016       |               |            |                      |          |           |        |
 |      017       |               |            |                      |          |           |        |
 |      018       |               |            |                      |          |           |        |
