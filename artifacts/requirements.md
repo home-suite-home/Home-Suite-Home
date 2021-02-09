@@ -20,8 +20,11 @@
 |      015       |    DEV 008    |   The architecture diagram shall contain context, container, and component diagrams    |   The architecture diagram is comprised of context, container, and component diagrams   |     3     | Necessary | Verified |
 |      016       |    DEV 008    |   The architecture diagram shall include a description and explanation of each diagram within it   |   The architecture diagram includes a description and explanation of each diagram within it   | 3  | Necessary | Verified |
 |      017       |    DEV 008    |   The architecture diagram shall include a table that relates each block to one or more user stories   |   The architecture diagram includes a table that relates each block to one or more user stories   |    3     | Necessary | Verified |
-|      018       |               |            |                      |          |           |        |
-|                |               |            |                      |          |           |        |
-|                |               |            |                      |          |           |        |
-|                |               |            |                      |          |           |        |
-|                |               |            |                      |          |           |        |
+|      018       |    DEV 009    |   The UML class diagram shall display the classes along with the interactions between them   |   The UML class diagram displays the classes along with the interactions between them   |    2     | Necessary | Verified |
+|      019       |               |            |                      |          |           |        |
+|      020       |               |            |                      |          |           |        |
+|      021       |               |            |                      |          |           |        |
+|      022       |               |            |                      |          |           |        |
+|      022       |               |            |                      |          |           |        |
+|      022       |               |            |                      |          |           |        |
+|      022       |               |            |                      |          |           |        |
