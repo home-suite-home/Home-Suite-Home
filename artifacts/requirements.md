@@ -21,7 +21,7 @@
 |      016       |    DEV 008    |   The architecture diagram shall include a description and explanation of each diagram within it   |   The architecture diagram includes a description and explanation of each diagram within it   | 3  | Necessary | Verified |
 |      017       |    DEV 008    |   The architecture diagram shall include a table that relates each block to one or more user stories   |   The architecture diagram includes a table that relates each block to one or more user stories   |    3     | Necessary | Verified |
 |      018       |    DEV 009    |   The UML class diagram shall display the classes along with the interactions between them   |   The UML class diagram displays the classes along with the interactions between them   |    2     | Necessary | Verified |
-|      019       |               |            |                      |          |           |        |
+|      019       |    DEV 009    |   Each UML diagram shall be accompanied by a brief description explaining what the elements are and why they are in the diagram   |   Each UML diagram is accompanied by a brief description explaining what the elements are and why they are in the diagram   |    2    | Necessary | Verified |
 |      020       |               |            |                      |          |           |        |
 |      021       |               |            |                      |          |           |        |
 |      022       |               |            |                      |          |           |        |
