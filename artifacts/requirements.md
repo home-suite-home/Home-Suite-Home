@@ -18,8 +18,8 @@
 |      013       |    DEV 006    |   The developers shall create a smtp hello world program    |   When the script is run an email is created and sent out   |   2   | Necessary | Verified |  
 |      014       |    DEV 007    |   New burndown and velocity charts shall be made for sprint 2   |   The new sprint 2 burndown and velocity charts have been created, and are available to access from github   |     1    | Necessary |  Verified |
 |      015       |    DEV 008    |   The architecture diagram shall contain context, container, and component diagrams    |   The architecture diagram is comprised of context, container, and component diagrams   |     3     | Necessary | Verified |
-|      016       |    DEV 008    |   The architecture diagram shall include a description and explanation of each diagram within it   |   The architecture diagram includes a description and explanation of each diagram within it   | 3  |     Necessary      |   Verified     |
-|      017       |               |            |                      |          |           |        |
+|      016       |    DEV 008    |   The architecture diagram shall include a description and explanation of each diagram within it   |   The architecture diagram includes a description and explanation of each diagram within it   | 3  | Necessary | Verified |
+|      017       |    DEV 008    |   The architecture diagram shall include a table that relates each block to one or more user stories   |   The architecture diagram includes a table that relates each block to one or more user stories   |    3     | Necessary | Verified |
 |      018       |               |            |                      |          |           |        |
 |                |               |            |                      |          |           |        |
 |                |               |            |                      |          |           |        |
