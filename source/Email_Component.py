@@ -69,4 +69,5 @@ class Email_Component:
             server.sendmail(
                 sender_email, reciever_email, message.as_string()
             )
-        print("Email sent.")
+
+        return("Email sent.")
