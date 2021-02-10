@@ -37,7 +37,7 @@
 * [System Architecture](artifacts/architecture.md)
 
 ## Task Allocation
-* Andres Graterol (graterollin) 
+* Andres Graterol (graterollin) - Requirement Chart/ UI
 * David Crumley (daviejones) - Architecture/Class Diagrams
 * Matthew Dowdy (dowdyma1)
 * Wyatt Vining (wv040)
