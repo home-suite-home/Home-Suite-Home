@@ -41,6 +41,6 @@
 * David Crumley (daviejones) - Architecture/Class Diagrams
 * Matthew Dowdy (dowdyma1)
 * Wyatt Vining (wv040)
-* Nathan Moulton (NathanM117)
+* Nathan Moulton (NathanM117) - Design Doc/Architecture Diagrams
 
 
