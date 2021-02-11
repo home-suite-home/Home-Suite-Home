@@ -49,7 +49,7 @@ void setup()
     // loop until connection successful
     while (WiFi.status() != WL_CONNECTED) 
     {
-        delay(500);
+        delay(500); // wait for half a second before trying connection again
         Serial.print(".");
     }
 
@@ -82,7 +82,7 @@ void setup()
 // This code will loop as long as the arduino is on
 void loop() 
 {
-    // handle a client request
+    // handle a client request - direct the clients to the page they request using server.on() above
     server.handleClient(); 
 }
 
