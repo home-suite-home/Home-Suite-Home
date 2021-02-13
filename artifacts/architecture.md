@@ -39,7 +39,7 @@ That said software security is not a primary concern for our implementation. The
 Our system is designed to run using low cost hardware such as, Raspberry Pi's. With recent advancements in these types of computers, performance should not be a concern. Our limitations may be considered as the hardware limitations of the entry level Raspberry Pi ([Technical Specifications](https://www.raspberrypi.org/products/raspberry-pi-4-model-b/specifications/)). Further, our system is designed to use a polling approach to sensor data collection. Meaning, the data can be collected and analyzed at the rate the aggregator (Raspberry Pi) becomes available. Lastly, the NodeMCU ESP8266 boards used to send sensor data should only be required to send their data at most every seccond which is well within their performance capabilities. 
 
 # Scalability
-The user will be able to add extra sensors up to a point, so as t provide greater breadth of analytics. A single instance of the system can serve only proprty due to the localised nature of operation.
+The user will be able to add extra sensors up to a point, so as to provide greater breadth of analytics. The open source nature of our system lends itself to creating potentially limitless additional sensors and control systems. A single instance of the system can serve only proprty due to the localised nature of operation. Multiple properties may be monitored by setting up an aggregator server at each loction. 
 
 # Interoperability
 The sensors are responsible for sharing data with the database as well at the aggregator.
