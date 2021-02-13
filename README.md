@@ -35,6 +35,7 @@
 * [Velocity Chart](https://docs.google.com/spreadsheets/d/1tpRyT-jUgHkrLnwx5NcxtOvh3uGg8ddGYrl60E0q6DA/edit#gid=0)
 * [Burndown Chart for Sprint 2](https://docs.google.com/spreadsheets/d/1tpRyT-jUgHkrLnwx5NcxtOvh3uGg8ddGYrl60E0q6DA/edit#gid=1102031550)
 * [System Architecture](artifacts/architecture.md)
+* [Product Demonstration](https://youtu.be/opssn2ocK3U)
 
 ## Task Allocation
 * Andres Graterol (graterollin) - Requirement Chart/ UI
