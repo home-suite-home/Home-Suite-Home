@@ -48,8 +48,10 @@ The sensors are responsible for sharing data with the database as well at the ag
 Our implimentation is localized. All string handling will be ASCII and english. This may be modified in the future as the software is open source.
 
 # Input/Output
+The primary input/output(I/O) for our system will be HTTP requests between the aggregator and sensor modules. The I/O will be real-time. When a request is made, the reciever processes and sends a response to the requester. If the response is unexpected, the aggregator will handle the error as appropriate. 
 
 # Error Processing
+This solution focuses on monitoring sensor data and keeping the user informed. Should an error occur, the system may first attempt to correct it. For example, if a sensor does not respond, the request may be resent. In the case the error may not be corrected, the user will be notified via email and may take appropriate action. Also, any important information will be logged to a local file on the aggregator should an error occur.
 
 # Fault Tolerance
 
