@@ -33,13 +33,13 @@
 * [Sprint Backlog](https://trello.com/b/BFcwvt3p/project)
 * [Requirements](artifacts/requirements.md)
 * [Velocity Chart](https://docs.google.com/spreadsheets/d/1tpRyT-jUgHkrLnwx5NcxtOvh3uGg8ddGYrl60E0q6DA/edit#gid=0)
-* [Burndown Chart for Sprint 1](https://docs.google.com/spreadsheets/d/1tpRyT-jUgHkrLnwx5NcxtOvh3uGg8ddGYrl60E0q6DA/edit#gid=2030454987)
+* [Burndown Chart for Sprint 2](https://docs.google.com/spreadsheets/d/1tpRyT-jUgHkrLnwx5NcxtOvh3uGg8ddGYrl60E0q6DA/edit#gid=1102031550)
 * [System Architecture](artifacts/architecture.md)
 
 ## Task Allocation
 * Andres Graterol (graterollin) - Requirement Chart/ UI
 * David Crumley (daviejones) - Architecture/Class Diagrams
-* Matthew Dowdy (dowdyma1)
+* Matthew Dowdy (dowdyma1) - UI / Velocity & Burndown Charts / Design Doc
 * Wyatt Vining (wv040)
 * Nathan Moulton (NathanM117) - Design Doc/Architecture Diagrams
 
