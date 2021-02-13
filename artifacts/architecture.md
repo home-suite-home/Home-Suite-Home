@@ -42,9 +42,10 @@ Our system is designed to run using low cost hardware such as, Raspberry Pi's. W
 The user will be able to add extra sensors up to a point, so as to provide greater breadth of analytics. The open source nature of our system lends itself to creating potentially limitless additional sensors and control systems. A single instance of the system can serve only proprty due to the localised nature of operation. Multiple properties may be monitored by setting up an aggregator server at each loction. 
 
 # Interoperability
-The sensors are responsible for sharing data with the database as well at the aggregator.
+The sensors are responsible for sharing data with the database as well at the aggregator. The aggregator is responsible for receiving and responding to email requests from a user.
 
 # Internationalization/Localization
+Our implimentation is localized. All string handling will be ASCII and english. This may be modified in the future as the software is open source.
 
 # Input/Output
 
