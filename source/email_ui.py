@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 import os
-
 import sys
 import dash
 import dash_core_components as dcc
@@ -8,24 +7,10 @@ import dash_html_components as html
 from dash.dependencies import Input, Output, State
 from Email_Component import Email_Component
 
+
 sys.path.append(".")
-
 colors = {"background": "343434"}
-
-app = dash.Dash(
-    __name__ 
-)
-
-
-def parse_contents(contents):
-    return html.Div(
-        [
-            html.Img(
-                src=contents,
-                style={"max-width": "100%", "max-height": "100%", "align": "middle"},
-            )
-        ]
-    )
+app = dash.Dash(__name__ )
 
 
 app.layout = html.Div(
@@ -43,7 +28,7 @@ app.layout = html.Div(
                     [
                         dcc.Input(
                             id="remote-email",
-                            placeholder="Input email",
+                            placeholder="Input email for raspberry pi",
                             type="text",
                             value="",
                             children=[html.Div(["Input email for raspberry pi"])],
@@ -56,12 +41,12 @@ app.layout = html.Div(
                         ),
                         html.Button("Submit", id="button"),
                     ],
-
                 ),
             ],
         )
     ]
 )
+
 
 @app.callback(
         [Output(component_id="remote-email", component_property="value")],
@@ -80,8 +65,6 @@ def update_output(n_clicks, remote_email):
         
 
     return [dash.no_update]
-
-
 
 
 if __name__ == "__main__":
