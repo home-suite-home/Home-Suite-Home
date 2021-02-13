@@ -54,8 +54,10 @@ The primary input/output(I/O) for our system will be HTTP requests between the a
 This solution focuses on monitoring sensor data and keeping the user informed. Should an error occur, the system may first attempt to correct it. For example, if a sensor does not respond, the request may be resent. In the case the error may not be corrected, the user will be notified via email and may take appropriate action. Also, any important information will be logged to a local file on the aggregator should an error occur.
 
 # Fault Tolerance
+The system is designed to continue to run through a multitude of faults. For example, if a sensor is unavailable or not working properly, the aggregator will continue to log all other sensors and check periodically to see if the issue with that sensor has been resolved. The system may also enter an alternate method of operation given a critical failure. As long as the aggregator is powered on and connected to the network, a user may still request email reports from the system. These reports may be ammended to reflect errors in the system.
 
 # Architectural Feasibility
+The architecture of our system is intended to grow into future features. This allows the architecture design to start out as feasible. With room to add features as the core system is developed.
 
 # Overengineering
 
