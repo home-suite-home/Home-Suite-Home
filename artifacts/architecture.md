@@ -15,6 +15,16 @@ analytics suite that provides home-owners and property managers a platform to mo
 calculated with a 'standard' sensor collection.
 
 # User Interface Design
+![UI to get the user's email](assets/screenshot_email_ui.png)
+The purpose of this screen is to get the user's email so that the raspberry
+pi knows where to send updates and statistics about the user's system.
+
+The user uses the mouse to click on the text box, and then they type their
+email. Once the user presses submit, a confirmation email is sent to the user so that they know that sending an email works.
+
+| Window Number | UID |
+|---------------|-----|
+| 1             | 011 |
 
 # Resource Management
 Computational load is divided among several ESP8266 modules with 2.5GHz? processors, and a
