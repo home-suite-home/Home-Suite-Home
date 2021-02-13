@@ -40,7 +40,7 @@
 * Andres Graterol (graterollin) - Requirement Chart/ UI
 * David Crumley (daviejones) - Architecture/Class Diagrams
 * Matthew Dowdy (dowdyma1) - UI / Velocity & Burndown Charts / Design Doc
-* Wyatt Vining (wv040)
+* Wyatt Vining (wv040) - Sensor Prototype / Demo Video
 * Nathan Moulton (NathanM117) - Design Doc/Architecture Diagrams
 
 
