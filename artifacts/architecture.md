@@ -19,7 +19,8 @@ calculated with a 'standard' sensor collection.
 The purpose of this screen is to get the user's email so that the raspberry
 pi knows where to send updates and statistics about the user's system.
 
-The user uses the mouse to click on the text box, and then they type their
+After plugging in the RaspberryPi to power and ethernet, the user makes sure they are on the same wifi network as the RaspberryPi and types in the
+IP address `127.0.0.1:8050` into their browser. The user then uses the mouse to click on the text box, and then they type their
 email. Once the user presses submit, a confirmation email is sent to the user so that they know that sending an email works.
 
 | Window Number | UID |
