@@ -5,6 +5,7 @@ Home-Suite-Home is an open-source sensor suite. It is designed to be lightweight
 analytics suite that provides home-owners and property managers a platform to monitor the health of their properties through the useof smart sensors. On a high level of operation, the sensors are responsible for sending data to a localised database hosted by a server/agregator. The sever portion stores data for time-series representaton, and he aggregator portion observes values in real time to verify that sensor readings are within user defined parameters. The user will recieve notfications via email in the event of any data anomolies, or when requested for data snapshots or historical data.
 
 # Code Design
+![screenshot of system context diagram](assets/system_context_screenshot.PNG)
 
 # Data Design
 Much of the data stored in this database will be unstructured. Sensors like the temperature/humidity sensor won't have many relations with one another. There are some sensor types that may have relational attributes, such as the RFID sensors which will require a table of valid IDs...
