@@ -72,10 +72,11 @@ Our system is designed to continue to run through many issues. There is a one si
 * Wire
 * Adafruit_SHT31
 
-*italic* This section will continue to be updated as more code is added with the sprints to come... 
+*This section will continue to be updated as more code is added with the sprints to come...* 
+
 # Reuse
+We intend to use some open source libraries mentioned in the Build-vs-Buy Decisions. This code, where possible, will be built into functions that can be replaced in the event we pivot to different libraries. Beyond that, we currently have no intention to reuse code. This is subject to change as we progress though the design process. We will update this document should any changes arise.
 
 *italic* This section will continue to be updated as more code is added with the sprints to come... 
 # Change Strategy
-
-
+The system is intended to be modular and adaptable. New sensors and their data can be added simply at any point in the future. We also intend to build the core functionality in a way that allows the base system to persist through many different perturbations of the higher level features. This will be accomplished by using simple, single responsibility functions and delineating data files between versions.
