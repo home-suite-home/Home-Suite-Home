@@ -7,7 +7,9 @@ analytics suite that provides home-owners and property managers a platform to mo
 # Code Design
 
 # Data Design
+Much of the data stored in this database will be unstructured. Sensors like the temperature/humidity sensor won't have many relations with one another. There are some sensor types that may have relational attributes, such as the RFID sensors which will require a table of valid IDs...
 
+![screenshot of ERD](assets/ERDscreenshot.png)
 # Business Rules
 - The system should record new sensor data every 30 seconds.
 - The user should be able to add new sensors after initial setup through the GUI.
