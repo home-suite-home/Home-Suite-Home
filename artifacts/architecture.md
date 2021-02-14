@@ -66,8 +66,13 @@ Our system is designed to continue to run through many issues. There is a one si
 
 # Build-vs-Buy Decisions
 ## Libraries Used
-*cvdash
+* cvdash
+* ESP8266WiFi
+* ESP8266WebServer
+* Wire
+* Adafruit_SHT31
 
+*italic* This section will continue to be updated as more code is added with the sprints to come... 
 # Reuse
 
 # Change Strategy
