@@ -1,4 +1,4 @@
-
+ 
 
 # Program Organization
 Home-Suite-Home is an open-source sensor suite. It is designed to be lightweight, modular home
@@ -45,6 +45,8 @@ The sensors are responsible for sharing data with the database as well at the ag
 # Overengineering
 
 # Build-vs-Buy Decisions
+## Libraries Used
+*cvdash
 
 # Reuse
 
