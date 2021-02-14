@@ -60,6 +60,7 @@ The system is designed to continue to run through a multitude of faults. For exa
 The architecture of our system is intended to grow into future features. This allows the architecture design to start out as feasible. With room to add features as the core system is developed.
 
 # Overengineering
+Our system is designed to continue to run through many issues. There is a one single point failure: the aggregator. If the aggregator encounters a hardware or power failure, the system will no longer function as intended. It is important to note that even without the aggregator the sensors can still be queried by HTTP requests from within the network.
 
 # Build-vs-Buy Decisions
 
