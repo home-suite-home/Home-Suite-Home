@@ -65,7 +65,7 @@ The architecture of our system is intended to grow into future features. This al
 Our system is designed to continue to run through many issues. There is a one single point failure: the aggregator. If the aggregator encounters a hardware or power failure, the system will no longer function as intended. It is important to note that even without the aggregator the sensors can still be queried by HTTP requests from within the network.
 
 # Build-vs-Buy Decisions
-## Libraries Used
+### Libraries Used
 * cvdash
 * ESP8266WiFi
 * ESP8266WebServer
@@ -75,6 +75,7 @@ Our system is designed to continue to run through many issues. There is a one si
 *italic* This section will continue to be updated as more code is added with the sprints to come... 
 # Reuse
 
+*italic* This section will continue to be updated as more code is added with the sprints to come... 
 # Change Strategy
 
 
