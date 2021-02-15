@@ -2,7 +2,7 @@
 
 # Program Organization
 Home-Suite-Home is an open-source sensor suite. It is designed to be lightweight, modular home
-analytics suite that provides home-owners and property managers a platform to monitor the health of their properties through the useof smart sensors. On a high level of operation, the sensors are responsible for sending data to a localised database hosted by a server/agregator. The sever portion stores data for time-series representaton, and he aggregator portion observes values in real time to verify that sensor readings are within user defined parameters. The user will recieve notfications via email in the event of any data anomolies, or when requested for data snapshots or historical data.
+analytics suite that provides home-owners and property managers a platform to monitor the health of their properties through the useof smart sensors. On a high level of operation, the sensors are responsible for sending data to a localised database hosted by a server/agregator. The sever portion stores data for time-series representaton, and the aggregator portion observes values in real time to verify that sensor readings are within user defined parameters. The user will recieve notfications via email in the event of any data anomalies, or when requested for data snapshots or historical data.
 
 # Code Design
 ## System Context Diagram
@@ -32,10 +32,10 @@ calculated with a 'standard' sensor collection.
 
 # User Interface Design
 ![UI to get the user's email](assets/screenshot_email_ui.png)
-The purpose of this screen is to get the user's email so that the raspberry
-pi knows where to send updates and statistics about the user's system.
+The purpose of this screen is to get the user's email so that the Raspberry
+Pi knows where to send updates and statistics about the user's system.
 
-After plugging in the RaspberryPi to power and ethernet, the user makes sure they are on the same wifi network as the RaspberryPi and types in the
+After plugging in the Raspberry Pi to power and ethernet, the user makes sure they are on the same wifi network as the RaspberryPi and types in the
 IP address `127.0.0.1:8050` into their browser. The user then uses the mouse to click on the text box, and then they type their
 email. Once the user presses submit, a confirmation email is sent to the user so that they know that sending an email works.
 
@@ -61,10 +61,10 @@ The user will be able to add extra sensors up to a point, so as to provide great
 The sensors are responsible for sharing data with the database as well at the aggregator. The aggregator is responsible for receiving and responding to email requests from a user.
 
 # Internationalization/Localization
-Our implimentation is localized. All string handling will be ASCII and english. This may be modified in the future as the software is open source.
+Our implimentation is localized. All string handling will be ASCII and English. This may be modified in the future as the software is open source.
 
 # Input/Output
-The primary input/output(I/O) for our system will be HTTP requests between the aggregator and sensor modules. The I/O will be real-time. When a request is made, the reciever processes and sends a response to the requester. If the response is unexpected, the aggregator will handle the error as appropriate. 
+The primary input/output(I/O) for our system will be HTTP requests between the aggregator and sensor modules. The I/O will be real-time. When a request is made, the receiver processes and sends a response to the requester. If the response is unexpected, the aggregator will handle the error as appropriate. 
 
 # Error Processing
 This solution focuses on monitoring sensor data and keeping the user informed. Should an error occur, the system may first attempt to correct it. For example, if a sensor does not respond, the request may be resent. In the case the error may not be corrected, the user will be notified via email and may take appropriate action. Also, any important information will be logged to a local file on the aggregator should an error occur.
@@ -80,7 +80,7 @@ Our system is designed to continue to run through many issues. There is a one si
 
 # Build-vs-Buy Decisions
 ### Libraries Used
-* dash
+* Dash
 * ESP8266WiFi
 * ESP8266WebServer
 * Wire
