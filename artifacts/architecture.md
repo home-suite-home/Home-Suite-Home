@@ -7,8 +7,10 @@ analytics suite that provides home-owners and property managers a platform to mo
 # Code Design
 ## System Context Diagram
 ![screenshot of system context diagram](assets/system_context_screenshot.PNG)
+
 ## Container Diagram
 ![screenshot of container diagram](assets/container_diagram.PNG)
+
 ## Component Diagrams
 ![screenshot of configuration application](assets/configuration_component_screenshot.PNG)
 ![screenshot of sensor data aggregator](assets/sensor_data_component_screenshot.PNG)
@@ -21,6 +23,7 @@ analytics suite that provides home-owners and property managers a platform to mo
 Much of the data stored in this database will be unstructured. Sensors like the temperature/humidity sensor won't have many relations with one another. There are some sensor types that may have relational attributes, such as the RFID sensors which will require a table of valid IDs...
 
 ![screenshot of ERD](assets/ERDscreenshot.png)
+
 # Business Rules
 - The system should record new sensor data every 30 seconds.
 - The user should be able to add new sensors after initial setup through the GUI.
@@ -41,8 +44,8 @@ email. Once the user presses submit, a confirmation email is sent to the user so
 | 1             | 011 |
 
 # Resource Management
-Computational load is divided among several ESP8266 modules with 2.5GHz? processors, and a
-Raspberri Pi 3 with 2Gb? of RAM. The Pi is responsile for running the main script for the aggregator,hosting the GUI and related config files, as well as hosting the database forthe sensors. Further research is needed to determine the exact workload and resurce requirements 
+Computational load is divided among several ESP8266 modules with 2.5GHz processors, and a
+Raspberry Pi 3 with 2Gb of RAM. The Pi is responsible for running the main script for the aggregator, hosting the GUI and related config files, as well as hosting the database for the sensors. Further research is needed to determine the exact workload and resource requirements.
 
 # Security
 This solution is designed to focus on ease of access and utility to the open-source community.
@@ -77,7 +80,7 @@ Our system is designed to continue to run through many issues. There is a one si
 
 # Build-vs-Buy Decisions
 ### Libraries Used
-* cvdash
+* dash
 * ESP8266WiFi
 * ESP8266WebServer
 * Wire
@@ -89,5 +92,6 @@ Our system is designed to continue to run through many issues. There is a one si
 We intend to use some open source libraries mentioned in the Build-vs-Buy Decisions. This code, where possible, will be built into functions that can be replaced in the event we pivot to different libraries. Beyond that, we currently have no intention to reuse code. This is subject to change as we progress though the design process. We will update this document should any changes arise.
 
 *italic* This section will continue to be updated as more code is added with the sprints to come... 
+
 # Change Strategy
 The system is intended to be modular and adaptable. New sensors and their data can be added simply at any point in the future. We also intend to build the core functionality in a way that allows the base system to persist through many different perturbations of the higher level features. This will be accomplished by using simple, single responsibility functions and delineating data files between versions.
