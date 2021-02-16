@@ -44,4 +44,21 @@
 * Wyatt Vining (wv040) - Sensor Prototype / Demo Video / Architecture
 * Nathan Moulton (NathanM117) - Design Doc/Architecture Diagrams
 
+# Sprint 3
+
+## Materials
+* [Product Backlog](https://trello.com/b/BFcwvt3p/project)
+* [Sprint Backlog](https://trello.com/b/BFcwvt3p/project)
+* [Requirements](https://trello.com/b/BFcwvt3p/project)
+* [Velocity Chart](https://docs.google.com/spreadsheets/d/1tpRyT-jUgHkrLnwx5NcxtOvh3uGg8ddGYrl60E0q6DA/edit#gid=0)
+* [Burndown Chart for Sprint 2](https://docs.google.com/spreadsheets/d/1tpRyT-jUgHkrLnwx5NcxtOvh3uGg8ddGYrl60E0q6DA/edit#gid=1102031550)
+* [System Architecture](artifacts/architecture.md)
+* [Product Demonstration](https://youtu.be/opssn2ocK3U)
+
+## Task Allocation
+* Andres Graterol (graterollin) - Automated unit tests 
+* David Crumley (daviejones) - 
+* Matthew Dowdy (dowdyma1) - 
+* Wyatt Vining (wv040) - 
+* Nathan Moulton (NathanM117) - 
 
