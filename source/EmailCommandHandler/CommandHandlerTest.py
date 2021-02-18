@@ -1,3 +1,14 @@
+'''
+//  Date: 02/18/2021
+//  FileName: CommandHandlerTest.py
+//  
+//  Engineer: David Crumley
+//  Contact: david_crumley@knights.ucf.edu
+//
+//  Description: 
+        simple script to run the EmailCommandHandler.py module
+'''
+
 import sys
 sys.path.append(".")
 from EmailCommandHandler import EmailCommandHandler
