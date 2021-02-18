@@ -1,5 +1,13 @@
 '''
-will read mailbox, and respond to user command with appropriate response
+//
+//  Date: 02/18/2021
+//  FileName: EmailCommandHandler.py
+//  
+//  Engineer: David Crumley
+//  Contact: david_crumley@knights.ucf.edu
+//
+//  Description: 
+        will read mailbox, and respond to user command with appropriate response
 '''
 
 
