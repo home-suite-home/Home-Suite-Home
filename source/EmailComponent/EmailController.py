@@ -1,11 +1,20 @@
 '''
-Provides an API for sending and recieving email_test
 
-Functions provided by EmailController API:
+  Date: 02/018/2021
+  FileName: EmailController.py
+  
+  Engineer: David Crumley
+  Contact: david_crumley@knights.ucf.edu
 
-    compose_email()
-    send_email()
-    check_mailbox()
+  Description: 
+
+    Provides an API for sending and recieving email_test
+
+    Functions provided by EmailController API:
+
+        compose_email()
+        send_email()
+        check_mailbox()
 
 '''
 import sys
