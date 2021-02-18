@@ -1,7 +1,14 @@
 '''
-will output appropriate response based on incoming command
-
-will handle accessing the database for sensor data
+//
+//  Date: 02/18/2021
+//  FileName: CommandResponse.py
+//  
+//  Engineer: David Crumley
+//  Contact: david_crumley@knights.ucf.edu
+//
+//  Description: 
+        will output appropriate response based on incoming command
+        will handle accessing the database for sensor data
 '''
 
 
