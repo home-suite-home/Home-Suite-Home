@@ -79,10 +79,7 @@ class EmailController:
         # search for email from our user
         status, num_messages = imap.select("INBOX")
         type, messages = imap.search(None, 'FROM', self.user_email)
-        #V DELETE V
-        print(type)
-        print(messages[0].split())
-
+ 
         # convert messages to a simple list of ID's
         messages = messages[0].split()
 
