@@ -13,7 +13,7 @@ import sys
 sys.path.append(".")
 from EmailCommandHandler import EmailCommandHandler
 
-user_email = "home.suite.home.test.user@gmail.com"
+user_email = input("Enter email address: ")
 device_email = "home.suite.home.testing@gmail.com"
 command_handler = EmailCommandHandler(user_email, device_email)
 
