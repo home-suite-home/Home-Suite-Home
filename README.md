@@ -57,7 +57,7 @@
 * [Product Demonstration](https://youtu.be/opssn2ocK3U)
 
 ## Task Allocation
-* Andres Graterol (graterollin) - Automated unit tests 
+* Andres Graterol (graterollin) - Automated unit tests/ requirements
 * David Crumley (daviejones) - 
 * Matthew Dowdy (dowdyma1) - 
 * Wyatt Vining (wv040) - 
