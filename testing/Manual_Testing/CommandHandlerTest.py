@@ -17,7 +17,7 @@
 '''
 
 import sys
-sys.path.append(".")
+sys.path.append("../../source/EmailCommandHandler")
 from EmailCommandHandler import EmailCommandHandler
 
 user_email = input("Enter email address: ")
