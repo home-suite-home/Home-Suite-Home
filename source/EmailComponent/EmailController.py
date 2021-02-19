@@ -23,7 +23,8 @@ sys.path.append(".")
 #  device email => "home.suite.home.testing@gmail.com"
 class EmailController:
 
-    def __init__(self, user_email, device_email):
+    # defualt parameters used for automated testing
+    def __init__(self, user_email = "home.suite.home.test.user@gmail.com", device_email = "hoime.suite.home.testing@gmail.com"):
         self.user_email = user_email
         self.device_email = device_email
         # attempting to read password for device email
