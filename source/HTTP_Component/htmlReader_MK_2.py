@@ -22,12 +22,15 @@ IMPERIAL = "imperial"
 
 class Sensor:
 
-    def __init__(self, units, address):
+    def __init__(self, sub_address, units=IMPERIAL, domain="http://localhost:8080"):
         self.units = units
-        self.address = address
+        self.address = domain + '/' + sub_address
 
     def requestData(self):
-        self.page = urlopen(self.address)
+        try:
+            self.page = urlopen(self.address)
+        except:
+            return -1
         rawBytes = self.page.read()
         return rawBytes.decode("utf-8")
 
@@ -89,20 +92,31 @@ class HumiditySensor(Sensor):
 
 
 def main():
-    temperatureSensorOne = TemperatureSensor(IMPERIAL, "http://localhost:8080/temperature")
-    humiditySensorOne = HumiditySensor(IMPERIAL, "http://localhost:8080/humidity")
+    temperatureSensorOne = TemperatureSensor(
+        "temperature",
+        IMPERIAL, 
+        "http://localhost:8080")
+    humiditySensorOne = HumiditySensor( 
+        "humidity",
+        IMPERIAL,
+        "http://localhost:8080")
 
-    print("Temperature in degrees ", 
-            temperatureSensorOne.getUnits(), 
-            ": ", 
-            temperatureSensorOne.getSensorValue())
+    print("Temperature in degrees {}: {}".format(temperatureSensorOne.getUnits(), 
+            temperatureSensorOne.getSensorValue()))
 
     print("Relative Humidity: ", humiditySensorOne.getSensorValue())
-    print("Dew Point ", 
-            humiditySensorOne.getUnits(), 
-            ": ", 
-            humiditySensorOne.getDewPoint(temperatureSensorOne.getDegreesCelcius()))
+    print("Dew Point {}: {}".format(humiditySensorOne.getUnits(), 
+            humiditySensorOne.getDewPoint(temperatureSensorOne.getDegreesCelcius())))
 
 
-if "__name__" == "__main__":
+def testSimulated():
+    print("testing")
+    temp = TemperatureSensor(sub_address="temperature")
+    humid = HumiditySensor(sub_address="humidity")
+    print(temp.getSensorValue())
+    print(humid.getSensorValue())
+
+
+if __name__ == "__main__":
     main()
+    #testSimulated()
