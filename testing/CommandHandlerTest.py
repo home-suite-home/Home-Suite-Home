@@ -12,7 +12,7 @@
 
 
 import sys
-sys.path.append("../EmailComponent") # this path will change if files moved
+sys.path.append("../source/EmailComponent/EmailComponent") # this path will change if files moved
 sys.path.append(".")
 from EmailController import EmailController
 from CommandResponse import CommandResponse
