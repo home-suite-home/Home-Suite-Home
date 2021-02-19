@@ -12,6 +12,7 @@
         1) run this file using the command: python CommandHandlerTest.py
                 - you will need to have a file named password.txt in the same folder
         2) send an email to the address: home.suite.home.testing@gmail.com 
+     
         3) check your inbox for a reply message, there should be one
 '''
 
