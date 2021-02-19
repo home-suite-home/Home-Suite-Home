@@ -20,7 +20,7 @@ IMPERIAL = "imperial"
 
 class Sensor:
 
-    def __init__(self, sub_address = "temperature", units = IMPERIAL, domain = "http://localhost:8080"):
+    def __init__(self, sub_address = "status", units = IMPERIAL, domain = "http://localhost:8080"):
         self.units = units
         self.address = domain + '/' + sub_address
 
