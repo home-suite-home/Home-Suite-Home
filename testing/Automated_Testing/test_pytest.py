@@ -1,3 +1,16 @@
+'''
+  Date: 02/19/2021
+  FileName: test_pytest.py
+  
+  Engineer: Andres Graterol
+  Contact: graterol.andres0@knights.ucf.edu
+  Description: 
+    Provides automated unit tests for 
+    the following functions in EmailController.py:
+        compose_email()
+        check_mailbox()
+'''
+
 # Automated Testing for EmailController.py
 from pytest import ExitCode
 from EmailController import *
