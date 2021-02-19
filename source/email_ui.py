@@ -14,7 +14,7 @@ app = dash.Dash(__name__ )
 
 
 app.layout = html.Div(
-    style={"backgroundColor": colors["background"]},
+        style={"backgroundColor": colors["background"]},
     children=[
         html.Div(
             id="title",
@@ -23,9 +23,16 @@ app.layout = html.Div(
         ),
         html.Div(
             id="major_container1",
+            style={'columnCount': 2},
             children=[
                 html.Div(
-                    [
+                    id="retrieve-email",
+                    style={
+                        "width": "100%", 
+                        "display" : "inline-block"
+                        },
+                    children=[
+                        html.H3(children='Send test email'),
                         dcc.Input(
                             id="remote-email",
                             placeholder="Input email for raspberry pi",
@@ -42,9 +49,31 @@ app.layout = html.Div(
                         html.Button("Submit", id="button"),
                     ],
                 ),
-            ],
+                html.Div(
+                    id="major_container2",
+                    style={
+                        "width": "100%", 
+                        "display": "inline-block",
+                        "textAlign": "left",
+                        },
+                    children=[
+                        html.H3(children='Enabled Sensors'),
+                        dcc.Checklist(
+                            options=[
+                                {'label': 'Temperature', 'value': 'tempSensor'},
+                                {'label': 'Humidity', 'value': 'humidSensor'},
+                            ],
+                            value=[], # initially enabled
+                            labelStyle={
+                                'display': 'block', 
+                                'textAlign': 'justify',
+                                },
+                        )
+                    ]
+                )
+            ]
         )
-    ]
+    ],
 )
 
 
