@@ -88,10 +88,21 @@ class HumiditySensor(Sensor):
             return "Celsius"
 
 
-temperatureSensorOne = TemperatureSensor(IMPERIAL, "http://localhost:8080/temperature")
-humiditySensorOne = HumiditySensor(IMPERIAL, "http://localhost:8080/humidity")
+def main():
+    temperatureSensorOne = TemperatureSensor(IMPERIAL, "http://localhost:8080/temperature")
+    humiditySensorOne = HumiditySensor(IMPERIAL, "http://localhost:8080/humidity")
 
-print("Temperature in degrees ", temperatureSensorOne.getUnits(), ": ", temperatureSensorOne.getSensorValue())
+    print("Temperature in degrees ", 
+            temperatureSensorOne.getUnits(), 
+            ": ", 
+            temperatureSensorOne.getSensorValue())
 
-print("Relative Humidity: ", humiditySensorOne.getSensorValue())
-print("Dew Point ", humiditySensorOne.getUnits(), ": ", humiditySensorOne.getDewPoint(temperatureSensorOne.getDegreesCelcius()))
+    print("Relative Humidity: ", humiditySensorOne.getSensorValue())
+    print("Dew Point ", 
+            humiditySensorOne.getUnits(), 
+            ": ", 
+            humiditySensorOne.getDewPoint(temperatureSensorOne.getDegreesCelcius()))
+
+
+if "__name__" == "__main__":
+    main()
