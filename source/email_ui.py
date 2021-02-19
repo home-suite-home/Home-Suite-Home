@@ -6,6 +6,7 @@ import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output, State
 from Email_Component import Email_Component
+from HTTP_Component.htmlReader_MK_2 import Sensor
 
 
 sys.path.append(".")
@@ -83,7 +84,7 @@ app.layout = html.Div(
         [
             Output(component_id="remote-email", component_property="value"),
             Output('enabled-sensors', 'value'),
-            #Output('output-sensor-readings', 'value'),
+            Output('output-sensor-readings', 'children'),
         ],
         [
             Input(component_id="button", component_property="n_clicks"),
@@ -94,9 +95,19 @@ app.layout = html.Div(
         ],
 )
 def update_output(n_clicks, enabledSensorsList, remote_email):
-    sensor_readings = dash.no_update
+    if(not enabledSensorsList):
+        sensor_readings = dash.no_update
+    else:
+        sensor_readings = ""
+
     for sensor in enabledSensorsList:
-        pass
+        if(sensor == "tempSensor"):
+            sensor_readings += "Tempurature: " + str(Sensor("temperature").getSensorValue())
+        if(sensor == "humidSensor"):
+            sensor_readings += "Humidity: " + str(Sensor("humidity").getSensorValue())
+
+        sensor_readings += ' '
+
 
     if remote_email != "":
         try:
@@ -107,11 +118,11 @@ def update_output(n_clicks, enabledSensorsList, remote_email):
         except:
             print("Error: Unable to send a test email to " + remote_email)
         
-        return ["", enabledSensorsList]
+        return ["", enabledSensorsList, sensor_readings]
     else:
-        return [dash.no_update, enabledSensorsList]
+        return [dash.no_update, enabledSensorsList, sensor_readings]
 
-    return [dash.no_update, enabledSensorsList]
+    return [dash.no_update, enabledSensorsList, sensor_readings]
 
 
 if __name__ == "__main__":
