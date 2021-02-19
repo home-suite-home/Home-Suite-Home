@@ -47,10 +47,11 @@ app.layout = html.Div(
                             multiple=True,
                         ),
                         html.Button("Submit", id="button"),
+                        html.Div(id='output-sensor-readings'),
                     ],
                 ),
                 html.Div(
-                    id="major_container2",
+                    id="checkboxes_container",
                     style={
                         "width": "100%", 
                         "display": "inline-block",
@@ -59,6 +60,7 @@ app.layout = html.Div(
                     children=[
                         html.H3(children='Enabled Sensors'),
                         dcc.Checklist(
+                            id='enabled-sensors',
                             options=[
                                 {'label': 'Temperature', 'value': 'tempSensor'},
                                 {'label': 'Humidity', 'value': 'humidSensor'},
@@ -78,11 +80,24 @@ app.layout = html.Div(
 
 
 @app.callback(
-        [Output(component_id="remote-email", component_property="value")],
-        [Input(component_id="button", component_property="n_clicks")],
-        [State(component_id="remote-email", component_property="value")],
+        [
+            Output(component_id="remote-email", component_property="value"),
+            Output('enabled-sensors', 'value'),
+            #Output('output-sensor-readings', 'value'),
+        ],
+        [
+            Input(component_id="button", component_property="n_clicks"),
+            Input('enabled-sensors', 'value'),
+        ],
+        [
+            State(component_id="remote-email", component_property="value"),
+        ],
 )
-def update_output(n_clicks, remote_email):
+def update_output(n_clicks, enabledSensorsList, remote_email):
+    sensor_readings = dash.no_update
+    for sensor in enabledSensorsList:
+        pass
+
     if remote_email != "":
         try:
             print("Sending a test email to " + remote_email)
@@ -92,8 +107,11 @@ def update_output(n_clicks, remote_email):
         except:
             print("Error: Unable to send a test email to " + remote_email)
         
+        return ["", enabledSensorsList]
+    else:
+        return [dash.no_update, enabledSensorsList]
 
-    return [dash.no_update]
+    return [dash.no_update, enabledSensorsList]
 
 
 if __name__ == "__main__":
