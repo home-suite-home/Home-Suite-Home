@@ -31,7 +31,7 @@ Much of the data stored in this database will be unstructured. Sensors like the 
 calculated with a 'standard' sensor collection.
 
 # User Interface Design
-![UI to get the user's email](assets/screenshot_email_ui.png)
+![UI Map Diagram](assets/User_Interface-9.jpg)
 The purpose of this screen is to get the user's email so that the Raspberry
 Pi knows where to send updates and statistics about the user's system.
 

@@ -9,3 +9,8 @@ This file contains instructions for executing manual testing
 1. 
 2. 
 3. 
+
+# posttester.js
+1. 
+2.  
+3.  
