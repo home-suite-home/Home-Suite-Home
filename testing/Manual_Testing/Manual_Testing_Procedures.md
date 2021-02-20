@@ -9,18 +9,16 @@ This file contains instructions for executing manual testing
 ## Description
 Verify (thing we are testing) using (tool name, resources) with (conditions)
 
-
+## Functional Case
 | No. | Steps to Reproduce | Expected Behaviour |
 | --- | --- | --- |
 | 1 | this is a test | test |
 
-| Edge Case |
-| --- |
+## Edge Case
 | No. | Steps to Reproduce | Expected Behaviour |
 | --- | --- | --- |
 
-| Negative Case |
-| ------------- |
+## Negative Case
 | No. | Steps to Reproduce | Expected Behaviour |
 | --- | --- | --- |
 
