@@ -7,9 +7,10 @@ This file contains instructions for executing manual testing
 
 # Sensors.py
 ## Description
-Verify (thing we are testing) using (tool name, resources) with (conditions)
+Verify *Sensors.py* can properly access sensor data from a web server, convert units and display the results correctly.
 
 ## Functional Case
+**Test Status:** *PASS*
 | No. | Steps to Reproduce | Expected Behaviour |
 | --- | --- | --- |
 | 1 | this is a test | test |
