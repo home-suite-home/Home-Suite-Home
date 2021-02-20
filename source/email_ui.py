@@ -6,7 +6,7 @@ import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output, State
 from Email_Component import Email_Component
-from HTTP_Component.htmlReader_MK_2 import Sensor
+from HTTP_Component.Sensors import Sensor
 
 
 def getStorageCheckmarks():
