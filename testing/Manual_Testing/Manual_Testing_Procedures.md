@@ -12,6 +12,7 @@ Verify *Sensors.py* can properly access sensor data from a web server, convert u
 For this test, we are begining with the following tools installed:
 * Atom Text Editor (Or Similar Code Editing Tool)
 * Linux Command Line 
+
 We will also need *sensorSim_constant.py*. This tool will allow us to mimic the behavior of a physical sensor. Allowing our testing to be conducted in a controlled manner without the need for additional hardware.
 ## Functional Case
 **Test Status:** *PASS*
