@@ -59,7 +59,7 @@
 ## Task Allocation
 * Andres Graterol (graterollin) - Automated unit tests/ requirements
 * David Crumley (daviejones) - 
-* Matthew Dowdy (dowdyma1) - 
+* Matthew Dowdy (dowdyma1) - UI / Charts
 * Wyatt Vining (wv040) - 
 * Nathan Moulton (NathanM117) - 
 
