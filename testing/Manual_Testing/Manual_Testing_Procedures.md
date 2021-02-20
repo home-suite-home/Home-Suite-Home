@@ -16,9 +16,11 @@ Verify *Sensors.py* can properly access sensor data from a web server, convert u
 | 1 | this is a test | test |
 
 ## Edge Case
+**Test Status:** *status*
 | No. | Steps to Reproduce | Expected Behaviour |
 | --- | --- | --- |
 
+**Test Status:** *status*
 ## Negative Case
 | No. | Steps to Reproduce | Expected Behaviour |
 | --- | --- | --- |
