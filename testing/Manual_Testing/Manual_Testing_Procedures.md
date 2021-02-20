@@ -13,6 +13,7 @@ Verify (thing we are testing) using (tool name, resources) with (conditions)
 | --- |
 | No. | Steps to Reproduce | Expected Behaviour |
 | --- | --- | --- |
+| 1 | this is a test | test |
 
 | Edge Case |
 | --- |
