@@ -12,7 +12,7 @@ The following will be needed for this test:
 
 ## Test Cases
 ### Functional Case
-**Test Status** *PASS*
+**Test Status** *PASS*</br>
 **Test Procedures**
 1. In the linux command line terminal, move to the directory (/testing/Manual_Testing)
 2. In the linux terminal, enter the command $python CommandHandlerTest.py
