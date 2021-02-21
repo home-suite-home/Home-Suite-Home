@@ -75,6 +75,7 @@ We will use *25.00* for our degrees Celsius and *50.00* percent for our relative
 | 8 | Verify the dew point displayed in the *Sensors.py* terminal output matches the first three significant digits from right to left of the [reference value 56.9](https://www.calculator.net/dew-point-calculator.html?airtemperature=25.0&airtemperatureunit=celsius&humidity=50&dewpoint=&dewpointunit=fahrenheit&x=87&y=22) | The dew point from the terminal output of *Sensors.py* will match the reference value |
 
 ### Negative Case
+**Test Status:** *PASS*
 | No. | Steps to Reproduce | Expected Behaviour |
 | --- | --- | --- |
 | 1 | Open the directory containing both *Sensors.py* and *sensorSim_constant.py* | A folder containing both source files should appear on the screen |
