@@ -116,9 +116,9 @@ user@machine:~$ npm init -y; npm install mongodb
 | No. | Steps to Reproduce | Expected Behavior |
 | --- | --- | --- |
 |  1  | Open the terminal, and procede to project directory| The project file should contain both the *posthandler.js* and *posttester.js* files|
-|  2  | run the posthandler file using the *node posthandler.js* command| The following output should be displayed in the terminal[posthandler]()|
+|  2  | run the posthandler file using the *node posthandler.js* command| The following output should be displayed in the terminal![posthandler](/artifacts/assets/posthandler_out1.png)|
 |  3  | Open another terminal window, and run the posttester.js script | The posttester.js script should return a starus code of 200, signifying a successful reply from the posthandler|
-|  4  | Procede to the terminal window running the posthandler| The posthandler should disply the following result:[posthandler]()|
+|  4  | Procede to the terminal window running the posthandler| The posthandler should disply the following result:![posthandler](/artifacts/assets/posthandler_out2.png)|
 |  5  | Open another terminal window and run the *mongo* command to open the mongo shell| The mongo shell opens|
-|  6  | Enter the *use sensorsdb* command followed by the *db.sensors.find({})* command to select the database for the sensors, and query the *sensors* collection for all of its members| The database outputs the sensor record inserted by the posttester.js script. [mongo_Out]()|
+|  6  | Enter the *use sensorsdb* command followed by the *db.sensors.find({})* command to select the database for the sensors, and query the *sensors* collection for all of its members| The database outputs the sensor record inserted by the posttester.js script. ![mongo_Out](/artifacts/assets/mongo_Out.png)|
 
