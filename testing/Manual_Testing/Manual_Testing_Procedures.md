@@ -53,7 +53,7 @@ Note: For simplicity, move both source files into a test directory on the local 
 **Test Status:** *PASS*
 
 **Test Data:**
-We will use *25.00* for our degrees Celsius and *50.00* percent for our relative humidity. These numbers are typical values for indoor room conditions.
+We will use *25.00* for our degrees Celsius and *50.00* percent for our relative humidity. These numbers are typical values for indoor room conditions. The test values have already been programmed into the *sensorSim_constant.py* test script.
 | No. | Steps to Reproduce | Expected Behavior |
 | --- | --- | --- |
 | 1 | Open the directory containing both *Sensors.py* and *sensorSim_constant.py* | A folder containing both source files should appear on the screen |
