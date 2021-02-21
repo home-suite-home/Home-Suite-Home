@@ -53,7 +53,7 @@
 
 ## Task Allocation
 * Andres Graterol (graterollin) - Automated unit tests / Requirements
-* David Crumley (daviejones) - 
+* David Crumley (daviejones) - EmailComponent / EmailCommandHandler
 * Matthew Dowdy (dowdyma1) - UI / Charts
 * Wyatt Vining (wv040) - Sensor Values Intake / Demo Video
 * Nathan Moulton (NathanM117) - Database Setup and Testing
