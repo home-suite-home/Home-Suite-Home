@@ -76,6 +76,9 @@ We will use *25.00* for our degrees Celsius and *50.00* percent for our relative
 
 ### Negative Case
 **Test Status:** *PASS*
+
+**Test Data:**
+No test data needed.
 | No. | Steps to Reproduce | Expected Behaviour |
 | --- | --- | --- |
 | 1 | Open the directory containing both *Sensors.py* and *sensorSim_constant.py* | A folder containing both source files should appear on the screen |
