@@ -19,7 +19,7 @@ The following will be needed for this test:
 3. When prompted, enter the email address that will be used to communicate with the program </br> ![prompt](/artifacts/assets/enter_email.PNG)
 4. Using an email application, send an email to 'home.suite.home.testing@gmail.com'</br> ![test_request](/artifacts/assets/test_request.PNG)
 #### Test Results
-1. The terminal will reflect the operations being handled by the running program
+1. The terminal will reflect the operations being handled by the running program </br> ![terminal_response](/artifacts/assets/terminal_response.PNG)
 2. An email message will be recieved by 'home.suite.home.testing@gmail.com'
 
 ### Negative Case
