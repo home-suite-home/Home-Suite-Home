@@ -51,6 +51,7 @@ Note: For simplicity, move both source files into a test directory on the local 
 ## Test Cases
 ### Functional Case
 **Test Status:** *PASS*
+
 **Test Data:**
 We will use *25.00* for our degrees Celsius and *50.00* percent for our relative humidity. These numbers are typical values for indoor room conditions.
 | No. | Steps to Reproduce | Expected Behaviour |
@@ -62,6 +63,7 @@ We will use *25.00* for our degrees Celsius and *50.00* percent for our relative
 | 5 | In the second terminal window type *python3 Sensors.py* and press return | The following output will be observed in the terminal: ![Sensor.py Nominal Output](/artifacts/assets/sensor_py_output.PNG)|
 | 6 | Compare the temperature in degrees Farenheit from the terminal output from *Sensors.py* shown in step 5 to a known conversion from 25.00 degrees Celsius to Fahrenheit [WolframAlpha Temperature Conversion](https://www.wolframalpha.com/input/?i=25.00+Celsius+to+Fahrenheit) | The *Sensor.py* terminal output for degrees Fahrenheit will match the WolframAlpha reference value |
 | 7 | Verify the relative humidity displayed in the terminal output from *Sensors.py* matches the test data of 50.0 | The relative humidity displayed in the terminal output for *Sensors.py* will match the test data value of 50.0 |
+| 8 | Verify the dew point displayed in the *Sensors.py* terminal output matches the first three significant digits from right to left of the [reference value 56.9](https://www.calculator.net/dew-point-calculator.html?airtemperature=25.0&airtemperatureunit=celsius&humidity=50&dewpoint=&dewpointunit=fahrenheit&x=87&y=22) | The dew point from the terminal output of *Sensors.py* will match the reference value |
 
 ### Edge Case
 **Test Status:** *status*
