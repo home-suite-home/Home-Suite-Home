@@ -39,7 +39,7 @@ The following will be needed for this test:
 Verify *Sensors.py* can properly access sensor data from a web server, convert units and display the results correctly.
 ## Test Tools and Dependencies 
 For this test, we are begining with the following tools installed:
-* Atom Text Editor (Or Similar Code Editing Tool)
+* Linux Text Editor (Or Similar Code Editing Tool)
 * Linux Command Line 
 
 We will also need the source code we are testing as well as our test script:
