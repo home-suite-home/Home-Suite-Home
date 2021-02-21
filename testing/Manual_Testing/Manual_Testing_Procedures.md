@@ -97,7 +97,7 @@ No test data needed.
 
 # posttester.js
 ## Description
-This test script sends a JSON document to the local webserver from the posthandler.js script. The purpose of this script is to confirm that the webserver recieves data in a similar format to the sensor data, and will successfully push it to the database for later viewing.
+This test script sends a JSON document of mock sensor data to the local webserver from the posthandler.js script. The purpose of this script is to confirm that the webserver recieves data in a similar format to the sensor data, and will successfully push it to the database for later viewing.
 
 ## Testing Requirements and Dependencies
 To set up a test environment in which to run the code, the following tools are required:
