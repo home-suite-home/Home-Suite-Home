@@ -75,10 +75,21 @@ We will use *25.00* for our degrees Celsius and *50.00* percent for our relative
 | 7 | Verify the relative humidity displayed in the terminal output from *Sensors.py* matches the test data of 50.0 | The relative humidity displayed in the terminal output for *Sensors.py* will match the test data value of 50.0 |
 | 8 | Verify the dew point displayed in the *Sensors.py* terminal output matches the first three significant digits from right to left of the [reference value 56.9](https://www.calculator.net/dew-point-calculator.html?airtemperature=25.0&airtemperatureunit=celsius&humidity=50&dewpoint=&dewpointunit=fahrenheit&x=87&y=22) | The dew point from the terminal output of *Sensors.py* will match the reference value |
 
-**Test Status:** *PASS*
 ### Negative Case
 | No. | Steps to Reproduce | Expected Behaviour |
 | --- | --- | --- |
+| 1 | Open the directory containing both *Sensors.py* and *sensorSim_constant.py* | A folder containing both source files should appear on the screen |
+| 2 | Right click the *Sensor.py* file and click on the *Open With Text Editor* option | A context menu will appear when the *Sensors.py* file is right clicked and when the *Open With Text Editor* option is left clicked from that menu, a text editor displaying the *Sensor.py* source code. |
+| 3 | Scroll down to line 98 and change the word in parenthesis from *temperature* to *fail* | The word *temperature* is replaced with the word *fail* |
+| 4 | Scroll down to line 103 and change the word in parenthesis from *temperature* to *fail* | The word *temperature* is replaced with the word *fail* |
+| 5 | Left click save in the upper right corner of the text editor to save the modified version of *Sensors.py* | The modified *Sensor.py* file will be saved |
+| 6 | Close the text editor | The text editor window will disappear |
+| 7 | Open the directory containing both *Sensors.py* and *sensorSim_constant.py* | A folder containing both source files should appear on the screen |
+| 8 | Right click in the directory window and select the *Open in Terminal* option | A terminal window will appear with the correct directory showing to the right of the users name |
+| 9 | Right click in the directory window for a second time and again select the *Open in Terminal* option | A second terminal window should appear again showing the correct directory name to the right of the users name |
+| 10 | In the first terminal window type *python3 sensorSim_constant.py* and press the return key | The terminal window will display the message *Server started ht<span>tp://</span>localhost:8080* |
+| 11 | In the second terminal window type *python3 Sensors.py* and press return | The following output will be observed in the terminal: ![Sensor.py Nominal Output](/artifacts/assets/sensor_output_fail.PNG) |
+| 12 | Observe the error from step 11 causes a crash resulting from incorrectly formatted data. | This error is expected behavior and is slated to be revised in future versions. |
 
 
 # posttester.js
