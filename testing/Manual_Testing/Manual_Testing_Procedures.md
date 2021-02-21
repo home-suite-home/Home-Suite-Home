@@ -14,7 +14,7 @@ The following will be needed for this test:
 ### Functional Case
 **Test Status** *PASS*</br>
 #### Test Procedures
-1. In the linux command line terminal, move to the directory : </testing/Manual_Testing>
+1. In the linux command line terminal, from the Home-Suite-Home directory, move to: </testing/Manual_Testing>
 2. In the linux terminal, enter the command $python CommandHandlerTest.py </br> ![command](/artifacts/assets/CommandHandlerCommand.PNG)
 3. When prompted, enter the email address that will be used to communicate with the program
 4. Using an email application, send an email to 'home.suite.home.testing@gmail.com'</br>
@@ -53,7 +53,7 @@ Note: For simplicity, move both source files into a test directory on the local 
 **Test Status:** *PASS*
 
 **Test Data:**
-We will use *25.00* for our degrees Celsius and *50.00* percent for our relative humidity. These numbers are typical values for indoor room conditions. The test values have already been programmed into the *sensorSim_constant.py* test script.
+We will use *25.00* for our degrees Celsius and *50.00* percent for our relative humidity. These numbers are typical values for indoor room conditions.
 | No. | Steps to Reproduce | Expected Behavior |
 | --- | --- | --- |
 | 1 | Open the directory containing both *Sensors.py* and *sensorSim_constant.py* | A folder containing both source files should appear on the screen |
