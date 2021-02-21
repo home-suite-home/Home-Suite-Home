@@ -116,11 +116,7 @@ user@machine:~$ npm init -y; npm install mongodb
 | No. | Steps to Reproduce | Expected Behavior |
 | --- | --- | --- |
 |  1  | Open the terminal, and procede to project directory| The project file should contain both the *posthandler.js* and *posttester.js* files|
-|  2  | run the posthandler file using the following command:
-```shell
-node posthandler.js
-```
-| The following output should be displayed in the terminal[posthandler]()|
+|  2  | run the posthandler file using the *node posthandler.js* command| The following output should be displayed in the terminal[posthandler]()|
 |  3  | Open another terminal window, and run the posttester.js script | The posttester.js script should return a starus code of 200, signifying a successful reply from the posthandler|
 |  4  | Procede to the terminal window running the posthandler|
 The posthandler should disply the following result:
