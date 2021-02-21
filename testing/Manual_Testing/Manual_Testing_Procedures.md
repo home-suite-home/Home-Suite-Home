@@ -37,11 +37,12 @@ The following will be needed for this test:
 | 3 | When prompted, enter an email address different than the one that will be used to communicate with the system | ![prompt](/artifacts/assets/non_user.PNG) |
 | 4 | Using an email application, send an email to 'home.suite.home.testing@gmail.com' | ![test_request](/artifacts/assets/test_request.PNG) |
 
-3. When prompted, enter an email address different than the one that will be used to communicate with the system
-4. Using an email application, send an email to 'home.suite.home.testing@gmail.com' using an email address 
-   different than the one entered into the command line</br>
 #### Test Results
-1. The terminal will not show anythin
+| No. | Expected Results | Actual Results |
+| --- | --- | --- |
+| 1 | The terminal will reflect the operations being handled by the running program | ![terminal_response](/artifacts/assets/terminal_response.PNG) |
+| 2 | An email message will be recieved by 'home.suite.home.testing@gmail.com' | ![email_response](/artifacts/assets/email_response.PNG) |
+1. The terminal will not show anything
 2. An email message will not be recieved by 'home.suite.home.testing@gmail.com'
 
 # Sensors.py
@@ -76,10 +77,6 @@ We will use *25.00* for our degrees Celsius and *50.00* percent for our relative
 | 8 | Verify the dew point displayed in the *Sensors.py* terminal output matches the first three significant digits from right to left of the [reference value 56.9](https://www.calculator.net/dew-point-calculator.html?airtemperature=25.0&airtemperatureunit=celsius&humidity=50&dewpoint=&dewpointunit=fahrenheit&x=87&y=22) | The dew point from the terminal output of *Sensors.py* will match the reference value |
 
 ### Negative Case
-**Test Status:** *PASS*
-
-**Test Data:**
-No data needed for this test.
 | No. | Steps to Reproduce | Expected Behaviour |
 | --- | --- | --- |
 | 1 | Open the directory containing both *Sensors.py* and *sensorSim_constant.py* | A folder containing both source files should appear on the screen |
