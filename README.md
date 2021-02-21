@@ -55,6 +55,6 @@
 * Andres Graterol (graterollin) - Automated unit tests/ requirements
 * David Crumley (daviejones) - 
 * Matthew Dowdy (dowdyma1) - UI / Charts
-* Wyatt Vining (wv040) - 
+* Wyatt Vining (wv040) - Sensor Values Intake / Demo Video
 * Nathan Moulton (NathanM117) - 
 
