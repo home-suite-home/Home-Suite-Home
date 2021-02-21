@@ -14,7 +14,7 @@ The following will be needed for this test:
 ### Functional Case
 **Test Status** *PASS*</br>
 #### Test Procedures
-1. In the linux command line terminal, from the repo's main directory, ![cd](/artifacts/assets/move_to_testing.PNG) </br> move to the manual testing directory  ![cd](/artifacts/assets/move_to_testing.PNG)
+1. In the linux command line terminal, from the repo's main directory, ![cd](/artifacts/assets/move_to_testing.PNG) </br> move to the manual testing directory  
 2. In the linux terminal, enter the command $python CommandHandlerTest.py </br></br> ![command](/artifacts/assets/CommandHandlerCommand.PNG)
 3. When prompted, enter the email address that will be used to communicate with the program </br></br> ![prompt](/artifacts/assets/enter_email.PNG)
 4. Using an email application, send an email to 'home.suite.home.testing@gmail.com'</br></br> ![test_request](/artifacts/assets/test_request.PNG)
