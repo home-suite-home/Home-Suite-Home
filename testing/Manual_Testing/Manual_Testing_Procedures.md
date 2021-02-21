@@ -15,7 +15,7 @@ The following will be needed for this test:
 **Test Status** *PASS*</br>
 #### Test Procedures
 1. In the linux command line terminal, move to the directory (/testing/Manual_Testing)
-2. In the linux terminal, enter the command $python CommandHandlerTest.py </br> (/artifacts/assets/CommandHandlerCommand.PNG)
+2. In the linux terminal, enter the command $python CommandHandlerTest.py </br> [commandd](/artifacts/assets/CommandHandlerCommand.PNG)
 3. When prompted, enter the email address that will be used to communicate with the program
 4. Using an email application, send an email to 'home.suite.home.testing@gmail.com'</br>
 #### Test Results
