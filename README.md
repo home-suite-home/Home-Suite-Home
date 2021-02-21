@@ -49,7 +49,7 @@
 * [Burndown Chart for Sprint 3](https://docs.google.com/spreadsheets/d/1tpRyT-jUgHkrLnwx5NcxtOvh3uGg8ddGYrl60E0q6DA/edit#gid=571215391)
 * [System Architecture](artifacts/architecture.md)
 * [Testing](https://github.com/home-suite-home/Home-Suite-Home/tree/main/testing)
-* [Product Demonstration](https://youtu.be/opssn2ocK3U)
+* [Product Demonstration](https://youtu.be/RsNj5nkG3Qg)
 
 ## Task Allocation
 * Andres Graterol (graterollin) - Automated unit tests / Requirements
