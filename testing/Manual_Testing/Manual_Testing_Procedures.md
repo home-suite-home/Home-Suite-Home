@@ -30,10 +30,9 @@ We will use *25.00* for our degrees Celsius and *50.00* percent for our relative
 | 2 | Right click in the directory window and select the *Open in Terminal* option | A terminal window will appear with the correct directory showing to the right of the users name |
 | 3 | Right click in the directory window for a second time and again select the *Open in Terminal* option | A second terminal window should appear again showing the correct directory name to the right of the users name |
 | 4 | In the first terminal window type *python3 sensorSim_constant.py* and press the return key | The terminal window will display the message *Server started ht<span>tp://</span>localhost:8080* |
-| 5 | In the second terminal window type *python3 Sensors.py* and press return | The following output will be observed in the terminal: *Temperature in degrees Fahrenheit: 77.0
-Relative Humidity:  50.0
-Dew Point Fahrenheit: 56.93
-* |
+| 5 | In the second terminal window type *python3 Sensors.py* and press return | The following output will be observed in the terminal: *Temperature in degrees Fahrenheit: 77.0 
+Relative Humidity:  
+50.0 Dew Point Fahrenheit: 56.93* |
 
 ### Edge Case
 **Test Status:** *status*
