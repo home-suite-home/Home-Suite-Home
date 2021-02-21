@@ -15,7 +15,7 @@ The following will be needed for this test:
 **Test Status** *PASS*
 **Test Procedures**
 1. In the linux command line terminal, move to the directory (/testing/Manual_Testing)
-2. In the linux terminal, enter the command $python CommandHandlerTest.py
+2. In the linux terminal, enter the command '''$python CommandHandlerTest.py'''
 3. When prompted, enter the email address that will be used to communicate with the program
 4. Using an email application, send an email to 'home.suite.home.testing@gmail.com'
 **Test Results**
@@ -26,7 +26,7 @@ The following will be needed for this test:
 **Test Status** *PASS*
 **Test Procedures**
 1. In the linux command line terminal, move to the directory (/testing/Manual_Testing)
-2. In the linux terminal, enter the command $python CommandHandlerTest.py
+2. In the linux terminal, enter the command '''$python CommandHandlerTest.py'''
 3. When prompted, enter an email address different than the one that will be used to communicate with the system
 4. Using an email application, send an email to 'home.suite.home.testing@gmail.com' using an email address 
    different than the one entered into the command line 
