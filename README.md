@@ -46,7 +46,7 @@
 ## Materials
 * [Trello Board](https://trello.com/b/BFcwvt3p/project) (Backlogs and Requirements)
 * [Velocity Chart](https://docs.google.com/spreadsheets/d/1tpRyT-jUgHkrLnwx5NcxtOvh3uGg8ddGYrl60E0q6DA/edit#gid=0)
-* [Burndown Chart for Sprint 3](https://docs.google.com/spreadsheets/d/1tpRyT-jUgHkrLnwx5NcxtOvh3uGg8ddGYrl60E0q6DA/edit#gid=1102031550)
+* [Burndown Chart for Sprint 3](https://docs.google.com/spreadsheets/d/1tpRyT-jUgHkrLnwx5NcxtOvh3uGg8ddGYrl60E0q6DA/edit#gid=571215391)
 * [System Architecture](artifacts/architecture.md)
 * [Testing](https://github.com/home-suite-home/Home-Suite-Home/tree/main/testing)
 * [Product Demonstration](https://youtu.be/opssn2ocK3U)
