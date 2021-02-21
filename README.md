@@ -52,7 +52,7 @@
 * [Product Demonstration](https://youtu.be/opssn2ocK3U)
 
 ## Task Allocation
-* Andres Graterol (graterollin) - Automated unit tests/ requirements
+* Andres Graterol (graterollin) - Automated unit tests / Requirements
 * David Crumley (daviejones) - 
 * Matthew Dowdy (dowdyma1) - UI / Charts
 * Wyatt Vining (wv040) - Sensor Values Intake / Demo Video
