@@ -40,10 +40,8 @@ The following will be needed for this test:
 #### Test Results
 | No. | Expected Results | Actual Results |
 | --- | --- | --- |
-| 1 | The terminal will reflect the operations being handled by the running program | ![terminal_response](/artifacts/assets/terminal_response.PNG) |
-| 2 | An email message will be recieved by 'home.suite.home.testing@gmail.com' | ![email_response](/artifacts/assets/email_response.PNG) |
-1. The terminal will not show anything
-2. An email message will not be recieved by 'home.suite.home.testing@gmail.com'
+| 1 | The terminal will not show anything | ![terminal_response](/artifacts/assets/no_response.PNG) |
+| 2 | An email message will not be recieved by 'home.suite.home.testing@gmail.com' | ![email_response](/artifacts/assets/empty_email.PNG) |
 
 # Sensors.py
 ## Description
