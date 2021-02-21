@@ -14,13 +14,13 @@ The following will be needed for this test:
 ### Functional Case
 **Test Status** *PASS*</br>
 #### Test Procedures
-1. In the linux command line terminal, from the repo's main directory, move to the manual testing directory </br> ![cd](/artifacts/assets/move_to_testing.PNG)
-2. In the linux terminal, enter the command $python CommandHandlerTest.py </br> ![command](/artifacts/assets/CommandHandlerCommand.PNG)
-3. When prompted, enter the email address that will be used to communicate with the program </br> ![prompt](/artifacts/assets/enter_email.PNG)
-4. Using an email application, send an email to 'home.suite.home.testing@gmail.com'</br> ![test_request](/artifacts/assets/test_request.PNG)
+1. In the linux command line terminal, from the repo's main directory, move to the manual testing directory </br></br> ![cd](/artifacts/assets/move_to_testing.PNG)
+2. In the linux terminal, enter the command $python CommandHandlerTest.py </br></br> ![command](/artifacts/assets/CommandHandlerCommand.PNG)
+3. When prompted, enter the email address that will be used to communicate with the program </br></br> ![prompt](/artifacts/assets/enter_email.PNG)
+4. Using an email application, send an email to 'home.suite.home.testing@gmail.com'</br></br> ![test_request](/artifacts/assets/test_request.PNG)
 #### Test Results
-1. The terminal will reflect the operations being handled by the running program </br> ![terminal_response](/artifacts/assets/terminal_response.PNG)
-2. An email message will be recieved by 'home.suite.home.testing@gmail.com' </br> ![email_response](/artifacts/assets/email_response.PNG)
+1. The terminal will reflect the operations being handled by the running program </br></br> ![terminal_response](/artifacts/assets/terminal_response.PNG)
+2. An email message will be recieved by 'home.suite.home.testing@gmail.com' </br></br> ![email_response](/artifacts/assets/email_response.PNG)
 
 ### Negative Case
 **Test Status** *PASS*</br>
