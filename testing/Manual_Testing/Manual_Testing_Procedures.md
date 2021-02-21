@@ -65,12 +65,7 @@ We will use *25.00* for our degrees Celsius and *50.00* percent for our relative
 | 7 | Verify the relative humidity displayed in the terminal output from *Sensors.py* matches the test data of 50.0 | The relative humidity displayed in the terminal output for *Sensors.py* will match the test data value of 50.0 |
 | 8 | Verify the dew point displayed in the *Sensors.py* terminal output matches the first three significant digits from right to left of the [reference value 56.9](https://www.calculator.net/dew-point-calculator.html?airtemperature=25.0&airtemperatureunit=celsius&humidity=50&dewpoint=&dewpointunit=fahrenheit&x=87&y=22) | The dew point from the terminal output of *Sensors.py* will match the reference value |
 
-### Edge Case
-**Test Status:** *status*
-| No. | Steps to Reproduce | Expected Behaviour |
-| --- | --- | --- |
-
-**Test Status:** *status*
+**Test Status:** *PASS*
 ### Negative Case
 | No. | Steps to Reproduce | Expected Behaviour |
 | --- | --- | --- |
