@@ -32,6 +32,8 @@ We will use *25.00* for our degrees Celsius and *50.00* percent for our relative
 | 4 | In the first terminal window type *python3 sensorSim_constant.py* and press the return key | The terminal window will display the message *Server started ht<span>tp://</span>localhost:8080* |
 | 5 | In the second terminal window type *python3 Sensors.py* and press return | The following output will be observed in the terminal: ![Sensor.py Nominal Output](/artifacts/assets/sensor py output.png)|
 
+![Sensor.py Nominal Output](/artifacts/assets/sensor py output.png)
+
 ### Edge Case
 **Test Status:** *status*
 | No. | Steps to Reproduce | Expected Behaviour |
