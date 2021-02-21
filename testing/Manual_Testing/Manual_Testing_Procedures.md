@@ -96,6 +96,36 @@ No test data needed.
 
 
 # posttester.js
-1. 
-2.  
-3.  
+## Description
+This test script sends a JSON document to the local webserver from the posthandler.js script. The purpose of this script is to confirm that the webserver recieves data in a similar format to the sensor data, and will successfully push it to the database for later viewing.
+
+## Testing Requirements and Dependencies
+To set up a test environment in which to run the code, the following tools are required:
+
+* Bash shell(or a similar Unix terminal emulator)
+* [MongoDB Community Server](https://www.mongodb.com/try/download/community)
+* [Node.js](https://nodejs.org/en/)
+
+Before running any of the programs listed here, it is recomended to follow the procedures for [setting up the server process for MongoDB](https://docs.mongodb.com/manual/administration/install-on-linux/), followed by [the installation process for Node.js](https://nodejs.org/en/download/). After which, you'll want to run the following command inside the project folder to install the dependencies for Node.js to interact with MongoDB...
+
+```shell
+user@machine:~$ npm init -y; npm install mongodb
+```
+## Test Procedures
+
+| No. | Steps to Reproduce | Expected Behavior |
+| --- | --- | --- |
+|  1  | Open the terminal, and procede to project directory| The project file should contain both the *posthandler.js* and *posttester.js* files|
+|  2  | run the posthandler file using the following command:
+```shell
+node posthandler.js
+```
+| The following output should be displayed in the terminal[posthandler]()|
+|  3  | Open another terminal window, and run the posttester.js script | The posttester.js script should return a starus code of 200, signifying a successful reply from the posthandler|
+|  4  | Procede to the terminal window running the posthandler|
+The posthandler should disply the following result:
+[posthandler]()|
+|  5  | open another terminal window and run the *mongo* command to open the mongo shell| The mongo shell opens|
+|  6  | Enter the *use sensorsdb* command followed by the *db.sensors.find({})* command to select the database for the sensors, and query the *sensors* collection for all of its members|
+| The database outputs the sensor record inserted by the posttester.js script. [mongo_Out]()|
+
