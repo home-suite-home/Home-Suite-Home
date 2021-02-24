@@ -78,7 +78,7 @@ app.layout = html.Div(
                                 "borderWidth": "1px",
                             },
                         ),
-                        html.Button("Submit", id="button"),
+                        html.Button("Submit", id="button",),
                         html.Div(id='output-sensor-readings'),
                     ],
                 ),
@@ -108,7 +108,10 @@ app.layout = html.Div(
                     ]
                 ),
             ]
-        )
+        ),
+        html.Div(className='card', children="Test card 1!"),
+        html.Div(className='card', children="Test card 2!"),
+        html.Div(className='card', children="Test card 3!"),
     ],
 )
 
