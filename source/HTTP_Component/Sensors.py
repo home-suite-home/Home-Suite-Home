@@ -1,15 +1,13 @@
 #
-#   Date: 2/19/21
+#   Date: 2/24/21
 #   File Name: Sensors.py
 #
 #   Engineer: Wyatt Vining
 #   Contact: wyatt.vining@knights.ucf.edu
 #
 #   Description:
-#       This is an object oriented script to demonstrate a method to retrieve sensor data from an HTML source.
+#       This is a script intended to retrieve, parse and return data from network connected sensors.
 #
-#   Note:
-#       This file is intended for testing purposes.
 #
 
 from urllib.request import urlopen
@@ -20,17 +18,24 @@ IMPERIAL = "imperial"
 
 class Sensor:
 
-    def __init__(self, sub_address = "status", units = IMPERIAL, domain = "http://localhost:8080"):
+    def __init__(self, sub_address, units = IMPERIAL, domain = "http://localhost:8080"):
         self.units = units
         self.address = domain + '/' + sub_address
 
     def requestData(self):
         try:
             self.page = urlopen(self.address)
-        except:
+        except Exception as e:
+            print(e)
             return "NaN"
         rawBytes = self.page.read()
-        return rawBytes.decode("utf-8")
+        rawString = rawBytes.decode("utf-8")
+        try:
+            float(rawString)
+        except Exception as e:
+            print(e)
+            return "NaN"
+        return rawString
 
     def getSensorValue(self):
         dataString = self.requestData()
