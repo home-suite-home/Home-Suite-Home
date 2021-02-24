@@ -8,6 +8,7 @@ from dash.dependencies import Input, Output, State
 from Email_Component import Email_Component
 from HTTP_Component.Sensors import Sensor
 
+sensor_names = {'tempSensor': 'Temperature', 'humidSensor': 'Humidity'}
 
 def getStorageCheckmarks():
     try:
@@ -23,15 +24,17 @@ def getStorageCheckmarks():
 
 
 def writeStorageCheckmarks(checkmarksList):
+    #print(checkmarksList)
     try:
         fileObj = open("enabled_sensors.txt", "w")
     except:
         print("Cannot write to enabled_sensors.txt")
 
+    checkmarksList = [x for x in checkmarksList if x != '']
+
     l = len(checkmarksList)
 
     if(l == 0):
-        fileObj.write("")
         print("Wrote nothing.")
 
     for i in range(l):
@@ -43,79 +46,101 @@ def writeStorageCheckmarks(checkmarksList):
     fileObj.close()
 
 
+def getCardDivs(enabledSensorsList):
+    divList = []
+
+    for enabledSensor in enabledSensorsList:
+        divList.append(
+            html.Div(className='card',
+                children=[
+                    html.H4(
+                        sensor_names[enabledSensor],
+                        style={'textAlign': 'center'},
+                    ),
+                ]
+            )
+        )
+
+    return divList
+
+
 colors = {"background": "343434"}
 app = dash.Dash(__name__)
 
+
+mainDivChildren = [
+    html.Div(
+        id="title",
+        children=html.H1(children="Home Sensor Suite"),
+        style={"textAlign": "center"},
+    ),
+    html.Div(
+        id="major_container1",
+        style={'columnCount': 2},
+        children=[
+            html.Div(
+                id="retrieve-email",
+                style={
+                    "width": "100%", 
+                    "display" : "inline-block"
+                    },
+                children=[
+                    html.H3(children='Send test email'),
+                    dcc.Input(
+                        id="remote-email",
+                        placeholder="Input email for raspberry pi",
+                        type="text",
+                        value="",
+                        children=[html.Div(["Input email for raspberry pi"])],
+                        style={
+                            "width": "95%",
+                            "height": "40px",
+                            "borderWidth": "1px",
+                        },
+                    ),
+                    html.Button("Submit", id="button",),
+                    html.Div(id='output-sensor-readings'),
+                ],
+            ),
+            html.Div(
+                id="checkboxes_container",
+                style={
+                    "width": "100%", 
+                    "display": "inline-block",
+                    "textAlign": "left",
+                    },
+                children=[
+                    html.H3(children='Enabled Sensors'),
+                    dcc.Checklist(
+                        id='enabled-sensors',
+                        persistence=True,
+                        options=[
+                            {'label': 'Temperature', 'value': 'tempSensor'},
+                            {'label': 'Humidity', 'value': 'humidSensor'},
+                        ],
+                        value=getStorageCheckmarks(), # initially enabled
+                        labelStyle={
+                            'display': 'block', 
+                            'textAlign': 'justify',
+                        },
+                    ),
+                    html.Button("Save Selection", id='save-checkmarks-button')
+                ]
+            ),
+        ],
+    ),
+    html.Div(id="cards-container", ),
+]
+
+#mainDivChildren.extend(testMultipleDivs())
+
 app.layout = html.Div(
         style={"backgroundColor": colors["background"]},
-    children=[
-        html.Div(
-            id="title",
-            children=html.H1(children="Home Sensor Suite"),
-            style={"textAlign": "center"},
-        ),
-        html.Div(
-            id="major_container1",
-            style={'columnCount': 2},
-            children=[
-                html.Div(
-                    id="retrieve-email",
-                    style={
-                        "width": "100%", 
-                        "display" : "inline-block"
-                        },
-                    children=[
-                        html.H3(children='Send test email'),
-                        dcc.Input(
-                            id="remote-email",
-                            placeholder="Input email for raspberry pi",
-                            type="text",
-                            value="",
-                            children=[html.Div(["Input email for raspberry pi"])],
-                            style={
-                                "width": "95%",
-                                "height": "40px",
-                                "borderWidth": "1px",
-                            },
-                        ),
-                        html.Button("Submit", id="button",),
-                        html.Div(id='output-sensor-readings'),
-                    ],
-                ),
-                html.Div(
-                    id="checkboxes_container",
-                    style={
-                        "width": "100%", 
-                        "display": "inline-block",
-                        "textAlign": "left",
-                        },
-                    children=[
-                        html.H3(children='Enabled Sensors'),
-                        dcc.Checklist(
-                            id='enabled-sensors',
-                            persistence=True,
-                            options=[
-                                {'label': 'Temperature', 'value': 'tempSensor'},
-                                {'label': 'Humidity', 'value': 'humidSensor'},
-                            ],
-                            value=getStorageCheckmarks(), # initially enabled
-                            labelStyle={
-                                'display': 'block', 
-                                'textAlign': 'justify',
-                            },
-                        ),
-                        html.Button("Save Selection", id='save-checkmarks-button')
-                    ]
-                ),
-            ]
-        ),
-        html.Div(className='card', children="Test card 1!"),
-        html.Div(className='card', children="Test card 2!"),
-        html.Div(className='card', children="Test card 3!"),
-    ],
+        children=mainDivChildren
 )
 
 
+# Email Entry Callback
 @app.callback(
         Output(component_id="remote-email", component_property="value"),
         Input(component_id="button", component_property="n_clicks_timestamp"),
@@ -136,10 +161,12 @@ def handle_email(button_timestamp, email):
         return dash.no_update
 
 
+# Sensor toggling Callback
 @app.callback(
         [   # components that will be modified
             Output('enabled-sensors', 'value'),
-            Output('output-sensor-readings', 'children'),
+            #Output('output-sensor-readings', 'children'),
+            Output('cards-container', 'children'),
         ],
         [   # components to listen for to run the callback
             Input('save-checkmarks-button', 'n_clicks_timestamp'),
@@ -149,6 +176,7 @@ def handle_email(button_timestamp, email):
         ],
 )
 def handle_sensor_toggle(button_timestamp, enabledSensorsList):
+    print(enabledSensorsList)
     if(button_timestamp != None):
         writeStorageCheckmarks(enabledSensorsList)
 
@@ -163,9 +191,11 @@ def handle_sensor_toggle(button_timestamp, enabledSensorsList):
                 sensor_readings += "Humidity: " + str(Sensor("humidity").getSensorValue())
             sensor_readings += ' '
 
-        return [enabledSensorsList, sensor_readings]
+        #return [enabledSensorsList, sensor_readings]
+        return [enabledSensorsList, getCardDivs(enabledSensorsList)]
     else:
-        return [getStorageCheckmarks(), dash.no_update]
+        storageCheckmarks = getStorageCheckmarks()
+        return [storageCheckmarks, getCardDivs(storageCheckmarks)]
 
 
 if __name__ == "__main__":
