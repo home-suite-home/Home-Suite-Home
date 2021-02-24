@@ -1,10 +1,10 @@
 div.card {
-    width: 150px;
-    height: 300px;
+    width: 200px;
+    height: 400px;
     background-color: #E4E4E4;
     border: 2px solid black;
     border-radius: 15px;
     margin: 20px;
-    padding: 20px; 
+    padding: 5px; 
     display: inline-block;
 }
