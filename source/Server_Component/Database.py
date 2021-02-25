@@ -32,21 +32,20 @@ class Database:
 		self.client = mongo.MongoClient()
 		
 	def connect(void):
-	        if not (self.connect_status):
-		        
-		        try:
-			        self.client = mongo.MongoClient(self.url, self.port)
-			        self.connect_status = True
-		        except ConnectionFailure:
-			        print("Well that didn't work. Check the database address, and make sure the mongod process is running...")
-			        self.connect_status = False
-	        else:
-	                print("connection already established")
+		if not self.connect_status == True:
+			try:
+				self.client = mongo.MongoClient(self.url, self.port)
+				self.connect_status = True
+			except ConnectionFailure:
+				print("Well that didn't work. Check the database address, and make sure the mongod process is running...")
+				self.connect_status = False
+		else:
+				print("connection already established")
 	                
 	                
 	
 	def SendSensorData(data, name, kind ):
-		if (self.connect_status):
+		if self.connect_status == True:
 			
 			db = self.client[sensorsdb]
 			collection = db[sensors]
@@ -68,20 +67,19 @@ class Database:
 			
 	# Maybe per sensor querying		
 	def GetData():
-		if (self.connect_status):
-		        db = self.client[sensorsdb]
-		        collection = db[sensors]
-		        records = collection.find({})
-		        
-		        for record in records:
-		        	print (record)
-	else:
+		if self.connect_status == True :
+			db = self.client[sensorsdb]
+			collection = db[sensors]
+			records = collection.find({})
+			
+			for record in records:
+				print (record)
+		else:
 			print("Well that didn't work. Check the database address, and make sure the mongod process is running...")
-		        self.connect()	
+			self.connect()	
 		
-	def DeleteAll():
+	##def DeleteAll():
 		#TBD
-			
-			
-			
-		
+
+
+
