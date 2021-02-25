@@ -32,7 +32,7 @@ class Database:
 		self.client = mongo.MongoClient()
 		
 	def connect(void):
-	        if !(self.connect_status):
+	        if not (self.connect_status):
 		        
 		        try:
 			        self.client = mongo.MongoClient(self.url, self.port)
@@ -45,7 +45,7 @@ class Database:
 	                
 	                
 	
-	def SendSensorData(data, String name, String kind ):
+	def SendSensorData(data, name, kind ):
 		if (self.connect_status):
 			
 			db = self.client[sensorsdb]
@@ -70,15 +70,14 @@ class Database:
 	def GetData():
 		if (self.connect_status):
 		        db = self.client[sensorsdb]
-			collection = db[sensors]
-			
-			records = collection.find({})
-			
-			for record in records
-			        print record
-		else:
+		        collection = db[sensors]
+		        records = collection.find({})
+		        
+		        for record in records:
+		        	print (record)
+	else:
 			print("Well that didn't work. Check the database address, and make sure the mongod process is running...")
-			self.connect()	
+		        self.connect()	
 		
 	def DeleteAll():
 		#TBD
