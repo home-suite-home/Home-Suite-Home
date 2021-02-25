@@ -32,39 +32,56 @@ class Database:
 		self.client = mongo.MongoClient()
 		
 	def connect(void):
-	# Add if statement based on status
-		try:
-			self.client = mongo.MongoClient(self.url, self.port)
-			self.connect_status = True
-		except ConnectionFailure
-			print("Well that didn't work. Check the database address, and make sure the mongod process is running...")
+	        if !(self.connect_status):
+		        
+		        try:
+			        self.client = mongo.MongoClient(self.url, self.port)
+			        self.connect_status = True
+		        except ConnectionFailure:
+			        print("Well that didn't work. Check the database address, and make sure the mongod process is running...")
+			        self.connect_status = False
+	        else:
+	                print("connection already established")
+	                
+	                
 	
-	# Maybe timestamp should be provided by sensor?		
-	def SendSensorData(data):
-		if (self.connect_status)
+	def SendSensorData(data, String name, String kind ):
+		if (self.connect_status):
 			
 			db = self.client[sensorsdb]
-			collection = db['temp']
+			collection = db[sensors]
 			t = time.time()
 			
 			dataobj = {
-			"name": "Temp_1"
-			"temp": data
+			"kind": kind,
+			"name": name,
+			"value": data,
 			"time": t 
 			}
 			
 			payload = json.dumps(dataobj)
-			collection.instert_one(payload)
-		else
-			print("Well that didn't work. Check the database address, and make sure the mongod process is running...")	
+			collection.insert_one(payload)
+		else:
+			print("Well that didn't work. Check the database address, and make sure the mongod process is running...")
+			self.connect()	
 		
 			
-			
+	# Maybe per sensor querying		
 	def GetData():
-		#TO BE ADDED
+		if (self.connect_status):
+		        db = self.client[sensorsdb]
+			collection = db[sensors]
+			
+			records = collection.find({})
+			
+			for record in records
+			        print record
+		else:
+			print("Well that didn't work. Check the database address, and make sure the mongod process is running...")
+			self.connect()	
 		
 	def DeleteAll():
-		
+		#TBD
 			
 			
 			
