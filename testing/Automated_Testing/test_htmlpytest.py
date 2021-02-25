@@ -15,7 +15,7 @@
 
 # Automated Testing for Sensors.py
 import pytest
-from htmlReader_MK_2 import *
+from Sensors import *
 
 def test_getDegreesCelsius():
     degrees = TemperatureSensor.getDegreesCelcius(TemperatureSensor())
