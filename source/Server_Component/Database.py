@@ -14,7 +14,7 @@ PORT = '27017'
 
 # This class will be comprised of methods that will
 # interface with a MongoDB database. These methods should
-# expect values from the methods in Sensors.py, and 
+# expect values from the methods in Sensors.py, and
 # send them to the database as JSON payloads.
 
 # Environmental Sensors
@@ -30,8 +30,8 @@ class Database:
 		self.port = port
 		self.connect_status = False
 		self.client = mongo.MongoClient()
-		
-	def connect(void):
+
+	def connect(self):
 		if not self.connect_status == True:
 			try:
 				self.client = mongo.MongoClient(self.url, self.port)
@@ -40,46 +40,41 @@ class Database:
 				print("Well that didn't work. Check the database address, and make sure the mongod process is running...")
 				self.connect_status = False
 		else:
-				print("connection already established")
-	                
-	                
-	
-	def SendSensorData(data, name, kind ):
+			print("connection already established")
+
+	def SendSensorData(self, data, name, kind):
 		if self.connect_status == True:
-			
+
 			db = self.client[sensorsdb]
 			collection = db[sensors]
 			t = time.time()
-			
+
 			dataobj = {
-			"kind": kind,
-			"name": name,
-			"value": data,
-			"time": t 
+                            "kind": kind,
+                            "name": name,
+                            "value": data,
+                            "time": t
 			}
-			
+
 			payload = json.dumps(dataobj)
 			collection.insert_one(payload)
 		else:
 			print("Well that didn't work. Check the database address, and make sure the mongod process is running...")
-			self.connect()	
-		
-			
-	# Maybe per sensor querying		
-	def GetData():
-		if self.connect_status == True :
+			self.connect()
+
+	# Maybe per sensor querying
+
+	def GetData(self):
+		if self.connect_status == True:
 			db = self.client[sensorsdb]
 			collection = db[sensors]
 			records = collection.find({})
-			
+
 			for record in records:
-				print (record)
+				print(record)
 		else:
 			print("Well that didn't work. Check the database address, and make sure the mongod process is running...")
-			self.connect()	
-		
+			self.connect()
+
 	##def DeleteAll():
 		#TBD
-
-
-
