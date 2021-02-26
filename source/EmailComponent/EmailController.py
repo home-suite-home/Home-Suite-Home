@@ -1,147 +1,142 @@
-
-'''
-//
-//  Date: 02/18/2021
-//  FileName: CommandResponse.py
-//
-//  Engineer: David Crumley
-//  Contact: david_crumley@knights.ucf.edu
-//
-//  Description:
-        will output appropriate response based on incoming command
-        will handle accessing the database for sensor data
-
-
- *************************************************************
- || - TODO: add enabled_sensors.txt functionality           ||
- ||         - only want to display sensors that are enabled ||
- *************************************************************
 '''
 
-class CommandResponse:
-    def __init__ (self, command):
-        self.command = command
+  Date: 02/018/2021
+  FileName: EmailController.py
 
-    def get_response(self):
-        if self.command == "help":
-            return help_message()
+  Engineer: David Crumley
+  Contact: david_crumley@knights.ucf.edu
 
-        elif self.command == "get most recent sensor data":
-            return most_recent_data()
+  Description:
 
-        else:
-            return help_message()
+    Provides an API for sending and recieving email_test
 
-###############################################################################
+    Functions provided by EmailController API:
+
+        compose_email()
+        send_email()
+        check_mailbox()
+
 '''
-Response definitions
-'''
-###############################################################################
+import sys
+sys.path.append(".")
 
-def help_mesasage():
-    text_response = "dummy help message"
-    html_response = """\
-    <html>
-        <body>
-            <p>dummy help message<br>
-                <a href="https://github.com/home-suite-home/Home-Suite-Home">
-                heres a link to the github, figure it out</a>
-            </p>
-        </body>
-    </html>
-    """
-    return (text_response, html_response)
+#  device email => "home.suite.home.testing@gmail.com"
+class EmailController:
 
-def most_recent_data():
-    '''
-    use the getData() function provided by Database.py
-     - getData returns a dict of all data currently in the database
-     - data written to a temp.txt file to avoid memory starvation
+    # defualt parameters used for automated testing
+    def __init__(self, user_email, device_email):
+        self.user_email = user_email
+        self.device_email = device_email
+        # attempting to read password for device email
+        try:
+            fileObj = open("password.txt", "r")
+        except:
+            print("Please add the password.txt file to your machine.")
+            return
 
-     - TODO: add enabled_sensors.txt functionality
-             - only want to display sensors that are enabled
-    '''
-    import sys
-    # translates to the Home-Suite-Home/Source directory
-    sys.path.append("../Server_Component")
-    from Database import Database
-    url = 'localhost'
-    port = 27017
+        self.password = fileObj.read().strip('\n')
 
-    # instantiate database and connect
-    db = Database(url, port)
-    db.connect()
+    def compose_email(self, subject, body_text, body_html, attachments = None):
+        # necessary libraries to construct email
+        from email.mime.text import MIMEText
+        from email.mime.multipart import MIMEMultipart
 
-    ### TESTING ###
-    db.SendSensorData(38.0, "temp_1", "Temp")
-    db.SendSensorData(15.0, "temp_2", "Temp")
-    db.SendSensorData(37.0, "temp_1", "Temp")
-    db.SendSensorData(10.0, "temp_3", "Temp")
+        # create the email message
+        message = MIMEMultipart("alternative")
+        message["Subject"] = subject
+        message["from"] = self.device_email
+        message["to"] = self.user_email
 
-    # retrieve data from db
-    data_list = db.GetData()
+        text = body_text
+        html = body_html
 
-    # search for each sensor name and retrieve latest entry
-    name_list = []
-    sensor_list = []
-    for data_obj in reversed(data_list):
-        if data_obj["name"] not in name_list:
-            name_list.append(data_obj["name"])
-            sensor_list.append(data_obj)
+        # convert to MIME objects
+        part1 = MIMEText(text, "plain")
+        part2 = MIMEText(html, "html")
 
-    # html string common to all tables
-    html_table = """\
-        <html>
-        <head>
-        <style>
-        table {
-            font-family: arial, sans-serif;
-            border-collapse: collapse;
-            width: 100%;
-            }
+        # add poth objects to the MIME multipart message
+        # the html part will be attempted first
+        message.attach(part1)
+        message.attach(part2)
 
-        td, th {
-            border: 1px solid #dddddd;
-            text-align: left;
-            padding: 8px;
-        }
+        print("email composed")
+        return message.as_string()
 
-        tr:nth-child(even) {
-            background-color: #dddddd;
-        }
-        </style>
-        </head>
-        <body>
+    def send_email(self, message):
+        #necessary libraries to send email
+        import smtplib, ssl
+        # create secure connection and send the send the email
+        context = ssl.create_default_context()
+        with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
+            server.login(self.device_email, self.password)
+            server.sendmail(
+                self.device_email, self.user_email, message
+            )
+        print("Email sent.")
 
-        <h2>Most Recent Sensor Data</h2>
+    def check_mailbox(self):
+    # email validation and inbox cleaning handled here
+        import imaplib
+        import email
+        from email.header import decode_header
 
-        <table>
-            <tr>
-                <th>Sensor Type</th>
-                <th>Sensor Name</th>
-                <th>Sensor Value</th>
-            </tr>
-    """
+        # create IMAP4 class with SSL
+        imap = imaplib.IMAP4_SSL("imap.gmail.com")
 
-    # create the table based on sensor_list data
-    for sensor in sensor_list:
-        html_table += """\
-            <tr>
-                <td>{sensor[type]}</td>
-                <td>{sensor[name]}</td>
-                <td>{sensor[value]}</td>
-            </tr>
-            """.format(**locals())
+        # login
+        imap.login(self.device_email, self.password)
 
+        # search for email from our user
+        status, num_messages = imap.select("INBOX")
+        type, messages = imap.search(None, 'FROM', self.user_email)
 
-    # add the html trailers
-    html_table += """\
-        </table>
-        </body>
-        </html>
-        """
-    text_response = str(data_list)
+        # convert messages to a simple list of ID's
+        messages = messages[0].split()
 
-    # TESTING
-    db.Clear()
-    return (text_response, html_table)
+        # return null if no emails
+        if len(messages) == 0:
+            return None
+
+        # fetch the newest email from user => last ID in the list
+        type, msg = imap.fetch(messages[-1], '(RFC822)')
+        #decode message
+        for response in msg:
+            if isinstance(response, tuple):
+                # parse bytes into message object
+                msg = email.message_from_bytes(response[1])
+                # decode the subject
+                subject, encoding = decode_header(msg["subject"])[0]
+                if isinstance(subject, bytes):
+                    subject = subject.decode(encoding)
+
+                print("subject:", subject)
+
+                # get the body out (only accepting multipart and plain text RN)
+                if msg.is_multipart():
+                    # just want the plain text
+                    for part in msg.walk():
+                        content_type = part.get_content_type()
+                        content_disposition = str(part.get("Content-Disposition"))
+                        if content_type == "text/plain" and "attachment" not in content_disposition:
+                            body = part.get_payload(decode=True).decode()
+                            print(body)
+                #plain text
+                else:
+                    # extract content type of email
+                    content_type = msg.get_content_type()
+                    # get the email body
+                    body = msg.get_payload(decode=True).decode()
+                    if content_type == "text/plain":
+                        # print only text email parts
+                        print(body)
+
+        # delete the email from the inbox
+        imap.store(messages[-1], "+FLAGS", "\\Deleted")
+
+        # end the smtp session
+        imap.close()
+        imap.logout()
+
+        print("checked the mailbox")
+        # remove whitespace including /n and /r
+        return str(body).strip()
