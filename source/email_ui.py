@@ -4,11 +4,16 @@ import sys
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
-from dash.dependencies import Input, Output, State
+from dash.dependencies import Input, Output, State, MATCH
 from Email_Component import Email_Component
 from HTTP_Component.Sensors import Sensor
 
-sensor_names = {'tempSensor': 'Temperature', 'humidSensor': 'Humidity'}
+
+sensor_names = {
+        # (display name, url extension, units)
+        'tempSensor': ('Temperature', 'temperature', 'F'), 
+        'humidSensor': ('Humidity', 'humidity', '%')
+    }
 
 def getStorageCheckmarks():
     try:
@@ -52,10 +57,19 @@ def getCardDivs(enabledSensorsList):
     for enabledSensor in enabledSensorsList:
         divList.append(
             html.Div(className='card',
+                style={'textAlign': 'center'},
                 children=[
                     html.H4(
-                        sensor_names[enabledSensor],
-                        style={'textAlign': 'center'},
+                        sensor_names[enabledSensor][0],
+                    ),
+                    html.H2(str(
+                        Sensor(sensor_names[enabledSensor][1]).
+                        getSensorValue()) + ' ' + 
+                        sensor_names[enabledSensor][2],
+                        id={'type': 'sensor-data', 'index': enabledSensor},
+                    ),
+                    html.Button('Refresh',
+                        id={'type': 'refresh-button', 'index': enabledSensor},
                     ),
                 ]
             )
@@ -99,7 +113,7 @@ mainDivChildren = [
                         },
                     ),
                     html.Button("Submit", id="button",),
-                    html.Div(id='output-sensor-readings'),
+                    #html.Div(id='output-sensor-readings'),
                 ],
             ),
             html.Div(
@@ -132,7 +146,6 @@ mainDivChildren = [
     html.Div(id="cards-container", ),
 ]
 
-#mainDivChildren.extend(testMultipleDivs())
 
 app.layout = html.Div(
         style={"backgroundColor": colors["background"]},
@@ -165,7 +178,6 @@ def handle_email(button_timestamp, email):
 @app.callback(
         [   # components that will be modified
             Output('enabled-sensors', 'value'),
-            #Output('output-sensor-readings', 'children'),
             Output('cards-container', 'children'),
         ],
         [   # components to listen for to run the callback
@@ -176,26 +188,25 @@ def handle_email(button_timestamp, email):
         ],
 )
 def handle_sensor_toggle(button_timestamp, enabledSensorsList):
-    print(enabledSensorsList)
-    if(button_timestamp != None):
+    local_enabledSensorsList = enabledSensorsList
+
+    if(button_timestamp != None): # Button is clicked
         writeStorageCheckmarks(enabledSensorsList)
-
-        sensor_readings = ""
-        if(not enabledSensorsList):
-            sensor_readings = dash.no_update
-
-        for sensor in enabledSensorsList:
-            if(sensor == "tempSensor"):
-                sensor_readings += "Tempurature: " + str(Sensor("temperature").getSensorValue())
-            if(sensor == "humidSensor"):
-                sensor_readings += "Humidity: " + str(Sensor("humidity").getSensorValue())
-            sensor_readings += ' '
-
-        #return [enabledSensorsList, sensor_readings]
-        return [enabledSensorsList, getCardDivs(enabledSensorsList)]
-    else:
+        return [enabledSensorsList, getCardDivs(enabledSensorsList)] # should element 0 be dash.no_update?
+    else: # Button is not clicked
         storageCheckmarks = getStorageCheckmarks()
         return [storageCheckmarks, getCardDivs(storageCheckmarks)]
+
+
+# callback to update sensor data
+@app.callback(
+        Output({'type': 'sensor-data', 'index': MATCH}, 'children'),
+        Input({'type': 'refresh-button', 'index': MATCH}, 'n_clicks_timestamp'),
+        State({'type': 'refresh-button', 'index': MATCH}, 'id'),
+)
+def handle_refresh_buttons(timestamp, id):
+    enabledSensor = id['index']
+    return "{} {}".format(Sensor(sensor_names[enabledSensor][1]).getSensorValue(), sensor_names[enabledSensor][2])
 
 
 if __name__ == "__main__":
