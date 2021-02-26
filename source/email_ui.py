@@ -188,8 +188,6 @@ def handle_email(button_timestamp, email):
         ],
 )
 def handle_sensor_toggle(button_timestamp, enabledSensorsList):
-    local_enabledSensorsList = enabledSensorsList
-
     if(button_timestamp != None): # Button is clicked
         writeStorageCheckmarks(enabledSensorsList)
         return [enabledSensorsList, getCardDivs(enabledSensorsList)] # should element 0 be dash.no_update?
