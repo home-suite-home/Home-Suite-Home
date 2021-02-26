@@ -41,7 +41,8 @@ class Database:
 				self.connect_status = False
 		else:
 			print("connection already established")
-
+	
+	# Populates the databas with a single recod given its name, sensor type, and raw value. 
 	def SendSensorData(self, data, name, sensor_type):
 		if self.connect_status == True:
 
@@ -57,13 +58,12 @@ class Database:
 			}
 
 			#payload = json.dumps(dataobj)
-			collection.insert_one(dataobj) # DIct is fine.
+			collection.insert_one(dataobj) # Dict is fine for parsing. No JSON needed
 		else:
 			print("Well that didn't work. Check the database address, and make sure the mongod process is running...")
 			self.connect()
 
-	# Maybe per sensor querying
-
+	# Retrieves all values currently in the database
 	def GetData(self):
 		if self.connect_status == True:
 			db = self.client['sensorsdb']
@@ -82,21 +82,22 @@ class Database:
 			self.connect()
 			return []
 
-	
-	def GetAvgVal(name)
+	# Produces the average value of a sensor in the database
+	def GetAvgVal(self, name):
 		if self.connect_status == True:
 			db = self.client['sensorsdb']
 			collection = db['sensors']
-			records = collection.find({'name' : name}, {'_id' : 0 , 'name' : 0, 'type' : 0, 'value' : 1})
-			
-			value_list = []
+			records = collection.find({'name' : name}, {'_id' : 0, 'time' : 0, 'type' : 0, 'name' : 0})
 			total = 0
+			num = collection.count_documents({'name' : name})
+			value_list = []
+			
 			for record in records:
+				print(record)
+				total += float(record['value'])
 				#report = json.load(record)
-				total += (float)record[value]
-				print(record[value])
 				
-			sensor_avg = total / len(records)
+			sensor_avg = total / num
 				
 			return sensor_avg
 		else:
@@ -104,12 +105,13 @@ class Database:
 			self.connect()
 			return 0
 	
-	##
-	def Clear():
+	# Deletes all records in the database
+	def Clear(self):
 		if self.connect_status == True:
 			db = self.client['sensorsdb']
 			collection = db['sensors']
 			
+			collection.delete_many({})
 		else:
 			print("Well that didn't work. Check the database address, and make sure the mongod process is running...")
 			self.connect()
@@ -119,8 +121,27 @@ class Database:
 
 def main():
 	print('Testing...')
-	dbase = Database(URL, POST)
-	dbase.connect()		
+	dbase = Database(URL, PORT)
+	dbase.connect()
+	
+	dbase.SendSensorData(20.0, "temp_1", "Temp")
+	dbase.SendSensorData(20.0, "temp_1", "Temp")
+	dbase.SendSensorData(20.0, "temp_1", "Temp")
+	dbase.SendSensorData(20.0,"temp_1", "Temp")
+	dbase.SendSensorData(20.0, "temp_1", "Temp")
+	dbase.SendSensorData(20.0, "temp_1", "Temp")
+	dbase.SendSensorData(20.0, "temp_1", "Temp")
+	dbase.SendSensorData(20.0, "temp_1", "Temp")
+	dbase.SendSensorData(20.0, "temp_1", "Temp")
+	dbase.SendSensorData(20.0, "temp_1", "Temp")
+	dbase.SendSensorData(20.0, "temp_1", "Temp")
+	
+	test_list = dbase.GetData()
+	test_value = dbase.GetAvgVal("temp_1")
+	print(test_value)
+	
+	dbase.Clear()
+		
 
 if __name__ == "__main__":
 	main()
