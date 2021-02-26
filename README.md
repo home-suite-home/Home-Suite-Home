@@ -58,3 +58,20 @@
 * Wyatt Vining (wv040) - Sensor Values Intake / Demo Video
 * Nathan Moulton (NathanM117) - Database Setup and Testing
 
+# Sprint 4
+
+## Materials
+* [Trello Board](https://trello.com/b/BFcwvt3p/project) (Backlogs and Requirements)
+* [Velocity Chart]()
+* [Burndown Chart for Sprint 4]()
+* [System Architecture](artifacts/architecture.md)
+* [Testing](https://github.com/home-suite-home/Home-Suite-Home/tree/main/testing)
+* [Product Demonstration]()
+
+## Task Allocation
+* Andres Graterol (graterollin) - Automated & Manual Testing 
+* David Crumley (daviejones) -
+* Matthew Dowdy (dowdyma1) - 
+* Wyatt Vining (wv040) - 
+* Nathan Moulton (NathanM117) - 
+
