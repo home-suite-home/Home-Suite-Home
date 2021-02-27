@@ -53,7 +53,7 @@ def writeStorageCheckmarks(checkmarksList):
 
 def getCardDivs(enabledSensorsList):
     divList = []
-
+    enabledSensorsList = [i for i in enabledSensorsList if i]
     for enabledSensor in enabledSensorsList:
         divList.append(
             html.Div(className='card',
