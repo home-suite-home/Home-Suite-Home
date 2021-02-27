@@ -115,33 +115,3 @@ class Database:
 		else:
 			print("Well that didn't work. Check the database address, and make sure the mongod process is running...")
 			self.connect()
-
-
-
-
-def main():
-	print('Testing...')
-	dbase = Database(URL, PORT)
-	dbase.connect()
-	
-	dbase.SendSensorData(20.0, "temp_1", "Temp")
-	dbase.SendSensorData(20.0, "temp_1", "Temp")
-	dbase.SendSensorData(20.0, "temp_1", "Temp")
-	dbase.SendSensorData(20.0,"temp_1", "Temp")
-	dbase.SendSensorData(20.0, "temp_1", "Temp")
-	dbase.SendSensorData(20.0, "temp_1", "Temp")
-	dbase.SendSensorData(20.0, "temp_1", "Temp")
-	dbase.SendSensorData(20.0, "temp_1", "Temp")
-	dbase.SendSensorData(20.0, "temp_1", "Temp")
-	dbase.SendSensorData(20.0, "temp_1", "Temp")
-	dbase.SendSensorData(20.0, "temp_1", "Temp")
-	
-	test_list = dbase.GetData()
-	test_value = dbase.GetAvgVal("temp_1")
-	print(test_value)
-	
-	dbase.Clear()
-		
-
-if __name__ == "__main__":
-	main()
