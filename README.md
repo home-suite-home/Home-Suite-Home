@@ -62,8 +62,8 @@
 
 ## Materials
 * [Trello Board](https://trello.com/b/BFcwvt3p/project) (Backlogs and Requirements)
-* [Velocity Chart]()
-* [Burndown Chart for Sprint 4]()
+* [Velocity Chart](https://docs.google.com/spreadsheets/d/1tpRyT-jUgHkrLnwx5NcxtOvh3uGg8ddGYrl60E0q6DA/edit#gid=0)
+* [Burndown Chart for Sprint 4](https://docs.google.com/spreadsheets/d/1tpRyT-jUgHkrLnwx5NcxtOvh3uGg8ddGYrl60E0q6DA/edit#gid=1480462962)
 * [System Architecture](artifacts/architecture.md)
 * [Testing](https://github.com/home-suite-home/Home-Suite-Home/tree/main/testing)
 * [Product Demonstration]()
@@ -71,7 +71,7 @@
 ## Task Allocation
 * Andres Graterol (graterollin) - Automated & Manual Testing 
 * David Crumley (daviejones) -
-* Matthew Dowdy (dowdyma1) - 
+* Matthew Dowdy (dowdyma1) - UI & Charts
 * Wyatt Vining (wv040) - 
 * Nathan Moulton (NathanM117) - 
 
