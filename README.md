@@ -70,7 +70,7 @@
 
 ## Task Allocation
 * Andres Graterol (graterollin) - Automated & Manual Testing 
-* David Crumley (daviejones) -
+* David Crumley (daviejones) - Email Sensor Data Reporting
 * Matthew Dowdy (dowdyma1) - UI & Charts
 * Wyatt Vining (wv040) - Demo Video / Sensor Config / Raspberry Pi Setup
 * Nathan Moulton (NathanM117) - Database Functionality & Testing
