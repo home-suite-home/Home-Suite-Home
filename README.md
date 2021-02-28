@@ -66,12 +66,12 @@
 * [Burndown Chart for Sprint 4](https://docs.google.com/spreadsheets/d/1tpRyT-jUgHkrLnwx5NcxtOvh3uGg8ddGYrl60E0q6DA/edit#gid=1480462962)
 * [System Architecture](artifacts/architecture.md)
 * [Testing](https://github.com/home-suite-home/Home-Suite-Home/tree/main/testing)
-* [Product Demonstration]()
+* [Product Demonstration](https://youtu.be/V0at3xWnXho)
 
 ## Task Allocation
 * Andres Graterol (graterollin) - Automated & Manual Testing 
 * David Crumley (daviejones) -
 * Matthew Dowdy (dowdyma1) - UI & Charts
-* Wyatt Vining (wv040) - 
+* Wyatt Vining (wv040) - Demo Video / Sensor Config / Raspberry Pi Setup
 * Nathan Moulton (NathanM117) - 
 
