@@ -124,3 +124,28 @@ user@machine:~$ npm init -y; npm install mongodb
 
 # Database_test.py
 ## Description
+This test script works to interact with the MongoDB database that will house the records for all of our sensors. The purpose of this script is to prove that we have connection to the database and can make edits to it without going through the database's GUI. 
+
+## Testing Requirements and Dependencies
+To set up a test environment in which to run the code, the following tools are required:
+
+* Bash shell(or a similar Unix terminal emulator)
+* [MongoDB Community Server](https://www.mongodb.com/try/download/community)
+* Database.py
+
+Before running any of the programs listed here, it is recomended to follow the procedures for [setting up the server process for MongoDB](https://docs.mongodb.com/manual/administration/install-community/) on your operating system. If you want access to a GUI for the database, it is recommended that you choose to install on either macOS or Windows. Ensure that *Database_test.py* and *Databse.py* are in the same directory on your machine before running. 
+
+## Test Procedures
+
+| No. | Steps to Reproduce | Expected Behavior |
+| --- | --- | --- |
+|  1  | Open the file *Database_test.py* on a text editor of your choice, and uncomment the line db.Clear() if it is not already | The line will light up to indicate that it will be compiled when ran |
+|  2  | Open the terminal and procede to the directory containing the required files | The directory should contain both files required for testing when inputting the commands *ls* or *dir* on the command line |
+|  3  | Run the *Database_test.py* script | Upon opening the mongoDB GUI (if running on macOS or Windows) you should see an empty databse called *sensorsdb* [sensorsdb](/artifacts/assets/empty_sensorsdb.png |
+|  4  | Return to the *Database_test.py* file and now comment out the line db.Clear() | The posthandler should disply the following result:![posthandler](/artifacts/assets/posthandler_out2.png)|
+|  5  | Open another terminal window and run the *mongo* command to open the mongo shell| The mongo shell opens|
+|  6  | Enter the *use sensorsdb* command followed by the *db.sensors.find({})* command to select the database for the sensors, and query the *sensors* collection for all of its members| The database outputs the sensor record inserted by the posttester.js script. ![mongo_Out](/artifacts/assets/mongo_Out.png)|
+
+
+
+ 
