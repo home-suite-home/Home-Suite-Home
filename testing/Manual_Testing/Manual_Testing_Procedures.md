@@ -141,7 +141,7 @@ Before running any of the programs listed here, it is recomended to follow the p
 | --- | --- | --- |
 |  1  | Open the file *Database_test.py* on a text editor of your choice, and uncomment the line db.Clear() if it is not already | The line will light up to indicate that it will be compiled when ran |
 |  2  | Open the terminal and procede to the directory containing the required files | The directory should contain both files required for testing when inputting the commands *ls* or *dir* on the command line |
-|  3  | Run the *Database_test.py* script | Upon opening the mongoDB GUI (if running on macOS or Windows) you should see an empty databse called *sensorsdb* [sensorsdb](/artifacts/assets/empty_sensorsdb.png) |
+|  3  | Run the *Database_test.py* script | Upon opening the mongoDB GUI (if running on macOS or Windows) you should see an empty databse called *sensorsdb* ![empty](/artifacts/assets/empty_sensorsdb.png) |
 |  4  | Return to the *Database_test.py* file and now comment out the line db.Clear() | The posthandler should disply the following result:![posthandler](/artifacts/assets/posthandler_out2.png)|
 |  5  | Open another terminal window and run the *mongo* command to open the mongo shell| The mongo shell opens|
 |  6  | Enter the *use sensorsdb* command followed by the *db.sensors.find({})* command to select the database for the sensors, and query the *sensors* collection for all of its members| The database outputs the sensor record inserted by the posttester.js script. ![mongo_Out](/artifacts/assets/mongo_Out.png)|
