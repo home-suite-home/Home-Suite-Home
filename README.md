@@ -66,7 +66,7 @@
 * [Burndown Chart for Sprint 4](https://docs.google.com/spreadsheets/d/1tpRyT-jUgHkrLnwx5NcxtOvh3uGg8ddGYrl60E0q6DA/edit#gid=1480462962)
 * [System Architecture](artifacts/architecture.md)
 * [Testing](https://github.com/home-suite-home/Home-Suite-Home/tree/main/testing)
-* [Product Demonstration](https://youtu.be/V0at3xWnXho)
+* [Product Demonstration](https://youtu.be/R36tOa5FSI4)
 
 ## Task Allocation
 * Andres Graterol (graterollin) - Automated & Manual Testing 
