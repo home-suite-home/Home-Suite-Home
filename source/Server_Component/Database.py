@@ -9,8 +9,6 @@ import time
 URL = 'localhost'
 PORT = 27017
 
-#client = mongo.Mongoclient('localhost', 27017)
-#db = client['sensorsdb']
 
 # This class will be comprised of methods that will
 # interface with a MongoDB database. These methods should
@@ -42,7 +40,7 @@ class Database:
 		else:
 			print("connection already established")
 	
-	# Populates the databas with a single recod given its name, sensor type, and raw value. 
+	# Populates the database with a single recod given its name, sensor type, and raw value. 
 	def SendSensorData(self, data, name, sensor_type):
 		if self.connect_status == True:
 
@@ -57,8 +55,7 @@ class Database:
                             "time": t
 			}
 
-			#payload = json.dumps(dataobj)
-			collection.insert_one(dataobj) # Dict is fine for parsing. No JSON needed
+			collection.insert_one(dataobj)
 		else:
 			print("Well that didn't work. Check the database address, and make sure the mongod process is running...")
 			self.connect()
@@ -72,7 +69,6 @@ class Database:
 			report_list = []
 
 			for record in records:
-				#report = json.load(record)
 				report_list.append(record)
 				print(record)
 				
@@ -94,8 +90,7 @@ class Database:
 			
 			for record in records:
 				print(record)
-				total += float(record['value'])
-				#report = json.load(record)
+				total += record['value']
 				
 			sensor_avg = total / num
 				
@@ -104,6 +99,76 @@ class Database:
 			print("Well that didn't work. Check the database address, and make sure the mongod process is running...")
 			self.connect()
 			return 0
+	
+	# Saves/ Updates sensor config data
+	def SaveConfigData(self, sensor_type, name, address, sub_address, min_threshold, max_threshold, alerts):
+		if self.connect_status == True:
+
+			db = self.client['sensorsdb']
+			collection = db['config']
+
+			dataobj = {
+                            "type": sensor_type,
+                            "name": name,
+                            "address": address,
+                            "sub_address": sub_address,
+                            "min_threshold" : min_threshold,
+                            "max_threshold" : max_threshold,
+                            "alerts": alerts
+			}
+			
+			# First, check if there's a record for this sensor...
+			if collection.count_documents({'name' : name}) >= 1:
+				# ... and update if there's an existing record
+				collection.replace_one({'name' : name}, dataobj)
+			else:
+				# Otherwise, insert the record
+				collection.insert_one(dataobj)
+		else:
+			print("Well that didn't work. Check the database address, and make sure the mongod process is running...")
+			self.connect()
+			
+	# retrieves all config data		
+	def GetConfigData(self):
+		if self.connect_status == True:
+			db = self.client['sensorsdb']
+			collection = db['config']
+			records = collection.find({}, {'_id' : 0})
+			report_list = []
+
+			for record in records:
+				report_list.append(record)
+				print(record)
+				
+			return report_list
+		else:
+			print("Well that didn't work. Check the database address, and make sure the mongod process is running...")
+			self.connect()
+			return []
+			
+	# removes a named sensor's config file
+	def DeleteConfigData(self, name):
+		if self.connect_status == True:
+			db = self.client['sensorsdb']
+			collection = db['config']
+			
+			collection.delete_one({"name" : name})
+			print("deleting " + name + " ...")
+		else:
+			print("Well that didn't work. Check the database address, and make sure the mongod process is running...")
+			self.connect()
+	
+	# Deletes all config data
+	def ClearConfigData(self):
+		if self.connect_status == True:
+			db = self.client['sensorsdb']
+			collection = db['config']
+			
+			collection.delete_many({})
+		else:
+			print("Well that didn't work. Check the database address, and make sure the mongod process is running...")
+			self.connect()
+	
 	
 	# Deletes all records in the database
 	def Clear(self):
