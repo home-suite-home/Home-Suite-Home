@@ -4,7 +4,9 @@ div.card {
     background-color: #E4E4E4;
     border: 2px solid black;
     border-radius: 15px;
-    margin: 20px;
+    margin: 10px;
     padding: 5px; 
-    display: inline-block;
+    /*display: table-cell;*/
+    display: inline-grid;
+    /*table-layout: fixed;*/
 }
