@@ -15,6 +15,20 @@ sensor_names = {
         'humidSensor': ('Humidity', 'humidity', '%')
     }
 
+new_sensor_card = html.Div(style={'display': 'inline-grid'},
+                    children=[
+                        html.Div(className='card',
+                            id='new-card',
+                            style={'textAlign': 'center', 'display': 'block'},
+                            children=[
+                                html.H4(''),
+                                html.Button('Add New Sensor',
+                                ),
+                            ]
+                        )
+                    ]
+                )
+
 def getStorageCheckmarks():
     try:
         fileObj = open("enabled_sensors.txt", "r")
@@ -29,7 +43,6 @@ def getStorageCheckmarks():
 
 
 def writeStorageCheckmarks(checkmarksList):
-    #print(checkmarksList)
     try:
         fileObj = open("enabled_sensors.txt", "w")
     except:
@@ -53,27 +66,33 @@ def writeStorageCheckmarks(checkmarksList):
 
 def getCardDivs(enabledSensorsList):
     divList = []
-    enabledSensorsList = [i for i in enabledSensorsList if i]
+    enabledSensorsList = [i for i in enabledSensorsList if i] # needs more permanent fix...
     for enabledSensor in enabledSensorsList:
         divList.append(
-            html.Div(className='card',
-                style={'textAlign': 'center'},
+            html.Div(style={'display': 'inline-grid'},
                 children=[
-                    html.H4(
-                        sensor_names[enabledSensor][0],
-                    ),
-                    html.H2(str(
-                        Sensor(sensor_names[enabledSensor][1]).
-                        getSensorValue()) + ' ' + 
-                        sensor_names[enabledSensor][2],
-                        id={'type': 'sensor-data', 'index': enabledSensor},
-                    ),
-                    html.Button('Refresh',
-                        id={'type': 'refresh-button', 'index': enabledSensor},
-                    ),
+                    html.Div(className='card',
+                        style={'textAlign': 'center', 'display':'block'},
+                        children=[
+                            html.H4(
+                                sensor_names[enabledSensor][0],
+                            ),
+                            html.H2(str(
+                                Sensor(sensor_names[enabledSensor][1]).
+                                getSensorValue()) + ' ' + 
+                                sensor_names[enabledSensor][2],
+                                id={'type': 'sensor-data', 'index': enabledSensor},
+                            ),
+                            html.Button('Refresh',
+                                id={'type': 'refresh-button', 'index': enabledSensor},
+                            ),
+                        ]
+                    )
                 ]
             )
         )
+
+    divList.append(new_sensor_card)
 
     return divList
 
@@ -143,7 +162,20 @@ mainDivChildren = [
             ),
         ],
     ),
-    html.Div(id="cards-container", ),
+    html.Div(id="cards-container", 
+        style={
+            #'overflow': 'auto', 
+            #'overflow': 'hidden', 
+            'width': '100%', 
+            'height': '100%', 
+            #'display': 'table', 
+            'display': 'inline-block',
+            #'border-spacing': '20px', 
+            #'table-layout': 'fixed',
+            #'position': 'relative',
+
+        }
+    ),
 ]
 
 
@@ -190,7 +222,7 @@ def handle_email(button_timestamp, email):
 def handle_sensor_toggle(button_timestamp, enabledSensorsList):
     if(button_timestamp != None): # Button is clicked
         writeStorageCheckmarks(enabledSensorsList)
-        return [enabledSensorsList, getCardDivs(enabledSensorsList)] # should element 0 be dash.no_update?
+        return [dash.no_update, getCardDivs(enabledSensorsList)]
     else: # Button is not clicked
         storageCheckmarks = getStorageCheckmarks()
         return [storageCheckmarks, getCardDivs(storageCheckmarks)]
