@@ -2,6 +2,7 @@
 import os
 import sys
 import dash
+import dash_daq as daq
 import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output, State, MATCH
@@ -15,19 +16,52 @@ sensor_names = {
         'humidSensor': ('Humidity', 'humidity', '%')
     }
 
-new_sensor_card = html.Div(style={'display': 'inline-grid'},
+new_sensor_card = html.Div(className='card',
+                    id='new-card',
                     children=[
-                        html.Div(className='card',
-                            id='new-card',
-                            style={'textAlign': 'center', 'display': 'block'},
-                            children=[
-                                html.H4(''),
-                                html.Button('Add New Sensor',
-                                ),
-                            ]
-                        )
+                        html.H4(''),
+                        html.Button('Add New Sensor', id='new-card-button',),
                     ]
                 )
+
+new_card_fields = [
+    html.H4('New Sensor'),
+    html.Div(
+        [
+            dcc.Input(
+                id='field_sensor-name',
+                autoFocus=True,
+                debounce=True,
+                placeholder='Sensor Name',
+            ),
+            dcc.Input(
+                id='field_ip-address',
+                debounce=True,
+                placeholder='IP Address',
+            ),
+            dcc.Input(
+                id='field_port-number',
+                debounce=True,
+                placeholder='Port Number (Optional)',
+            ),
+            dcc.Input(
+                id='field_url-plug',
+                debounce=True,
+                placeholder='URL Plug',
+            ),
+            daq.BooleanSwitch(
+                id='field_alert',
+                on=False,
+                color='#9ad6aa',
+                label='Alerts:',
+                labelPosition='top',
+            ),
+            html.H4(''),
+            html.Button('Create', id='field_create-card-button'),
+        ],
+        #style={'textAlign': 'left'},
+    ),
+]
 
 def getStorageCheckmarks():
     try:
@@ -69,28 +103,26 @@ def getCardDivs(enabledSensorsList):
     enabledSensorsList = [i for i in enabledSensorsList if i] # needs more permanent fix...
     for enabledSensor in enabledSensorsList:
         divList.append(
-            html.Div(style={'display': 'inline-grid'},
+            html.Div(className='card',
                 children=[
-                    html.Div(className='card',
-                        style={'textAlign': 'center', 'display':'block'},
-                        children=[
-                            html.H4(
-                                sensor_names[enabledSensor][0],
-                            ),
-                            html.H2(str(
-                                Sensor(sensor_names[enabledSensor][1]).
-                                getSensorValue()) + ' ' + 
-                                sensor_names[enabledSensor][2],
-                                id={'type': 'sensor-data', 'index': enabledSensor},
-                            ),
-                            html.Button('Refresh',
-                                id={'type': 'refresh-button', 'index': enabledSensor},
-                            ),
-                        ]
-                    )
+                    html.H4(
+                        sensor_names[enabledSensor][0],
+                    ),
+                    html.H2(str(
+                        Sensor(sensor_names[enabledSensor][1]).
+                        getSensorValue()) + ' ' + 
+                        sensor_names[enabledSensor][2],
+                        id={'type': 'sensor-data', 'index': enabledSensor},
+                    ),
+                    html.Button('Refresh',
+                        id={'type': 'refresh-button', 'index': enabledSensor},
+                    ),
                 ]
             )
         )
+
+    #for i in range(12):
+    #    divList.append(html.Div(className='card', children=[html.H4('<Test card {}>'.format(i))]))
 
     divList.append(new_sensor_card)
 
@@ -122,7 +154,7 @@ mainDivChildren = [
                     dcc.Input(
                         id="remote-email",
                         placeholder="Input email for raspberry pi",
-                        type="text",
+                        type="email",
                         value="",
                         children=[html.Div(["Input email for raspberry pi"])],
                         style={
@@ -130,6 +162,7 @@ mainDivChildren = [
                             "height": "40px",
                             "borderWidth": "1px",
                         },
+                        debounce=True,
                     ),
                     html.Button("Submit", id="button",),
                     #html.Div(id='output-sensor-readings'),
@@ -169,12 +202,16 @@ mainDivChildren = [
             'width': '100%', 
             'height': '100%', 
             #'display': 'table', 
-            'display': 'inline-block',
+            'display': 'grid',
+            'align-content': 'start',
+            'grid-template-columns': 'repeat(auto-fill, 230px)',
+            #'grid-auto-flow': 'column',
             #'border-spacing': '20px', 
             #'table-layout': 'fixed',
             #'position': 'relative',
 
-        }
+        },
+        children=[new_sensor_card],
     ),
 ]
 
@@ -237,6 +274,18 @@ def handle_sensor_toggle(button_timestamp, enabledSensorsList):
 def handle_refresh_buttons(timestamp, id):
     enabledSensor = id['index']
     return "{} {}".format(Sensor(sensor_names[enabledSensor][1]).getSensorValue(), sensor_names[enabledSensor][2])
+
+
+@app.callback(
+        Output('new-card', 'children'),
+        Input('new-card-button', 'n_clicks_timestamp'),
+)
+def add_new_sensor(timestamp):
+    if(timestamp != None):
+        return new_card_fields
+    else:
+        return dash.no_update
+
 
 
 if __name__ == "__main__":
