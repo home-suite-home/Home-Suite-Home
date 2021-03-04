@@ -4,7 +4,7 @@ import Sensors
 def main():
 
     data = Database.Database()
-    data.Clear()
+    # data.Clear()
 
     # SaveConfigData(type, name, address, sub_address, min_threshold, max_threshold, alerts)
 
