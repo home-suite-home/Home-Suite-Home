@@ -2,11 +2,11 @@
 //
 //  Date: 02/18/2021
 //  FileName: EmailCommandHandler.py
-//  
+//
 //  Engineer: David Crumley
 //  Contact: david_crumley@knights.ucf.edu
 //
-//  Description: 
+//  Description:
         will read mailbox, and respond to user command with appropriate response
 '''
 
@@ -32,8 +32,8 @@ class EmailCommandHandler:
         # response will be a tuple with first element being text and
         # second element being html
         if (incoming_email != None):
-            text_response, html_response = CommandResponse(incoming_email).get_response()
+            text_response, html_response, attachment = CommandResponse(incoming_email).get_response()
             # compose and send the email to user
             subject = "Command Response"
-            outgoing_email = self.email_controller.compose_email(subject, text_response, html_response)
+            outgoing_email = self.email_controller.compose_email(subject, text_response, html_response, attachment)
             self.email_controller.send_email(outgoing_email)

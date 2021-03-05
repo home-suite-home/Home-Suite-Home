@@ -40,6 +40,7 @@ class EmailController:
         # necessary libraries to construct email
         from email.mime.text import MIMEText
         from email.mime.multipart import MIMEMultipart
+        from email.mime.image import MIMEImage
 
         # create the email message
         message = MIMEMultipart("alternative")
@@ -50,6 +51,7 @@ class EmailController:
         text = body_text
         html = body_html
 
+
         # convert to MIME objects
         part1 = MIMEText(text, "plain")
         part2 = MIMEText(html, "html")
@@ -58,6 +60,12 @@ class EmailController:
         # the html part will be attempted first
         message.attach(part1)
         message.attach(part2)
+        # add attachments
+        if attachments:
+            fp = open(attachments, 'rb')
+            img = MIMEImage(fp.read())
+            fp.close()
+            message.attach(img)
 
         print("email composed")
         return message.as_string()

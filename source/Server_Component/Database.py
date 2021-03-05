@@ -1,5 +1,8 @@
 # Nathan Moulton
 # Database.py
+import sys
+sys.path.append("..")
+
 
 import pymongo as mongo
 import json
@@ -152,7 +155,6 @@ class Database:
 			time_bound = (TimeStamps().getTimestamp()) - (3600 * hours)
 			records = collection.find({'name' : name, 'type' : sensor_type, 'time': {'$gte': time_bound}}, {'_id' : 0})
 			report_list = []
-
 			for record in records:
 				report_list.append(record)
 

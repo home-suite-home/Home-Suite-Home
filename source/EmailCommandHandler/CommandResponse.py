@@ -28,6 +28,15 @@ class CommandResponse:
         elif self.command == "get most recent sensor data":
             return most_recent_data()
 
+        elif "get sensor data:" in self.command:
+            sensor_rqst = self.command.split(":", 1)[1]
+            sensor_rqst = sensor_rqst.split(",")
+            sensor_type = sensor_rqst[0].strip()
+            sensor_name = sensor_rqst[1].strip()
+            sensor_time = sensor_rqst[2].strip()
+            return sensor_data_analytics(sensor_type, sensor_name, sensor_time)
+
+
         else:
             return help_message()
 
@@ -37,19 +46,64 @@ Response definitions
 '''
 ###############################################################################
 
-def help_mesasage():
+def help_message():
     text_response = "dummy help message"
     html_response = """\
     <html>
         <body>
-            <p>dummy help message<br>
-                <a href="https://github.com/home-suite-home/Home-Suite-Home">
-                heres a link to the github, figure it out</a>
+            <p>help message<br>
+                <p>
+                    COMMAND                               |   RESPONSE                            <br>
+                    get most recent sensor data           | recieve the most recent data          <br>
+                                                          | for each sensor by name               <br>
+                    get sensor data: <name>, <yryr-mn-dy> | recieve all data from sensor <name>   <br>
+                                                          | including from <date> until current   <br>
+                                                          | time                                  <br>
+                </p>
             </p>
         </body>
     </html>
     """
-    return (text_response, html_response)
+    return (text_response, html_response, None)
+
+def sensor_data_analytics(type, name, days):
+    import sys
+    # translates to the Home-Suite-Home/Source directory
+    sys.path.append("../Server_Component")
+    sys.path.append("..")
+    from Database import Database
+    from timeKeeper import TimeStamps
+    import plotly.express as px
+
+    URL = 'localhost'
+    PORT = 27017
+
+    # instantiate database and connect
+    db = Database(URL, PORT)
+    db.connect()
+
+    hours = int(days)*24
+
+    db.SendSensorData(38.0, "temp_1", "Temp")
+    db.SendSensorData(15.0, "temp_2", "Temp")
+    db.SendSensorData(37.0, "temp_1", "Temp")
+    db.SendSensorData(10.0, "temp_3", "Temp")
+
+    data = db.GetRecentSensorData(name, type, int(hours))
+
+    # create line graph
+    graph = px.line(data, x='time', y='value', title = "data over time")
+    graph.show()
+    # create filename
+    filepath = "../../analytics/"
+    filename = str(TimeStamps().getTimestamp())
+    filename += ".png"
+    filepath += filename
+    graph.write_image(filepath)
+
+    return(name, "None", filepath)
+
+
 
 def most_recent_data():
     '''
@@ -143,4 +197,4 @@ def most_recent_data():
 
     # TESTING
     db.Clear()
-    return (text_response, html_table)
+    return (text_response, html_table, None)
