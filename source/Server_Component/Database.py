@@ -141,6 +141,27 @@ class Database:
 			print("Well that didn't work. Check the database address, and make sure the mongod process is running...")
 			self.connect()
 
+
+	# retrieves a sensor's data in the database within a range of hours
+	def GetRecentSensorData(self, name, sensor_type, hours):
+		if self.connect_status == True:
+			db = self.client['sensorsdb']
+			collection = db['sensors']
+
+			# All records will have a ts value greater than this
+			time_bound = (TimeStamps().getTimestamp()) - (3600 * hours)
+			records = collection.find({'name' : name, 'type' : sensor_type, 'time': {'$gte': time_bound}}, {'_id' : 0})
+			report_list = []
+
+			for record in records:
+				report_list.append(record)
+
+			return report_list
+		else:
+			print("Well that didn't work. Check the database address, and make sure the mongod process is running...")
+			self.connect()
+			return []
+
 	# retrieves all config data
 	def GetConfigData(self):
 		if self.connect_status == True:
