@@ -8,16 +8,18 @@
 #   Description: utility for getting and parsing time and date stamps
 #
 
+import time
 import datetime
 
 class TimeStamps:
-    # returns a string - ready for storing in the database
+    # returns an int - ready for storing in the database
     def getTimestampString(self):
-        return str(datetime.datetime.now())
+        return int(time.time())
 
-    # converts a string from a database into a time-date data object - ready to be parsed
-    def stringToTimestamp(self, timeString):
-        return datetime.datetime.strptime(timeString, '%Y-%m-%d %H:%M:%S.%f')
+    # converts an int from a database into a time-date data object - ready to be parsed
+    def stringToTimestamp(self, tstamp):
+        timeString = str(datetime.datetime.fromtimestamp(tstamp))
+        return datetime.datetime.strptime(timeString, '%Y-%m-%d %H:%M:%S')
 
     # demonstrates use of timestamp data
     # expects a timedate data object - output of stringToTimestamp()
@@ -43,7 +45,7 @@ def main():
     ts = TimeStamps()
     date_time_string = ts.getTimestampString() # a.k.a get the timestamp from the databse
     date_time_obj = ts.stringToTimestamp(date_time_string) # create a datetime data object from the timestamp string
-
+    #print(date_time_string)
     ts.printTimestamp(date_time_obj) # parse and print the timedate data object
 
 if __name__ == "__main__":
