@@ -83,7 +83,7 @@
 * [Burndown Chart for Sprint 5]()
 * [System Architecture](artifacts/architecture.md)
 * [Testing](https://github.com/home-suite-home/Home-Suite-Home/tree/main/testing)
-* [Product Demonstration](https://youtu.be/R36tOa5FSI4)
+* [Product Demonstration]()
 
 ## Task Allocation
 * Andres Graterol (graterollin) - 
