@@ -75,3 +75,20 @@
 * Wyatt Vining (wv040) - Demo Video / Sensor Config / Raspberry Pi Setup
 * Nathan Moulton (NathanM117) - Database Functionality & Testing
 
+# Sprint 5
+
+## Materials
+* [Trello Board](https://trello.com/b/BFcwvt3p/project) (Backlogs and Requirements)
+* [Velocity Chart]()
+* [Burndown Chart for Sprint 5]()
+* [System Architecture](artifacts/architecture.md)
+* [Testing](https://github.com/home-suite-home/Home-Suite-Home/tree/main/testing)
+* [Product Demonstration](https://youtu.be/R36tOa5FSI4)
+
+## Task Allocation
+* Andres Graterol (graterollin) - 
+* David Crumley (daviejones) -
+* Matthew Dowdy (dowdyma1) - 
+* Wyatt Vining (wv040) - 
+* Nathan Moulton (NathanM117) - 
+
