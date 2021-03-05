@@ -58,7 +58,7 @@ class Database:
 
 			db = self.client['sensorsdb']
 			collection = db['sensors']
-			ts = TimeStamps().getTimestampString()
+			ts = TimeStamps().getTimestamp()
 
 			dataobj = {
                             "type": sensor_type,
