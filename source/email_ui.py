@@ -8,7 +8,7 @@ import dash_html_components as html
 from dash.dependencies import Input, Output, State, MATCH
 from Email_Component import Email_Component
 from HTTP_Component.Sensors import Sensor
-
+from UI_Utils import *
 
 sensor_names = {
         # (display name, url extension, units)
@@ -35,6 +35,11 @@ new_card_fields = [
                 placeholder='Sensor Name',
             ),
             dcc.Input(
+                id='field_units',
+                debounce=True,
+                placeholder='Units',
+            ),
+            dcc.Input(
                 id='field_ip-address',
                 debounce=True,
                 placeholder='IP Address',
@@ -58,10 +63,18 @@ new_card_fields = [
             ),
             html.H4(''),
             html.Button('Create', id='field_create-card-button'),
+            html.H4('Invalid Selection', style={'display': 'none'}, id='invalid-selection'),
         ],
         #style={'textAlign': 'left'},
     ),
 ]
+
+fields_card = html.Div(className='card',
+                    id='fields-card',
+                    children=new_card_fields,
+                    style={'display': 'none'},
+                )
+
 
 def getStorageCheckmarks():
     try:
@@ -130,7 +143,7 @@ def getCardDivs(enabledSensorsList):
 
 
 colors = {"background": "343434"}
-app = dash.Dash(__name__)
+app = dash.Dash(__name__, suppress_callback_exceptions=True)
 
 
 mainDivChildren = [
@@ -168,31 +181,31 @@ mainDivChildren = [
                     #html.Div(id='output-sensor-readings'),
                 ],
             ),
-            html.Div(
-                id="checkboxes_container",
-                style={
-                    "width": "100%", 
-                    "display": "inline-block",
-                    "textAlign": "left",
-                    },
-                children=[
-                    html.H3(children='Enabled Sensors'),
-                    dcc.Checklist(
-                        id='enabled-sensors',
-                        persistence=True,
-                        options=[
-                            {'label': 'Temperature', 'value': 'tempSensor'},
-                            {'label': 'Humidity', 'value': 'humidSensor'},
-                        ],
-                        value=getStorageCheckmarks(), # initially enabled
-                        labelStyle={
-                            'display': 'block', 
-                            'textAlign': 'justify',
-                        },
-                    ),
-                    html.Button("Save Selection", id='save-checkmarks-button')
-                ]
-            ),
+            #    html.Div(
+            #        id="checkboxes_container",
+            #        style={
+            #            "width": "100%", 
+            #            "display": "inline-block",
+            #            "textAlign": "left",
+            #            },
+            #        children=[
+            #            html.H3(children='Enabled Sensors'),
+            #            dcc.Checklist(
+            #                id='enabled-sensors',
+            #                persistence=True,
+            #                options=[
+            #                    {'label': 'Temperature', 'value': 'tempSensor'},
+            #                    {'label': 'Humidity', 'value': 'humidSensor'},
+            #                ],
+            #                value=getStorageCheckmarks(), # initially enabled
+            #                labelStyle={
+            #                    'display': 'block', 
+            #                    'textAlign': 'justify',
+            #                },
+            #            ),
+            #            html.Button("Save Selection", id='save-checkmarks-button')
+            #        ]
+            #    ),
         ],
     ),
     html.Div(id="cards-container", 
@@ -211,8 +224,9 @@ mainDivChildren = [
             #'position': 'relative',
 
         },
-        children=[new_sensor_card],
+        children=[fields_card, new_sensor_card,]
     ),
+    #html.Button('Create', id='field_create-card-button', hidden=True)
 ]
 
 
@@ -243,6 +257,7 @@ def handle_email(button_timestamp, email):
         return dash.no_update
 
 
+'''
 # Sensor toggling Callback
 @app.callback(
         [   # components that will be modified
@@ -263,7 +278,7 @@ def handle_sensor_toggle(button_timestamp, enabledSensorsList):
     else: # Button is not clicked
         storageCheckmarks = getStorageCheckmarks()
         return [storageCheckmarks, getCardDivs(storageCheckmarks)]
-
+'''
 
 # callback to update sensor data
 @app.callback(
@@ -276,17 +291,82 @@ def handle_refresh_buttons(timestamp, id):
     return "{} {}".format(Sensor(sensor_names[enabledSensor][1]).getSensorValue(), sensor_names[enabledSensor][2])
 
 
+
 @app.callback(
-        Output('new-card', 'children'),
-        Input('new-card-button', 'n_clicks_timestamp'),
+        [
+            Output('cards-container', 'children'),
+            Output('fields-card', 'children'),
+            Output('fields-card', 'style'),
+            Output('invalid-selection', 'style'),
+            Output('new-card', 'style'),
+            Output('field_sensor-name', 'value'),
+            Output('field_ip-address', 'value'),
+            Output('field_port-number', 'value'),
+            Output('field_url-plug', 'value'),
+            Output('field_alert', 'value'),
+        ],
+        [
+            Input('new-card-button', 'n_clicks'),
+            Input('field_create-card-button', 'n_clicks'),
+        ],
+        [
+            State('cards-container', 'children'),
+            State('fields-card', 'children'),
+            State('field_sensor-name', 'value'),
+            #State('field_units', 'value'),
+            State('field_ip-address', 'value'),
+            State('field_port-number', 'value'),
+            State('field_url-plug', 'value'),
+            State('field_alert', 'value'),
+        ]
 )
-def add_new_sensor(timestamp):
-    if(timestamp != None):
-        return new_card_fields
+def create_new_card(new_card_clicks, create_button_clicks, cardList, fieldsList, sensor_name, ip_address, port, url, alert):
+    ctx = dash.callback_context
+
+    curButton = '';
+
+    if ctx.triggered:
+        curButton = ctx.triggered[0]['prop_id'].split('.')[0]
+
+
+    print("Create: {} | Add new: {}".format(create_button_clicks, new_card_clicks))
+
+    if(curButton == 'field_create-card-button'):
+
+        if(isValidSensor(url, ip_address, port)):
+            print("yes")
+            temp = html.Div(className='card',
+                    id=sensor_name,
+                    children=[
+                        html.H4(
+                            sensor_name,
+                        ),
+                        html.H2(str(
+                            Sensor(url, port=port, domain=ip_address).getSensorValue()),
+                            id={'type': 'sensor-data', 'index': sensor_name},
+                        ),
+                        html.Button('Refresh',
+                            id={'type': 'refresh-button', 'index': sensor_name},
+                        ),
+                    ]
+                )
+
+            tempList = cardList[:-1] + [temp] + [new_sensor_card]
+            sensor_names[sensor_name] = (sensor_name, url, '')
+            return [tempList, dash.no_update, {'display':'none'}, dash.no_update, {'display':'block'}, '', '', '', '', False]
+        else:
+            if(len(fieldsList) == 2):
+                print("appending")
+                return [dash.no_update, fieldsList, dash.no_update, {'display':'block'}, dash.no_update, dash.no_update, dash.no_update, dash.no_update, dash.no_update, dash.no_update]
+            return dash.no_update
+    elif(curButton == 'new-card-button'):
+        print("showing field & hiding new-card")
+        return[cardList + [fields_card], dash.no_update, {'display': 'block'}, dash.no_update, {'display': 'none'}, dash.no_update, dash.no_update, dash.no_update, dash.no_update, dash.no_update]
     else:
         return dash.no_update
+        
 
 
 
 if __name__ == "__main__":
-    app.run_server(debug=True)
+    app.run_server(debug=True,)
