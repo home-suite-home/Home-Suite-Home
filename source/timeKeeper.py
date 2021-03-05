@@ -13,7 +13,7 @@ import datetime
 
 class TimeStamps:
     # returns an int - ready for storing in the database
-    def getTimestampString(self):
+    def getTimestamp(self):
         return int(time.time())
 
     # converts an int from a database into a time-date data object - ready to be parsed
@@ -43,7 +43,7 @@ class TimeStamps:
 def main():
 
     ts = TimeStamps()
-    date_time_string = ts.getTimestampString() # a.k.a get the timestamp from the databse
+    date_time_string = ts.getTimestamp() # a.k.a get the timestamp from the databse
     date_time_obj = ts.stringToTimestamp(date_time_string) # create a datetime data object from the timestamp string
     #print(date_time_string)
     ts.printTimestamp(date_time_obj) # parse and print the timedate data object
