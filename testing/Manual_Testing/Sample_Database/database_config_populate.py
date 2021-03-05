@@ -1,9 +1,23 @@
+#
+#   Filename: databse_config_populate.py
+#   Date: 3/5/21
+#
+#   Engineer: Wyatt Vining
+#   Contact: wyatt.vining@knights.ucf.edu
+#
+#   Description:
+#       Temporary method to create config files in the databse.
+#       Will be replaced by user entry into the UI.
+#
+
+
 import Database
 import Sensors
 
 def main():
 
     data = Database.Database()
+    # use data.clear() to reset the database if creating a new config environment
     # data.Clear()
 
     # SaveConfigData(type, name, address, sub_address, min_threshold, max_threshold, alerts)
