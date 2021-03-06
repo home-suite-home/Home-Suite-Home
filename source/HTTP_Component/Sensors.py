@@ -18,7 +18,7 @@ IMPERIAL = "imperial"
 
 class Sensor:
 
-    def __init__(self, url_plug, units=IMPERIAL, domain='localhost', port='80'):
+    def __init__(self, url_plug, units = METRIC, domain = 'localhost', port = '80'):
         self.units = units
         try:
             self.address = 'http://' + domain + ':' + port + '/' + url_plug
@@ -26,7 +26,7 @@ class Sensor:
             print(e)
             self.address = ''
 
-        #print("address(sensor): " + self.address)
+        # print("address(sensor): " + self.address)
 
     def requestData(self):
         try:
