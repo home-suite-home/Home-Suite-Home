@@ -27,7 +27,7 @@ def main():
     # data.Clear()
 
     # use data.ClearConfigData() to remove all config data
-    data.ClearConfigData()
+    # data.ClearConfigData()
 
 
     ### New Config Structure ###
