@@ -17,8 +17,12 @@ import Sensors
 def main():
 
     data = Database.Database()
-    # use data.clear() to reset the database if creating a new config environment
+
+    # use data.clear() to remove all sensor data
     # data.Clear()
+
+    # use data.ClearConfigData() to remove all config data
+    # data.ClearConfigData()
 
     # SaveConfigData(type, name, address, sub_address, min_threshold, max_threshold, alerts)
 
