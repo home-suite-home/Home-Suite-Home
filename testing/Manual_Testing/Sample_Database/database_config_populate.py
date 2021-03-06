@@ -53,7 +53,7 @@ def main():
 
     # SHT31
     data.SaveConfigData("temperature", "Back Porch Temperature", "10.0.1.64", "temperatureSHT", -10, 50, True)
-    data.SaveConfigData("humidity", "Back Porch Humidity", "10.0.1.64", "humiditySHT", -10, 50, True)
+    data.SaveConfigData("humidity", "Back Porch Humidity", "10.0.1.64", "humiditySHT", 30, 90, True)
 
     # DS18B20
     data.SaveConfigData("temperature", "Outside Temperature 1", "10.0.1.64", "sensor1", -10, 50, True)
@@ -64,9 +64,9 @@ def main():
 
     # DHT 22
     data.SaveConfigData("temperature", "DHT One Temperature", "10.0.1.64", "dht1temperature", -10, 50, True)
-    data.SaveConfigData("humidity", "DHT One Humidity", "10.0.1.64", "dht1humidity", -10, 50, True)
+    data.SaveConfigData("humidity", "DHT One Humidity", "10.0.1.64", "dht1humidity", 30, 90, True)
     data.SaveConfigData("temperature", "DHT Two Temperature", "10.0.1.64", "dht2temperature", -10, 50, True)
-    data.SaveConfigData("humidity", "DHT Two Humidity", "10.0.1.64", "dht2humidity", -10, 50, True)
+    data.SaveConfigData("humidity", "DHT Two Humidity", "10.0.1.64", "dht2humidity", 30, 90, True)
 
 
 if __name__ == "__main__":
