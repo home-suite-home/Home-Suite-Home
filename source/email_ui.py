@@ -12,8 +12,8 @@ from UI_Utils import *
 
 sensor_names = {
         # (display name, url extension, units)
-        'tempSensor': ('Temperature', 'temperature', 'F'), 
-        'humidSensor': ('Humidity', 'humidity', '%')
+        'tempSensor': ('Temperature', 'temperature', 'F', 'localhost', '8080'), 
+        'humidSensor': ('Humidity', 'humidity', '%', 'localhost', '8080')
     }
 
 new_sensor_card = html.Div(className='card',
@@ -37,7 +37,7 @@ new_card_fields = [
             dcc.Input(
                 id='field_units',
                 debounce=True,
-                placeholder='Units',
+                placeholder='Units (Optional)',
             ),
             dcc.Input(
                 id='field_ip-address',
@@ -63,7 +63,7 @@ new_card_fields = [
             ),
             html.H4(''),
             html.Button('Create', id='field_create-card-button'),
-            html.H4('Invalid Selection', style={'display': 'none'}, id='invalid-selection'),
+            html.H4('Invalid Selection', style={'color': 'red','display': 'none' }, id='invalid-selection'),
         ],
         #style={'textAlign': 'left'},
     ),
@@ -226,7 +226,7 @@ mainDivChildren = [
         },
         children=[fields_card, new_sensor_card,]
     ),
-    #html.Button('Create', id='field_create-card-button', hidden=True)
+    
 ]
 
 
@@ -257,29 +257,6 @@ def handle_email(button_timestamp, email):
         return dash.no_update
 
 
-'''
-# Sensor toggling Callback
-@app.callback(
-        [   # components that will be modified
-            Output('enabled-sensors', 'value'),
-            Output('cards-container', 'children'),
-        ],
-        [   # components to listen for to run the callback
-            Input('save-checkmarks-button', 'n_clicks_timestamp'),
-        ],
-        [   # components to get the state of upon callaback
-            State('enabled-sensors', 'value'),
-        ],
-)
-def handle_sensor_toggle(button_timestamp, enabledSensorsList):
-    if(button_timestamp != None): # Button is clicked
-        writeStorageCheckmarks(enabledSensorsList)
-        return [dash.no_update, getCardDivs(enabledSensorsList)]
-    else: # Button is not clicked
-        storageCheckmarks = getStorageCheckmarks()
-        return [storageCheckmarks, getCardDivs(storageCheckmarks)]
-'''
-
 # callback to update sensor data
 @app.callback(
         Output({'type': 'sensor-data', 'index': MATCH}, 'children'),
@@ -288,7 +265,7 @@ def handle_sensor_toggle(button_timestamp, enabledSensorsList):
 )
 def handle_refresh_buttons(timestamp, id):
     enabledSensor = id['index']
-    return "{} {}".format(Sensor(sensor_names[enabledSensor][1]).getSensorValue(), sensor_names[enabledSensor][2])
+    return "{} {}".format(Sensor(sensor_names[enabledSensor][1], domain=sensor_names[enabledSensor][3], port=sensor_names[enabledSensor][4]).getSensorValue(), sensor_names[enabledSensor][2])
 
 
 
@@ -320,8 +297,11 @@ def handle_refresh_buttons(timestamp, id):
             State('field_alert', 'value'),
         ]
 )
-def create_new_card(new_card_clicks, create_button_clicks, cardList, fieldsList, sensor_name, ip_address, port, url, alert):
+def create_new_card(new_card_clicks, create_button_clicks, cardList, fieldsList, sensor_name, ip_address, port, url_plug, alert):
     ctx = dash.callback_context
+
+    if(port == None or port == ''):
+        port = '8080'
 
     curButton = '';
 
@@ -333,8 +313,7 @@ def create_new_card(new_card_clicks, create_button_clicks, cardList, fieldsList,
 
     if(curButton == 'field_create-card-button'):
 
-        if(isValidSensor(url, ip_address, port)):
-            print("yes")
+        if(isValidSensor(url_plug, ip_address, sensor_name, sensor_names, port=port)):
             temp = html.Div(className='card',
                     id=sensor_name,
                     children=[
@@ -342,7 +321,7 @@ def create_new_card(new_card_clicks, create_button_clicks, cardList, fieldsList,
                             sensor_name,
                         ),
                         html.H2(str(
-                            Sensor(url, port=port, domain=ip_address).getSensorValue()),
+                            Sensor(url_plug, port=port, domain=ip_address).getSensorValue()),
                             id={'type': 'sensor-data', 'index': sensor_name},
                         ),
                         html.Button('Refresh',
@@ -352,13 +331,10 @@ def create_new_card(new_card_clicks, create_button_clicks, cardList, fieldsList,
                 )
 
             tempList = cardList[:-1] + [temp] + [new_sensor_card]
-            sensor_names[sensor_name] = (sensor_name, url, '')
+            sensor_names[sensor_name] = (sensor_name, url_plug, '', ip_address, port)
             return [tempList, dash.no_update, {'display':'none'}, dash.no_update, {'display':'block'}, '', '', '', '', False]
         else:
-            if(len(fieldsList) == 2):
-                print("appending")
-                return [dash.no_update, fieldsList, dash.no_update, {'display':'block'}, dash.no_update, dash.no_update, dash.no_update, dash.no_update, dash.no_update, dash.no_update]
-            return dash.no_update
+            return [dash.no_update, fieldsList, dash.no_update, {'display':'block', 'color': 'red'}, dash.no_update, dash.no_update, dash.no_update, dash.no_update, dash.no_update, dash.no_update]
     elif(curButton == 'new-card-button'):
         print("showing field & hiding new-card")
         return[cardList + [fields_card], dash.no_update, {'display': 'block'}, dash.no_update, {'display': 'none'}, dash.no_update, dash.no_update, dash.no_update, dash.no_update, dash.no_update]

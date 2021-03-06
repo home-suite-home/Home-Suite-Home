@@ -1,9 +1,15 @@
 from HTTP_Component.Sensors import Sensor
 import math
 
-def isValidSensor(url_plug, ip_address, port='8080'):
+def isValidSensor(url_plug, ip_address, sensor_name, sensor_names, port='8080'):
+
+    if(sensor_names.get(sensor_name)):
+        return False
+
     if(port == ''):
-        port = 8080
+        port = '8080'
+
+    print("{}:{}/{}".format(ip_address, port, url_plug))
     mySensor = Sensor(url_plug, domain=ip_address, port=port).getSensorValue()
 
     try:
