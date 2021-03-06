@@ -6,7 +6,7 @@ def main():
     data = Database.Database()
     # data.Clear()
 
-    print(data.GetAvgVal("Indoor Temperature"))
+    print(data.GetAvgVal("temp_50"))
 
 if __name__ == "__main__":
     main()
