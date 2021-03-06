@@ -22,7 +22,8 @@ class Sensor:
         self.units = units
         try:
             self.address = 'http://' + domain + ':' + port + '/' + url_plug
-        except:
+        except Exception as e:
+            print(e)
             self.address = ''
 
         #print("address(sensor): " + self.address)
