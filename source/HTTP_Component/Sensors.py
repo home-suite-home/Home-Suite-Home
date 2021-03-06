@@ -25,7 +25,7 @@ class Sensor:
         except:
             self.address = ''
 
-        #print("address(sensor): " + self.address)
+        #print("address (Sensors.py): " + self.address)
 
     def requestData(self):
         try:
