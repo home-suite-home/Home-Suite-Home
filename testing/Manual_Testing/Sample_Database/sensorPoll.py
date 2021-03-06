@@ -30,7 +30,7 @@ def main():
             sub_address = record["sub_address"]
             min_threshold = record["min_threshold"]
             max_threshold = record["max_threshold"]
-            sensorValue = Sensors.Sensor(sub_address, "metric", address).getSensorValue()
+            sensorValue = Sensors.Sensor(url_plug=sub_address, domain=address).getSensorValue()
             print(sensorValue)
             data.SendSensorData(sensorValue, name, type)
             print()
