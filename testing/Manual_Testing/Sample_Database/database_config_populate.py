@@ -24,7 +24,13 @@ def main():
     # use data.ClearConfigData() to remove all config data
     # data.ClearConfigData()
 
-    # SaveConfigData(categeory, type, name, address, port_number, sub_address, units, min_threshold, max_threshold, alerts)
+
+    ### New Config Structure ###
+
+    # SaveConfigData(Categeory, type, name, IP_Address, port, url_plug sensor_units, min_threshold, max_threshold, alerts)
+    # SaveConfigData("Temperature", "temperature", "Outside Temperature", "10.0.1.60", 80, "sensor1", "Fahrenheit", min_threshold, max_threshold, alerts)
+
+
 
     ##  Indoor Sensor Cluster   ##
 
