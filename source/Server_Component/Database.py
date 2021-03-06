@@ -32,7 +32,7 @@ PORT = 27017
 #
 
 class Database:
-	def __init__(self, url, port):
+	def __init__(self, url = URL, port = PORT):
 		self.url = url
 		self.port = port
 		self.connect_status = False
