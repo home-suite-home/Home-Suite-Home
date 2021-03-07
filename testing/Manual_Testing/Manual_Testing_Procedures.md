@@ -67,7 +67,7 @@ The following will be needed for this test:
 ## Description
 Verify *Sensors.py* can properly access sensor data from a web server, convert units and display the results correctly.
 ## Test Tools and Dependencies
-For this test, we are begining with the following tools installed:
+For this test, we are beginning with the following tools installed:
 * Linux Text Editor (Or Similar Code Editing Tool)
 * Linux Command Line
 
@@ -137,3 +137,38 @@ Before running any of the programs listed here, it is recomended to follow the p
 |  4  | Return to the *Database_test.py* file and now comment out the line db.Clear() | The line should now appear commented out and it will not compile when ran in the command line |
 |  5  | Run the testing script again | The command line shall have have a view of all the records as a list and should also be printing the averages for each sensor ![cmd](/artifacts/assets/cmd_dbTest.PNG)|
 |  6  | Check the Database once again | The database should now be populated with the data sent in the testing file ![populated](/artifacts/assets/populated_sensorsdb.PNG)|
+
+# Database Maximum Certified Usage
+## [U021] As a property owner, I want to have a history for up to 100 sensors over a time period of one year so that, I may look back on trends in my historical sensor data.
+## Description
+This procedure will test the stability of the database and certify the ability to contain data to satisfy the following maximum specifications guidelines:
+
+* 100 individual sensors
+* Polling rate of all sensors is once per minute
+* 1 year of data (45,000) entries must be searchable in less than 30 seconds
+
+Note: The systems preformed nominally under these conditions and likely has the capability to scale beyond these guidelines.
+
+## Test Tools and Dependencies
+For this test, we are beginning with the following tools installed:
+* Linux Text Editor (Or Similar Code Editing Tool)
+* Linux Command Line
+* Raspberry Pi 4 8gb running Ubuntu 20.10
+
+We will also need the source code we are testing as well as our test script:
+* [Database_stressAdd_1000.py](/testing/Manual_Testing/Database_Stress_Test/Database_stressAdd_1000.py)
+* [Database_stressSearch.py](/testing/Manual_Testing/Database_Stress_Test/Database_stressSearch.py)
+* [Database.py](/testing/Manual_Testing/Database_Stress_Test/Database.py)
+* [Sensors.py](/testing/Manual_Testing/Database_Stress_Test/Sensors.py)
+
+## Test Case
+**Test Status:** *PASS*
+**Note:** The steps in this procedure should be carried out on a Raspberry Pi as specified in Tools for this section.
+| No. | Steps to Reproduce | Expected Behavior |
+| --- | --- | --- |
+| 1 | Download all source scripts and place them in the same folder together | All source scripts needed for testing will be in the same directory |
+| 2 | Open the directory containing all source scripts for this test | A directory listing all source files shall appear on the user's screen |
+| 3 | Right click in the folder window with the testing source files and select open in terminal from the context menu | A terminal window shall open and display the correct file path next to the user's username |
+| 4 | Type *python3 Database_stressAdd_1000.py* and press return | The script shall begin populating the database. This may take approx. 170 minutes |
+| 5 | Once the script from step 4 has finished running type *time python3 Database_stressSearch.py* and press return | The average value for one sensor of the database shall be calculated representing a technical worst case for access time |
+| 6 | Observe the *real* time printed in the terminal window and ensure that time is less than 60 seconds | The *real* time the Database took to return the average value will be less than 60 seconds |
