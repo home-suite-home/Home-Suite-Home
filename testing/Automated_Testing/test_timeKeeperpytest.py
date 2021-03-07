@@ -1,15 +1,39 @@
+#
+#   Filename: test_timeKeeperpytest.py
+#   Date: 03/06/2021
+#
+#   Engineer: Andres Graterol
+#   Contact: graterol.andres0@knights.ucf.edu
+#
+#   Description: Automated Unit test for timeKeeper.py
+#                Grabs a string from getTimeStamp()
+#                Tests the individual aspects of stringToTimestamp()
+#
+
 # Automated test for timeKeeper.py
-import datetime 
+import datetime
 import pytest
-from timeKeeper import TimeStamps 
+from timeKeeper import TimeStamps
 
 # testing the stringToTimeStamp function
-def test_stringToTimestamp():
-    timeStamp = TimeStamps.stringToTimestamp(TimeStamps,"2021-03-03 18:09:19.611086")
-    assert (timeStamp.strftime("%Y") == "2021")
-    assert (timeStamp.strftime("%m") == "03")
-    assert (timeStamp.strftime("%d") == "03")
-    assert (timeStamp.strftime("%H") == "18")
-    assert (timeStamp.strftime("%M") == "09")
-    assert (timeStamp.strftime("%S.%f") == "19.611086")
 
+
+def test_stringToTimestamp():
+    # 1615082379 is an int pulled from .getTimeStamp
+    timeStamp = TimeStamps.stringToTimestamp(TimeStamps, 1615082379)
+
+    # Showing the timestamp that we just passed
+    TimeStamps.printTimestamp(TimeStamps, timeStamp)
+
+    # asserting the year...
+    assert (timeStamp.strftime("%Y") == "2021")
+    # the month...
+    assert (timeStamp.strftime("%m") == "03")
+    # the day...
+    assert (timeStamp.strftime("%d") == "06")
+    # the hour...
+    assert (timeStamp.strftime("%H") == "20")
+    # the minute...
+    assert (timeStamp.strftime("%M") == "59")
+    # the second...
+    assert (timeStamp.strftime("%S.%f") == "39.000000")
