@@ -11,7 +11,7 @@ The following will be needed for this test:
 * clone the repository on to the local machine: this will ensure all necessary files are found
 
 ## Test Cases
-### UID : 014
+### [U014] As a property owner I want to receive a response from the system when a command is given over email so that the system will do what I want remotely. 
 ### Functional Case (help message)
 **Test Status** *PASS*</br>
 #### Test Procedures
@@ -28,7 +28,7 @@ The following will be needed for this test:
 | 1 | The terminal will reflect the operations being handled by the running program | ![terminal_response](/artifacts/assets/terminal_response.PNG) |
 | 2 | An email message will be recieved by 'home.suite.home.testing@gmail.com' | ![email_response](/artifacts/assets/email_response.PNG) |
 
-### UID : 003
+### [U003] As a property owner, I would like to view a graphic representation of sensor data over time so that I can see trends in my property. 
 ### Functional Case (get sensor data)
 **Test Status** *PASS*</br>
 #### Test Procedures
@@ -115,6 +115,7 @@ No test data needed.
 | 12 | Observe the error from step 11 causes a crash resulting from incorrectly formatted data. | This error is expected behavior and is slated to be revised in future versions. |
 
 # Database_test.py
+## [DEV015] As a developer, I want to be able to access the database in Python, so that I can use database functions in other python files.  
 ## Description
 This test script works to interact with the MongoDB database that will house the records for all of our sensors. The purpose of this script is to prove that we have connection to the database and can make edits to it without going through the database's GUI.
 
