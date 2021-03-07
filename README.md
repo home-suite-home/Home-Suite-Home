@@ -94,5 +94,5 @@
 
 ## Quick Links
 * [System Source Code](source)
-* [Sensor Source Code](sensors source)
+* [Sensor Source Code](sensors_source)
 * [Testing](testing)
