@@ -90,7 +90,7 @@
 * David Crumley (daviejones) - Data analytics email response (in development)
 * Matthew Dowdy (dowdyma1) - UI
 * Wyatt Vining (wv040) - Raspberry Pi upgrade / Database Stress Test / Timestamps / Sensor Config Data / Sensor Polling - Save Data / Sample Database Creation
-* Nathan Moulton (NathanM117) -
+* Nathan Moulton (NathanM117) - Database.py/ Manual Testing (Database)/ Sample Database Creation/ Timestamps
 
 ## Quick Links
 * [System Source Code](source)
