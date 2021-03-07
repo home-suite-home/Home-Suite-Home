@@ -11,6 +11,7 @@ The following will be needed for this test:
 * clone the repository on to the local machine: this will ensure all necessary files are found
 
 ## Test Cases
+### UID : 014
 ### Functional Case (help message)
 **Test Status** *PASS*</br>
 #### Test Procedures
@@ -27,6 +28,7 @@ The following will be needed for this test:
 | 1 | The terminal will reflect the operations being handled by the running program | ![terminal_response](/artifacts/assets/terminal_response.PNG) |
 | 2 | An email message will be recieved by 'home.suite.home.testing@gmail.com' | ![email_response](/artifacts/assets/email_response.PNG) |
 
+### UID : 003
 ### Functional Case (get sensor data)
 **Test Status** *PASS*</br>
 #### Test Procedures
