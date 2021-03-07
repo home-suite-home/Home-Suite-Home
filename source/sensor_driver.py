@@ -3,6 +3,7 @@ from time import sleep
 import timeKeeper
 from HTTP_Component.Sensors import Sensor
 from Server_Component.Database import Database
+from EmailComponent.EmailController import EmailController
 
 
 POLL_RATE = 60
