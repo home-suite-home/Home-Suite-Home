@@ -79,8 +79,8 @@
 
 ## Materials
 * [Trello Board](https://trello.com/b/BFcwvt3p/project) (Backlogs and Requirements)
-* [Velocity Chart]()
-* [Burndown Chart for Sprint 5]()
+* [Velocity Chart](https://docs.google.com/spreadsheets/d/1tpRyT-jUgHkrLnwx5NcxtOvh3uGg8ddGYrl60E0q6DA/edit#gid=0)
+* [Burndown Chart for Sprint 5](https://docs.google.com/spreadsheets/d/1tpRyT-jUgHkrLnwx5NcxtOvh3uGg8ddGYrl60E0q6DA/edit#gid=994440609)
 * [System Architecture](artifacts/architecture.md)
 * [Testing](https://github.com/home-suite-home/Home-Suite-Home/tree/main/testing)
 * [Product Demonstration]()
@@ -88,7 +88,7 @@
 ## Task Allocation
 * Andres Graterol (graterollin) - Automated Testing (UI & timeKeeper) / Manual Testing (Database)
 * David Crumley (daviejones) - Data analytics email response (in development)
-* Matthew Dowdy (dowdyma1) -
+* Matthew Dowdy (dowdyma1) - UI
 * Wyatt Vining (wv040) - Raspberry Pi upgrade / Database Stress Test / Timestamps / Sensor Config Data / Sensor Polling - Save Data / Sample Database Creation
 * Nathan Moulton (NathanM117) -
 
@@ -96,3 +96,4 @@
 * [System Source Code](source)
 * [Sensor Source Code](sensors_source)
 * [Testing](testing)
+* [User Interface](source/email_ui.py)
