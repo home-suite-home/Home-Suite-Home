@@ -163,12 +163,39 @@ We will also need the source code we are testing as well as our test script:
 
 ## Test Case
 **Test Status:** *PASS*
+
 **Note:** The steps in this procedure should be carried out on a Raspberry Pi as specified in Tools for this section.
 | No. | Steps to Reproduce | Expected Behavior |
 | --- | --- | --- |
 | 1 | Download all source scripts and place them in the same folder together | All source scripts needed for testing will be in the same directory |
 | 2 | Open the directory containing all source scripts for this test | A directory listing all source files shall appear on the user's screen |
-| 3 | Right click in the folder window with the testing source files and select open in terminal from the context menu | A terminal window shall open and display the correct file path next to the user's username |
+| 3 | Right click in the folder window with the testing source files and select *open in terminal* from the context menu | A terminal window shall open and display the correct file path next to the user's username |
 | 4 | Type *python3 Database_stressAdd_1000.py* and press return | The script shall begin populating the database. This may take approx. 170 minutes |
 | 5 | Once the script from step 4 has finished running type *time python3 Database_stressSearch.py* and press return | The average value for one sensor of the database shall be calculated representing a technical worst case for access time |
 | 6 | Observe the *real* time printed in the terminal window and ensure that time is less than 60 seconds | The *real* time the Database took to return the average value will be less than 60 seconds |
+
+# Sensor Configurations in the Database
+## [U019] As a property owner, I would like to save my sensor preferences so that, I only have to enter the information for each sensor once.
+
+## Description
+This procedure will demonstrate manually loading and retrieving the user settings configurations for each sensor.
+
+## Test Tools and Dependencies
+For this test, we are beginning with the following tools installed:
+* Linux Text Editor (Or Similar Code Editing Tool)
+* Linux Command Line
+* Raspberry Pi 4 8gb running Ubuntu 20.10
+
+We will also need the source code we are testing as well as our test script:
+* [databse_config_populate.py](/testing/Manual_Testing/Sample_Database/databse_config_populate.py)
+* [database_read_configs.py](/testing/Manual_Testing/Sample_Database/database_read_configs.py)
+* [Database.py](/source/Server_Component/Database.py)
+
+## Test Case
+**Test Status:** *PASS*
+| No. | Steps to Reproduce | Expected Behavior |
+| --- | --- | --- |
+| 1 | Open the directory containing all three source scripts for testing | A directory containing the scripts we are using for this test will appear |
+| 2 | Right click in the directory and select *open in terminal* from the context menu | A terminal window with the correct file path next to the user's username will appear |
+| 3 | Type *python3 databse_config_populate.py* and press return | The script should compile and run without any errors |
+| 4 | Once the script in step 3 has finished running, type *python3 database_read_configs.py* | all of the configuration data added in the previous step will be printed to the terminal |
