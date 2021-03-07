@@ -39,7 +39,7 @@ class TimeStamps:
         date_time = timestamp.strftime("%m/%d/%Y, %H:%M:%S")
         print("date and time:",date_time)
 
-
+'''
 def main():
 
     ts = TimeStamps()
@@ -50,3 +50,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+'''
