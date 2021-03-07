@@ -89,6 +89,6 @@
 * Andres Graterol (graterollin) - 
 * David Crumley (daviejones) -
 * Matthew Dowdy (dowdyma1) - 
-* Wyatt Vining (wv040) - 
+* Wyatt Vining (wv040) - Raspberry Pi upgrade / Database Stress Test / Timestamps / Sensor Config Data / Sensor Polling - Save Data / Sample Database Creation
 * Nathan Moulton (NathanM117) - 
 
