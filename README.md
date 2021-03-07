@@ -86,7 +86,7 @@
 * [Product Demonstration]()
 
 ## Task Allocation
-* Andres Graterol (graterollin) - 
+* Andres Graterol (graterollin) - Automated Testing (UI & timeKeeper) / Manual Testing (Database)
 * David Crumley (daviejones) -
 * Matthew Dowdy (dowdyma1) - 
 * Wyatt Vining (wv040) - Raspberry Pi upgrade / Database Stress Test / Timestamps / Sensor Config Data / Sensor Polling - Save Data / Sample Database Creation
