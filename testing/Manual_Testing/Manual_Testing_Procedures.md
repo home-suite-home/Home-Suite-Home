@@ -63,6 +63,7 @@ The following will be needed for this test:
 | 2 | An email message will not be recieved by 'home.suite.home.testing@gmail.com' | ![email_response](/artifacts/assets/empty_email.PNG) |
 
 # Sensors.py
+## [U002] As a property-owner, I'd like the temperature of my property to be monitored.
 ## Description
 Verify *Sensors.py* can properly access sensor data from a web server, convert units and display the results correctly.
 ## Test Tools and Dependencies
