@@ -17,39 +17,101 @@ def test_lambdatest_todo_app():
     sleep(2)
 
     # Selecting temperature checkbox
-    chrome_driver.find_element_by_xpath("//*[contains(text(), 'Temperature')]").click()
-    sleep(1)
+    #chrome_driver.find_element_by_xpath("//*[contains(text(), 'Temperature')]").click()
+    #sleep(1)
     # Selecting humidity checkbox
-    chrome_driver.find_element_by_xpath("//*[contains(text(), 'Humidity')]").click()
-    sleep(1)
+    #chrome_driver.find_element_by_xpath("//*[contains(text(), 'Humidity')]").click()
+    #sleep(1)
     # Save the selections
-    id_check = "save-checkmarks-button"
-    chrome_driver.find_element_by_id(id_check).click()
-    sleep(8)
+    #id_check = "save-checkmarks-button"
+    #chrome_driver.find_element_by_id(id_check).click()
+    #sleep(8)
 
     # At this point sensor cards should appear; 
     # click refresh to see them change
     # Note: sensorSim_random must be running in order to see these change 
 
-    buttons = chrome_driver.find_elements_by_css_selector("button")
-    print(len(buttons))
-   
-    # Refresh the temperature sensor card
-    # If only one card 
-  
-    if (len(buttons) > 2):
-        print("ATTEMPTING REFRESH - temp\n")
-        buttons[2].click()
-    sleep(4)
+    chrome_driver.find_element_by_id("new-card-button").click()
+    sleep(3)
 
-    # Refresh the humidity sensor card
-    # Two cards
+    # sample fields to populate the new card 
+    sample_sensorName = "Temp"
+    sample_IPaddress = "localhost"
+    sample_portNumber = "8080"
+    sample_URLplug = "temperature"
+
+    # populating the new sensor fields 
+
+    cards = chrome_driver.find_elements_by_id("fields-card")
+    print(len(cards))
+
+    for card in cards:
+        print(card)
+
+    sensorName_field = cards[1].find_element_by_id("field_sensor-name")
+    sensorName_field.send_keys(sample_sensorName)
+    sleep(2)
+
+    IPaddress_field = cards[1].find_element_by_id("field_ip-address")
+    IPaddress_field.send_keys(sample_IPaddress)
+    sleep(2)
+
+    portNumber_field = cards[1].find_element_by_id("field_port-number")
+    portNumber_field.send_keys(sample_portNumber)
+    sleep(2)
+
+    URLplug_field = cards[1].find_element_by_id("field_url-plug")
+    URLplug_field.send_keys(sample_URLplug)
+    sleep(2)
+
+    # Clicking alert switch and creating a new card 
+    cards[1].find_element_by_id("field_alert").click()
+    sleep(2)
+    cards[1].find_element_by_id("field_create-card-button").click()
+    sleep(7)
+
+    card_container = chrome_driver.find_element_by_id("cards-container")
+
+    new_cards = card_container.find_elements_by_id("new-card")
+    print(len(new_cards))
+
+    for new_card in new_cards:
+        print(new_card)
+
+    new_cards[1].find_element_by_id("new-card-button").click()
+    sleep(3)
+
+    # Updating names for humidity sensor card 
+    sample_sensorName = "Humid"
+    sample_IPaddress = "localhost"
+    sample_portNumber = "8080"
+    sample_URLplug = "humidity"
+
+    cards = chrome_driver.find_elements_by_id("fields-card")
+    print(len(cards))
+
+    for card in cards:
+        print(card)
+
+    sensorName_field = cards[1].find_element_by_id("field_sensor-name")
+    sensorName_field.send_keys(sample_sensorName)
+    sleep(2)
+
+    IPaddress_field = cards[1].find_element_by_id("field_ip-address")
+    IPaddress_field.send_keys(sample_IPaddress)
+    sleep(2)
+
+    portNumber_field = cards[1].find_element_by_id("field_port-number")
+    portNumber_field.send_keys(sample_portNumber)
+    sleep(2)
+
+    URLplug_field = cards[1].find_element_by_id("field_url-plug")
+    URLplug_field.send_keys(sample_URLplug)
+    sleep(2)
+
+    cards[1].find_element_by_id("field_create-card-button").click()
+    sleep(5)
     
-    if (len(buttons) > 3):
-       print("ATTEMPTING REFRESH - humid\n")
-       buttons[3].click()
-    sleep(4)
-
     # Populating the email field 
     sample_text = "home.suite.home.test.user@gmail.com"
     email_text_field = chrome_driver.find_element_by_id("remote-email")
