@@ -138,6 +138,7 @@ Before running any of the programs listed here, it is recomended to follow the p
 |  5  | Run the testing script again | The command line shall have have a view of all the records as a list and should also be printing the averages for each sensor ![cmd](/artifacts/assets/cmd_dbTest.PNG)|
 |  6  | Check the Database once again | The database should now be populated with the data sent in the testing file ![populated](/artifacts/assets/populated_sensorsdb.PNG)|
 
+
 # Database Maximum Certified Usage
 ## [U021] As a property owner, I want to have a history for up to 100 sensors over a time period of one year so that, I may look back on trends in my historical sensor data.
 ## Description
@@ -155,7 +156,7 @@ For this test, we are beginning with the following tools installed:
 * Linux Command Line
 * Raspberry Pi 4 8gb running Ubuntu 20.10
 
-We will also need the source code we are testing as well as our test script:
+We will also need the following test scripts:
 * [Database_stressAdd_1000.py](/testing/Manual_Testing/Database_Stress_Test/Database_stressAdd_1000.py)
 * [Database_stressSearch.py](/testing/Manual_Testing/Database_Stress_Test/Database_stressSearch.py)
 * [Database.py](/testing/Manual_Testing/Database_Stress_Test/Database.py)
@@ -174,6 +175,7 @@ We will also need the source code we are testing as well as our test script:
 | 5 | Once the script from step 4 has finished running type *time python3 Database_stressSearch.py* and press return | The average value for one sensor of the database shall be calculated representing a technical worst case for access time |
 | 6 | Observe the *real* time printed in the terminal window and ensure that time is less than 60 seconds | The *real* time the Database took to return the average value will be less than 60 seconds |
 
+
 # Sensor Configurations in the Database
 ## [U019] As a property owner, I would like to save my sensor preferences so that, I only have to enter the information for each sensor once.
 
@@ -186,7 +188,7 @@ For this test, we are beginning with the following tools installed:
 * Linux Command Line
 * Raspberry Pi 4 8gb running Ubuntu 20.10
 
-We will also need the source code we are testing as well as our test script:
+We will also need the following test scripts:
 * [databse_config_populate.py](/testing/Manual_Testing/Sample_Database/databse_config_populate.py)
 * [database_read_configs.py](/testing/Manual_Testing/Sample_Database/database_read_configs.py)
 * [Database.py](/source/Server_Component/Database.py)
@@ -199,3 +201,30 @@ We will also need the source code we are testing as well as our test script:
 | 2 | Right click in the directory and select *open in terminal* from the context menu | A terminal window with the correct file path next to the user's username will appear |
 | 3 | Type *python3 databse_config_populate.py* and press return | The script should compile and run without any errors |
 | 4 | Once the script in step 3 has finished running, type *python3 database_read_configs.py* | all of the configuration data added in the previous step will be printed to the terminal |
+
+
+# sensor_driver.py
+## [U022] As a homeowner, I want multiple temperature and humidity sensors to save their readings so that, I can retain the historical environment data around my property.
+
+## Description
+This procedure will demonstrate the capability to save sensor data to the database at a regular interval.
+
+## Test Tools and Dependencies
+For this test, we are beginning with the following tools installed:
+* Linux Text Editor (Or Similar Code Editing Tool)
+* Linux Command Line
+* A database loaded with sensor configurations
+* A set of sensors
+
+We will also need the source code:
+* [sensor_driver.py](/source/sensor_driver.py)
+
+## Test Case
+**Test Status:** *PASS*
+| No. | Steps to Reproduce | Expected Behavior |
+| --- | --- | --- |
+| 1 | Open the directory containing the source file | A directory containing *sensor_driver.py* will appear |
+| 2 | Right click in the directory containing the source file for testing and select *open in terminal* from the context menu | A terminal window with the correct file path displayed next to the user's username will appear |
+| 3 | Type *python3 sensor_driver.py* and press return | *sensor_driver.py* will compile and run |
+| 4 | Observe the printouts to the terminal windows | each time a sensor is accessed and recorded, a printout containing the senor name and value to record is displayed in the terminal window |
+| 5 | The script will loop every 60 seconds gathering data until we interrupt it - press *ctrl + c* to stop the script | The terminal window will return control to the user showing the test has ended |
