@@ -32,8 +32,8 @@ The following will be needed for this test:
 #### Test Procedures
 | No. | Steps to Reproduce | Expected Behavior |
 | --- | --- | --- |
-| 0 | Have a mongodb instance running locally on your machine | ![mongo](/artifacts/assets/instance_mongodb.png) |
-| 1 | Import the test database into mongodb instance | ![import](/artifacts/assets/import_mongodb.p)
+| 0 | Have a mongodb instance running locally on your machine | ![mongo](/artifacts/assets/instance_mongodb.PNG) |
+| 1 | Import the test database into mongodb instance | ![import](/artifacts/assets/import_mongodb.PNG)
 | 2 | In the linux command line terminal, from the repo's main directory, move to the manual testing directory| ![cd](/artifacts/assets/move_to_testing.PNG) |
 | 3 | In the linux terminal, enter the command $python CommandHandlerTest.py | ![prompt](/artifacts/assets/CommandHandlerCommand.PNG) |
 | 4 | Using an email application, send an email to 'home.suite.home.testing@gmail.com' from 'home.suite.home.test.user@gmail.com'| ![test_request](/artifacts/assets/test_request.PNG) |
