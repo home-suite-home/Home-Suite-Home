@@ -173,7 +173,7 @@ We will also need the following test scripts:
 | 3 | Right click in the folder window with the testing source files and select *open in terminal* from the context menu | A terminal window shall open and display the correct file path next to the user's username |
 | 4 | Type *python3 Database_stressAdd_1000.py* and press return | The script shall begin populating the database. This may take approx. 170 minutes |
 | 5 | Once the script from step 4 has finished running type *time python3 Database_stressSearch.py* and press return | The average value for one sensor of the database shall be calculated representing a technical worst case for access time |
-| 6 | Observe the *real* time printed in the terminal window and ensure that time is less than 60 seconds | The *real* time the Database took to return the average value will be less than 60 seconds |
+| 6 | Observe the *real* time printed in the terminal window and ensure that time is less than 60 seconds | The *real* time the Database took to return the average value will be less than 60 seconds ![searchTime](/artifacts/assets/database_stressSearch.PNG) |
 
 
 # Sensor Configurations in the Database
