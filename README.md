@@ -83,7 +83,7 @@
 * [Burndown Chart for Sprint 5](https://docs.google.com/spreadsheets/d/1tpRyT-jUgHkrLnwx5NcxtOvh3uGg8ddGYrl60E0q6DA/edit#gid=994440609)
 * [System Architecture](artifacts/architecture.md)
 * [Testing](https://github.com/home-suite-home/Home-Suite-Home/tree/main/testing)
-* [Product Demonstration]()
+* [Product Demonstration](https://youtu.be/gygcMzER3ZE)
 
 ## Task Allocation
 * Andres Graterol (graterollin) - Automated Testing (UI & timeKeeper) / Manual Testing (Database)
