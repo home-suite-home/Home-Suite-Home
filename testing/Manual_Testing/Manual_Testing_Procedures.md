@@ -124,7 +124,7 @@ To set up a test environment in which to run the code, the following tools are r
 
 * Bash shell(or a similar Unix terminal emulator)
 * [MongoDB Community Server](https://www.mongodb.com/try/download/community)
-* [Database.py](/testing/Manual_Testing/Database_Stress_Test/Database.py)
+* [Database.py](/source/Server_Component/Database.py)
 * [Database_test.py](/testing/Manual_Testing/Database_test.py)
 
 Before running any of the programs listed here, it is recomended to follow the procedures for [setting up the server process for MongoDB](https://docs.mongodb.com/manual/administration/install-community/) on your operating system. If you want access to a GUI for the database, it is recommended that you choose to install on either macOS or Windows. Ensure that *Database_test.py* and *Databse.py* are in the same directory on your machine before running.
@@ -161,7 +161,7 @@ For this test, we are beginning with the following tools installed:
 We will also need the following test scripts:
 * [Database_stressAdd_1000.py](/testing/Manual_Testing/Database_Stress_Test/Database_stressAdd_1000.py)
 * [Database_stressSearch.py](/testing/Manual_Testing/Database_Stress_Test/Database_stressSearch.py)
-* [Database.py](/source/Server_Component/Database.py)
+* [Database.py](/testing/Manual_Testing/Database_Stress_Test/Database.py)
 * [Sensors.py](/testing/Manual_Testing/Database_Stress_Test/Sensors.py)
 
 ## Test Case
