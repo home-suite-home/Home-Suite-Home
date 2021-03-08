@@ -94,6 +94,6 @@
 
 ## Quick Links
 * [System Source Code](source)
-* [Sensor Source Code](sensors_source)
+* [Sensor Source Code](sensor_source)
 * [Testing](testing)
 * [User Interface](source/email_ui.py)
