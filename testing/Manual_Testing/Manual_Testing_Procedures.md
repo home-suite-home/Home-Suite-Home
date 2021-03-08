@@ -137,9 +137,10 @@ Before running any of the programs listed here, it is recomended to follow the p
 |  1  | Open the file *Database_test.py* on a text editor of your choice, and uncomment the lines db.ClearConfigData() and db.Clear() if they are not already | The line will light up to indicate that it will be compiled when ran |
 |  2  | Open the terminal and procede to the directory containing the required files | The directory should contain both files required for testing when inputting the commands *ls* or *dir* on the command line |
 |  3  | Run the *Database_test.py* script | Upon opening the MongoDB GUI (if running on macOS or Windows) you should see an empty databse called *sensorsdb* ![empty](/artifacts/assets/empty_sensorsdb.PNG) |
-|  4  | Return to the *Database_test.py* file and now comment out the line db.Clear() | The line should now appear commented out and it will not compile when ran in the command line |
+|  4  | Return to the *Database_test.py* file and now comment out the lines db.ClearConfigData() and db.Clear() | The line should now appear commented out and it will not compile when ran in the command line |
 |  5  | Run the testing script again | The command line shall have have a view of all the records as a list and should also be printing the averages for each sensor ![cmd](/artifacts/assets/cmd_dbTest.PNG)|
-|  6  | Check the Database once again | The database should now be populated with the data sent in the testing file ![populated](/artifacts/assets/populated_sensorsdb.PNG)|
+|  6  | Scroll down on the terminal | The terminal shall show 20 timestamps strings in epoch time. It will also show the 5 most recent objects passed to the database and their corresponding epoch time. | 
+|  7  | Check the Database once again | The database should now be populated with the data sent in the testing file ![populated](/artifacts/assets/populated_sensorsdb.PNG)|
 
 
 # Database Maximum Certified Usage
