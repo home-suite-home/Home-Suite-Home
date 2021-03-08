@@ -161,7 +161,7 @@ For this test, we are beginning with the following tools installed:
 We will also need the following test scripts:
 * [Database_stressAdd_1000.py](/testing/Manual_Testing/Database_Stress_Test/Database_stressAdd_1000.py)
 * [Database_stressSearch.py](/testing/Manual_Testing/Database_Stress_Test/Database_stressSearch.py)
-* [Database.py](/testing/Manual_Testing/Database_Stress_Test/Database.py)
+* [Database.py](/source/Server_Component/Database.py)
 * [Sensors.py](/testing/Manual_Testing/Database_Stress_Test/Sensors.py)
 
 ## Test Case
