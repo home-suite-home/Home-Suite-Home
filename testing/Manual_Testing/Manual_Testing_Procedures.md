@@ -126,14 +126,15 @@ To set up a test environment in which to run the code, the following tools are r
 * [MongoDB Community Server](https://www.mongodb.com/try/download/community)
 * [Database.py](/source/Server_Component/Database.py)
 * [Database_test.py](/testing/Manual_Testing/Database_test.py)
+* [timeKeeper.py](/source/timeKeeper.py)
 
-Before running any of the programs listed here, it is recomended to follow the procedures for [setting up the server process for MongoDB](https://docs.mongodb.com/manual/administration/install-community/) on your operating system. If you want access to a GUI for the database, it is recommended that you choose to install on either macOS or Windows. Ensure that *Database_test.py* and *Databse.py* are in the same directory on your machine before running.
+Before running any of the programs listed here, it is recomended to follow the procedures for [setting up the server process for MongoDB](https://docs.mongodb.com/manual/administration/install-community/) on your operating system. If you want access to a GUI for the database, it is recommended that you choose to install on either macOS or Windows. Ensure that *Database_test.py*, *Databse.py*, and *timeKeeper.py* are in the same directory on your machine before running.
 
 ## Test Procedures
 
 | No. | Steps to Reproduce | Expected Behavior |
 | --- | --- | --- |
-|  1  | Open the file *Database_test.py* on a text editor of your choice, and uncomment the line db.Clear() if it is not already | The line will light up to indicate that it will be compiled when ran |
+|  1  | Open the file *Database_test.py* on a text editor of your choice, and uncomment the lines db.ClearConfigData() and db.Clear() if they are not already | The line will light up to indicate that it will be compiled when ran |
 |  2  | Open the terminal and procede to the directory containing the required files | The directory should contain both files required for testing when inputting the commands *ls* or *dir* on the command line |
 |  3  | Run the *Database_test.py* script | Upon opening the MongoDB GUI (if running on macOS or Windows) you should see an empty databse called *sensorsdb* ![empty](/artifacts/assets/empty_sensorsdb.PNG) |
 |  4  | Return to the *Database_test.py* file and now comment out the line db.Clear() | The line should now appear commented out and it will not compile when ran in the command line |
