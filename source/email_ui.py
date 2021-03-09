@@ -9,10 +9,11 @@ from dash.dependencies import Input, Output, State, MATCH
 from Email_Component import Email_Component
 from HTTP_Component.Sensors import Sensor
 from UI_Utils import *
+from subprocess import check_output
 
 sensor_names = {
         # (display name, url extension, units)
-        'tempSensor': ('Temperature', 'temperature', 'F', 'localhost', '8080'), 
+        'tempSensor': ('Temperature', 'temperature', 'F', 'localhost', '8080'),
         'humidSensor': ('Humidity', 'humidity', '%', 'localhost', '8080')
     }
 
@@ -123,7 +124,7 @@ def getCardDivs(enabledSensorsList):
                     ),
                     html.H2(str(
                         Sensor(sensor_names[enabledSensor][1]).
-                        getSensorValue()) + ' ' + 
+                        getSensorValue()) + ' ' +
                         sensor_names[enabledSensor][2],
                         id={'type': 'sensor-data', 'index': enabledSensor},
                     ),
@@ -159,7 +160,7 @@ mainDivChildren = [
             html.Div(
                 id="retrieve-email",
                 style={
-                    "width": "100%", 
+                    "width": "100%",
                     "display" : "inline-block"
                     },
                 children=[
@@ -184,7 +185,7 @@ mainDivChildren = [
             #    html.Div(
             #        id="checkboxes_container",
             #        style={
-            #            "width": "100%", 
+            #            "width": "100%",
             #            "display": "inline-block",
             #            "textAlign": "left",
             #            },
@@ -199,7 +200,7 @@ mainDivChildren = [
             #                ],
             #                value=getStorageCheckmarks(), # initially enabled
             #                labelStyle={
-            #                    'display': 'block', 
+            #                    'display': 'block',
             #                    'textAlign': 'justify',
             #                },
             #            ),
@@ -208,25 +209,25 @@ mainDivChildren = [
             #    ),
         ],
     ),
-    html.Div(id="cards-container", 
+    html.Div(id="cards-container",
         style={
-            #'overflow': 'auto', 
-            #'overflow': 'hidden', 
-            'width': '100%', 
-            'height': '100%', 
-            #'display': 'table', 
+            #'overflow': 'auto',
+            #'overflow': 'hidden',
+            'width': '100%',
+            'height': '100%',
+            #'display': 'table',
             'display': 'grid',
             'align-content': 'start',
             'grid-template-columns': 'repeat(auto-fill, 230px)',
             #'grid-auto-flow': 'column',
-            #'border-spacing': '20px', 
+            #'border-spacing': '20px',
             #'table-layout': 'fixed',
             #'position': 'relative',
 
         },
         children=[fields_card, new_sensor_card,]
     ),
-    
+
 ]
 
 
@@ -340,9 +341,13 @@ def create_new_card(new_card_clicks, create_button_clicks, cardList, fieldsList,
         return[cardList + [fields_card], dash.no_update, {'display': 'block'}, dash.no_update, {'display': 'none'}, dash.no_update, dash.no_update, dash.no_update, dash.no_update, dash.no_update]
     else:
         return dash.no_update
-        
+
 
 
 
 if __name__ == "__main__":
-    app.run_server(debug=True,)
+    ip_address = check_output(["hostname", "-I"]).decode("utf-8").strip(" ").strip("\n").replace(" ", "")
+    print("IP Address: ", ip_address)
+    port = 8050
+    print("Port: ", port)
+    app.run_server(debug=True, host=ip_address, port=port)
