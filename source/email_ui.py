@@ -12,6 +12,7 @@ from HTTP_Component.Sensors import Sensor
 from UI_Utils import *
 from subprocess import check_output
 from collections import OrderedDict
+from Server_Component.Database import Database
 
 class OutputHolder:
     def __init__(self, inList):
@@ -39,11 +40,32 @@ class OutputHolder:
         print(self.curDictHolder)
 
 
-sensor_names = {
-        # (display name, url extension, units)
-        'tempSensor': ('Temperature', 'temperature', 'F', 'localhost', '8080'),
-        'humidSensor': ('Humidity', 'humidity', '%', 'localhost', '8080')
-    }
+def getCardDivs():
+    divList = []
+
+    sensorData = db.GetData()
+    for sensor in db.GetConfigData():
+        divList.append(
+            html.Div(className='card',
+                children=[
+                    html.H4(sensor['name']),
+                    html.H2('NaN',
+                        id={'type': 'sensor-data', 'index': '{}-{}'.format(sensor['type'], sensor['name'])},
+                    ),
+                    html.Button('Refresh',
+                        id={'type': 'refresh-button', 'index': '{}-{}'.format(sensor['type'], sensor['name'])},
+                    ),
+                ]
+            )
+        )
+
+    divList.append(fields_card)
+    divList.append(new_sensor_card)
+
+    return divList
+
+
+db = Database()
 
 new_sensor_card = html.Div(className='card',
                     id='new-card',
@@ -94,7 +116,6 @@ new_card_fields = [
             html.Button('Create', id='field_create-card-button'),
             html.H4('Invalid Selection', style={'color': 'red','display': 'none' }, id='invalid-selection'),
         ],
-        #style={'textAlign': 'left'},
     ),
 ]
 
@@ -187,17 +208,6 @@ def handle_email(button_timestamp, email):
         return dash.no_update
 
 
-# callback to update sensor data
-@app.callback(
-        Output({'type': 'sensor-data', 'index': MATCH}, 'children'),
-        Input({'type': 'refresh-button', 'index': MATCH}, 'n_clicks_timestamp'),
-        State({'type': 'refresh-button', 'index': MATCH}, 'id'),
-)
-def handle_refresh_buttons(timestamp, id):
-    enabledSensor = id['index']
-    return "{} {}".format(Sensor(sensor_names[enabledSensor][1], domain=sensor_names[enabledSensor][3], port=sensor_names[enabledSensor][4]).getSensorValue(), sensor_names[enabledSensor][2])
-
-
 outHolder = OutputHolder([
     ('cards-container', 'children'),
     ('fields-card', 'children'),
@@ -210,7 +220,6 @@ outHolder = OutputHolder([
     ('field_url-plug', 'value'),
     ('field_alert', 'value'),
 ])
-outHolder.printDict()
 
 @app.callback(
         outHolder.getObjList(),
@@ -241,10 +250,10 @@ def create_new_card(new_card_clicks, create_button_clicks, cardList, fieldsList,
     if ctx.triggered:
         curButton = ctx.triggered[0]['prop_id'].split('.')[0]
 
-
     if(curButton == 'field_create-card-button'):
+        if(isValidSensor(url_plug, ip_address, sensor_name, port=port)):
+            db.SaveConfigData('temperature', sensor_name, ip_address, url_plug, 0, 100, alert)
 
-        if(isValidSensor(url_plug, ip_address, sensor_name, sensor_names, port=port)):
             newSensorDiv = html.Div(className='card',
                     id=sensor_name,
                     children=[
@@ -261,10 +270,7 @@ def create_new_card(new_card_clicks, create_button_clicks, cardList, fieldsList,
                     ]
                 )
 
-            newCardDivList = cardList[:-1] + [newSensorDiv] + [new_sensor_card]
-            sensor_names[sensor_name] = (sensor_name, url_plug, '', ip_address, port)
-
-            outHolder.addReturn(('cards-container', 'children'), newCardDivList)
+            outHolder.addReturn(('cards-container', 'children'), getCardDivs())
             outHolder.addReturn(('invalid-selection', 'style'), {'display': 'none'})
 
             # clear the fields
@@ -279,11 +285,10 @@ def create_new_card(new_card_clicks, create_button_clicks, cardList, fieldsList,
         else:
             outHolder.addReturn(('invalid-selection', 'style'), {'display':'block', 'color': 'red'})
     elif(curButton == 'new-card-button'):
-        outHolder.addReturn(('cards-container', 'children'), cardList + [fields_card])
         outHolder.addReturn(('fields-card', 'style'), {'display': 'block'}),
         outHolder.addReturn(('new-card', 'style'), {'display': 'none'})
     else:
-        raise PreventUpdate
+        outHolder.addReturn(('cards-container', 'children'), getCardDivs())
 
     return outHolder.getReturns()
 
