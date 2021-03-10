@@ -6,10 +6,38 @@ import dash_daq as daq
 import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output, State, MATCH
+from dash.exceptions import PreventUpdate
 from Email_Component import Email_Component
 from HTTP_Component.Sensors import Sensor
 from UI_Utils import *
 from subprocess import check_output
+from collections import OrderedDict
+
+class OutputHolder:
+    def __init__(self, inList):
+        self.curDictHolder = OrderedDict()
+
+        for item in inList:
+            self.curDictHolder[item] = dash.no_update
+
+    def getObjList(self):
+        return [Output(key[0], key[1]) for key, _ in self.curDictHolder.items()]
+
+    def getReturns(self):
+        out = [value for _, value in self.curDictHolder.items()]
+        self.__clearHolder()
+        return out
+
+    def __clearHolder(self):
+        for key, _ in self.curDictHolder.items():
+            self.curDictHolder[key] = dash.no_update
+
+    def addReturn(self, key, value):
+        self.curDictHolder[key] = value
+
+    def printDict(self):
+        print(self.curDictHolder)
+
 
 sensor_names = {
         # (display name, url extension, units)
@@ -77,72 +105,6 @@ fields_card = html.Div(className='card',
                 )
 
 
-def getStorageCheckmarks():
-    try:
-        fileObj = open("enabled_sensors.txt", "r")
-    except:
-        print("Cannot find enabled_sensors.txt")
-        return []
-
-    outList = fileObj.read().split('\n')
-    fileObj.close()
-
-    return outList
-
-
-def writeStorageCheckmarks(checkmarksList):
-    try:
-        fileObj = open("enabled_sensors.txt", "w")
-    except:
-        print("Cannot write to enabled_sensors.txt")
-
-    checkmarksList = [x for x in checkmarksList if x != '']
-
-    l = len(checkmarksList)
-
-    if(l == 0):
-        print("Wrote nothing.")
-
-    for i in range(l):
-        if(i != l-1):
-            fileObj.write(checkmarksList[i] + '\n')
-        else:
-            fileObj.write(checkmarksList[i])
-
-    fileObj.close()
-
-
-def getCardDivs(enabledSensorsList):
-    divList = []
-    enabledSensorsList = [i for i in enabledSensorsList if i] # needs more permanent fix...
-    for enabledSensor in enabledSensorsList:
-        divList.append(
-            html.Div(className='card',
-                children=[
-                    html.H4(
-                        sensor_names[enabledSensor][0],
-                    ),
-                    html.H2(str(
-                        Sensor(sensor_names[enabledSensor][1]).
-                        getSensorValue()) + ' ' +
-                        sensor_names[enabledSensor][2],
-                        id={'type': 'sensor-data', 'index': enabledSensor},
-                    ),
-                    html.Button('Refresh',
-                        id={'type': 'refresh-button', 'index': enabledSensor},
-                    ),
-                ]
-            )
-        )
-
-    #for i in range(12):
-    #    divList.append(html.Div(className='card', children=[html.H4('<Test card {}>'.format(i))]))
-
-    divList.append(new_sensor_card)
-
-    return divList
-
-
 colors = {"background": "343434"}
 app = dash.Dash(__name__, suppress_callback_exceptions=True)
 
@@ -182,52 +144,19 @@ mainDivChildren = [
                     #html.Div(id='output-sensor-readings'),
                 ],
             ),
-            #    html.Div(
-            #        id="checkboxes_container",
-            #        style={
-            #            "width": "100%",
-            #            "display": "inline-block",
-            #            "textAlign": "left",
-            #            },
-            #        children=[
-            #            html.H3(children='Enabled Sensors'),
-            #            dcc.Checklist(
-            #                id='enabled-sensors',
-            #                persistence=True,
-            #                options=[
-            #                    {'label': 'Temperature', 'value': 'tempSensor'},
-            #                    {'label': 'Humidity', 'value': 'humidSensor'},
-            #                ],
-            #                value=getStorageCheckmarks(), # initially enabled
-            #                labelStyle={
-            #                    'display': 'block',
-            #                    'textAlign': 'justify',
-            #                },
-            #            ),
-            #            html.Button("Save Selection", id='save-checkmarks-button')
-            #        ]
-            #    ),
         ],
     ),
     html.Div(id="cards-container",
         style={
-            #'overflow': 'auto',
-            #'overflow': 'hidden',
             'width': '100%',
             'height': '100%',
-            #'display': 'table',
             'display': 'grid',
             'align-content': 'start',
             'grid-template-columns': 'repeat(auto-fill, 230px)',
-            #'grid-auto-flow': 'column',
-            #'border-spacing': '20px',
-            #'table-layout': 'fixed',
-            #'position': 'relative',
 
         },
         children=[fields_card, new_sensor_card,]
     ),
-
 ]
 
 
@@ -269,20 +198,22 @@ def handle_refresh_buttons(timestamp, id):
     return "{} {}".format(Sensor(sensor_names[enabledSensor][1], domain=sensor_names[enabledSensor][3], port=sensor_names[enabledSensor][4]).getSensorValue(), sensor_names[enabledSensor][2])
 
 
+outHolder = OutputHolder([
+    ('cards-container', 'children'),
+    ('fields-card', 'children'),
+    ('fields-card', 'style'),
+    ('invalid-selection', 'style'),
+    ('new-card', 'style'),
+    ('field_sensor-name', 'value'),
+    ('field_ip-address', 'value'),
+    ('field_port-number', 'value'),
+    ('field_url-plug', 'value'),
+    ('field_alert', 'value'),
+])
+outHolder.printDict()
 
 @app.callback(
-        [
-            Output('cards-container', 'children'),
-            Output('fields-card', 'children'),
-            Output('fields-card', 'style'),
-            Output('invalid-selection', 'style'),
-            Output('new-card', 'style'),
-            Output('field_sensor-name', 'value'),
-            Output('field_ip-address', 'value'),
-            Output('field_port-number', 'value'),
-            Output('field_url-plug', 'value'),
-            Output('field_alert', 'value'),
-        ],
+        outHolder.getObjList(),
         [
             Input('new-card-button', 'n_clicks'),
             Input('field_create-card-button', 'n_clicks'),
@@ -299,6 +230,7 @@ def handle_refresh_buttons(timestamp, id):
         ]
 )
 def create_new_card(new_card_clicks, create_button_clicks, cardList, fieldsList, sensor_name, ip_address, port, url_plug, alert):
+
     ctx = dash.callback_context
 
     if(port == None or port == ''):
@@ -310,12 +242,10 @@ def create_new_card(new_card_clicks, create_button_clicks, cardList, fieldsList,
         curButton = ctx.triggered[0]['prop_id'].split('.')[0]
 
 
-    print("Create: {} | Add new: {}".format(create_button_clicks, new_card_clicks))
-
     if(curButton == 'field_create-card-button'):
 
         if(isValidSensor(url_plug, ip_address, sensor_name, sensor_names, port=port)):
-            temp = html.Div(className='card',
+            newSensorDiv = html.Div(className='card',
                     id=sensor_name,
                     children=[
                         html.H4(
@@ -331,22 +261,35 @@ def create_new_card(new_card_clicks, create_button_clicks, cardList, fieldsList,
                     ]
                 )
 
-            tempList = cardList[:-1] + [temp] + [new_sensor_card]
+            newCardDivList = cardList[:-1] + [newSensorDiv] + [new_sensor_card]
             sensor_names[sensor_name] = (sensor_name, url_plug, '', ip_address, port)
-            return [tempList, dash.no_update, {'display':'none'}, dash.no_update, {'display':'block'}, '', '', '', '', False]
+
+            outHolder.addReturn(('cards-container', 'children'), newCardDivList)
+            outHolder.addReturn(('invalid-selection', 'style'), {'display': 'none'})
+
+            # clear the fields
+            outHolder.addReturn(('field_sensor-name', 'value'), '')
+            outHolder.addReturn(('field_ip-address', 'value'), '')
+            outHolder.addReturn(('field_port-number', 'value'), '')
+            outHolder.addReturn(('field_url-plug', 'value'), '')
+            outHolder.addReturn(('field_alert', 'value'), False)
+
+            outHolder.addReturn(('new-card', 'style'), {'display': 'block'})
+
         else:
-            return [dash.no_update, fieldsList, dash.no_update, {'display':'block', 'color': 'red'}, dash.no_update, dash.no_update, dash.no_update, dash.no_update, dash.no_update, dash.no_update]
+            outHolder.addReturn(('invalid-selection', 'style'), {'display':'block', 'color': 'red'})
     elif(curButton == 'new-card-button'):
-        print("showing field & hiding new-card")
-        return[cardList + [fields_card], dash.no_update, {'display': 'block'}, dash.no_update, {'display': 'none'}, dash.no_update, dash.no_update, dash.no_update, dash.no_update, dash.no_update]
+        outHolder.addReturn(('cards-container', 'children'), cardList + [fields_card])
+        outHolder.addReturn(('fields-card', 'style'), {'display': 'block'}),
+        outHolder.addReturn(('new-card', 'style'), {'display': 'none'})
     else:
-        return dash.no_update
+        raise PreventUpdate
 
-
+    return outHolder.getReturns()
 
 
 if __name__ == "__main__":
-    ip_address = check_output(["hostname", "-I"]).decode("utf-8").strip(" ").strip("\n").replace(" ", "")
+    ip_address = check_output(["hostname", "-I"]).decode("utf-8").split(" ")[0]
     print("IP Address: ", ip_address)
     port = 8050
     print("Port: ", port)
