@@ -97,3 +97,26 @@
 * [Sensor Source Code](sensor_source)
 * [Testing](testing)
 * [User Interface](source/email_ui.py)
+
+# Sprint 6
+
+## Materials
+* [Trello Board](https://trello.com/b/BFcwvt3p/project) (Backlogs and Requirements)
+* [Velocity Chart](https://docs.google.com/spreadsheets/d/1tpRyT-jUgHkrLnwx5NcxtOvh3uGg8ddGYrl60E0q6DA/edit#gid=0)
+* [Burndown Chart for Sprint 6]()
+* [System Architecture](artifacts/architecture.md)
+* [Testing](https://github.com/home-suite-home/Home-Suite-Home/tree/main/testing)
+* [Product Demonstration]()
+
+## Task Allocation
+* Andres Graterol (graterollin) - 
+* David Crumley (daviejones) - 
+* Matthew Dowdy (dowdyma1) - 
+* Wyatt Vining (wv040) - 
+* Nathan Moulton (NathanM117) - 
+
+## Quick Links
+* [System Source Code](source)
+* [Sensor Source Code](sensor_source)
+* [Testing](testing)
+* [User Interface](source/email_ui.py)
