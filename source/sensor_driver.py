@@ -10,7 +10,7 @@ POLL_RATE = 60
 
 def main():
     db = Database()
-    sensorConfigs = db.GetConfigData()
+    sensorConfigs = db.getConfigData()
 
     while True:
         for record in sensorConfigs:
@@ -25,7 +25,7 @@ def main():
                 # TODO: send email alert
                 print("Sensor value out of tollerance")
 
-            db.SendSensorData(sensorValue, record["name"], record["type"])
+            db.sendSensorData(sensorValue, record["name"], record["type"])
 
         sleep(POLL_RATE)
 

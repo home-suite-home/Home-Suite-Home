@@ -41,7 +41,7 @@ class Database:
 			print("connection already established")
 
 	# Populates the database with a single recod given its name, sensor type, and raw value.
-	def SendSensorData(self, data, name, sensor_type):
+	def sendSensorData(self, data, name, sensor_type):
 		if self.connect_status == True:
 
 			db = self.client['sensorsdb']
@@ -61,7 +61,7 @@ class Database:
 			self.connect()
 
 	# Retrieves all values currently in the database
-	def GetData(self):
+	def getData(self):
 		if self.connect_status == True:
 			db = self.client['sensorsdb']
 			collection = db['sensors']
@@ -79,7 +79,7 @@ class Database:
 			return []
 
 	# Produces the average value of a sensor in the database
-	def GetAvgVal(self, name):
+	def getAvgVal(self, name):
 		if self.connect_status == True:
 			db = self.client['sensorsdb']
 			collection = db['sensors']
@@ -101,7 +101,7 @@ class Database:
 			return 0
 
 	# Saves/ Updates sensor config data
-	def SaveConfigData(self, sensor_type, name, address, sub_address, min_threshold, max_threshold, alerts):
+	def saveConfigData(self, sensor_type, name, address, sub_address, min_threshold, max_threshold, alerts):
 		if self.connect_status == True:
 
 			db = self.client['sensorsdb']
@@ -129,7 +129,7 @@ class Database:
 			self.connect()
 
 	# retrieves all config data
-	def GetConfigData(self):
+	def getConfigData(self):
 		if self.connect_status == True:
 			db = self.client['sensorsdb']
 			collection = db['config']
@@ -147,7 +147,7 @@ class Database:
 			return []
 
 	# removes a named sensor's config file
-	def DeleteConfigData(self, name):
+	def deleteConfigData(self, name):
 		if self.connect_status == True:
 			db = self.client['sensorsdb']
 			collection = db['config']
@@ -159,7 +159,7 @@ class Database:
 			self.connect()
 
 	# Deletes all config data
-	def ClearConfigData(self):
+	def clearConfigData(self):
 		if self.connect_status == True:
 			db = self.client['sensorsdb']
 			collection = db['config']
@@ -171,7 +171,7 @@ class Database:
 
 
 	# Deletes all records in the database
-	def Clear(self):
+	def clear(self):
 		if self.connect_status == True:
 			db = self.client['sensorsdb']
 			collection = db['sensors']

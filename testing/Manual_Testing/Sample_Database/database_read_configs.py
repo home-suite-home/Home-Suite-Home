@@ -10,7 +10,7 @@ from time import sleep
 data = Database.Database()
 
 def main():
-    configs = data.GetConfigData()
+    configs = data.getConfigData()
 
     for record in configs:
         print()

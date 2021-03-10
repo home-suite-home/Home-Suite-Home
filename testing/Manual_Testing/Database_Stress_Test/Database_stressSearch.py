@@ -4,9 +4,9 @@ import Sensors
 def main():
 
     data = Database.Database()
-    # data.Clear()
+    # data.clear()
 
-    print(data.GetAvgVal("temp_50"))
+    print(data.getAvgVal("temp_50"))
 
 if __name__ == "__main__":
     main()

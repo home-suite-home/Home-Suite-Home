@@ -8,7 +8,7 @@ def data_over_time(type, name, hours):
     db = Database()
     db.connect()
 
-    data = db.GetRecentSensorData(name, type, int(hours))
+    data = db.getRecentSensorData(name, type, int(hours))
 
     # create line graph
     title_str = name + ": data over " + str(hours) + " hours"

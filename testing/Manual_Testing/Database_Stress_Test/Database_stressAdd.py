@@ -13,7 +13,7 @@ def main():
         "http://localhost:8080")
     for sensorName in nameArray:
         for i in range(100000):
-            data.SendSensorData(temperatureSensorOne.getSensorValue(), sensorName, "temperature")
+            data.sendSensorData(temperatureSensorOne.getSensorValue(), sensorName, "temperature")
 
 if __name__ == "__main__":
     main()

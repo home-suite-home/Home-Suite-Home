@@ -26,9 +26,9 @@ PORT = 27017
 
 # RECENT UPDATES
 #
-# Need sensor name and type to query records
-# Timestamp generator swapped for Wyatt's timeKeeper
-# GetAvg updated to be less expensive
+# Get avg has time parameter
+#
+#
 #
 
 class Database:
@@ -56,7 +56,7 @@ class Database:
 			print("connection already established")
 
 	# Populates the database with a single recod given its name, sensor type, and raw value.
-	def SendSensorData(self, data, name, sensor_type):
+	def sendSensorData(self, data, name, sensor_type):
 		if self.connect_status == True:
 
 			db = self.client['sensorsdb']
@@ -76,7 +76,7 @@ class Database:
 			self.connect()
 
 	# Retrieves all values currently in the database
-	def GetData(self):
+	def getData(self):
 		if self.connect_status == True:
 			db = self.client['sensorsdb']
 			collection = db['sensors']
@@ -92,8 +92,8 @@ class Database:
 			self.connect()
 			return []
 
-	# Produces the average value of a sensor in the database
-	def GetAvgVal(self, name, sensor_type):
+	# Produces the average value of a sensor in a time period
+	def getAvgVal(self, name, sensor_type):
 		if self.connect_status == True:
 			db = self.client['sensorsdb']
 			collection = db['sensors']
@@ -116,8 +116,9 @@ class Database:
 			self.connect()
 			return 0
 
+
 	# Saves/ Updates sensor config data
-	def SaveConfigData(self, sensor_type, name, address, sub_address, min_threshold, max_threshold, alerts):
+	def saveConfigData(self, sensor_type, name, category, address, port, sub_address, min_threshold, max_threshold, units, alerts):
 		if self.connect_status == True:
 
 			db = self.client['sensorsdb']
@@ -126,10 +127,13 @@ class Database:
 			dataobj = {
                             "type": sensor_type,
                             "name": name,
+							"category": category,
                             "address": address,
+							"port": port,
                             "sub_address": sub_address,
                             "min_threshold" : min_threshold,
                             "max_threshold" : max_threshold,
+							"units" : units,
                             "alerts": alerts
 			}
 
@@ -146,7 +150,7 @@ class Database:
 
 
 	# retrieves a sensor's data in the database within a range of hours
-	def GetRecentSensorData(self, name, sensor_type, hours):
+	def getRecentSensorData(self, name, sensor_type, hours):
 		if self.connect_status == True:
 			db = self.client['sensorsdb']
 			collection = db['sensors']
@@ -165,7 +169,7 @@ class Database:
 			return []
 
 	# retrieves all config data
-	def GetConfigData(self):
+	def getConfigData(self):
 		if self.connect_status == True:
 			db = self.client['sensorsdb']
 			collection = db['config']
@@ -183,7 +187,7 @@ class Database:
 			return []
 
 	# removes a named sensor's config file
-	def DeleteConfigData(self, name, sensor_type):
+	def deleteConfigData(self, name, sensor_type):
 		if self.connect_status == True:
 			db = self.client['sensorsdb']
 			collection = db['config']
@@ -195,7 +199,7 @@ class Database:
 			self.connect()
 
 	# Deletes all config data
-	def ClearConfigData(self):
+	def clearConfigData(self):
 		if self.connect_status == True:
 			db = self.client['sensorsdb']
 			collection = db['config']
@@ -207,7 +211,7 @@ class Database:
 
 
 	# Deletes all records in the database
-	def Clear(self):
+	def clear(self):
 		if self.connect_status == True:
 			db = self.client['sensorsdb']
 			collection = db['sensors']

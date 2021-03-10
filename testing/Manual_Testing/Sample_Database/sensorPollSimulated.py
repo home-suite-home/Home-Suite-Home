@@ -10,7 +10,7 @@ from time import sleep
 data = Database.Database()
 
 def main():
-    configs = data.GetConfigData()
+    configs = data.getConfigData()
     loopCounter = 1;
 
     while True:
@@ -32,7 +32,7 @@ def main():
             max_threshold = record["max_threshold"]
             sensorValue = Sensors.Sensor(url_plug=sub_address, domain='localhost', port='8080').getSensorValue()
             print(sensorValue)
-            data.SendSensorData(sensorValue, name, type)
+            data.sendSensorData(sensorValue, name, type)
             print()
         loopCounter += 1
         sleep(60)

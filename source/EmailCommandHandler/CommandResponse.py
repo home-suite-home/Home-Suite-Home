@@ -112,7 +112,7 @@ def most_recent_data():
     db.connect()
 
     # only grab sensors with configs
-    config_list = db.GetConfigData()
+    config_list = db.getConfigData()
     name_list = []
     type_list = []
     for config in config_list:
@@ -122,7 +122,7 @@ def most_recent_data():
     # retrieve data from db
     data_list = []
     for i in range(len(config_list)):
-        data_list.append(db.GetRecentSensorData(name_list[i], type_list[i], 1))
+        data_list.append(db.getRecentSensorData(name_list[i], type_list[i], 1))
 
     # get most recent of these lists
     most_recent_list = []
@@ -183,5 +183,5 @@ def most_recent_data():
     text_response = str(most_recent_list)
 
     # TESTING
-    db.Clear()
+    db.clear()
     return (text_response, html_table, None)

@@ -43,8 +43,8 @@ class OutputHolder:
 def getCardDivs():
     divList = []
 
-    sensorData = db.GetData()
-    for sensor in db.GetConfigData():
+    sensorData = db.getData()
+    for sensor in db.getConfigData():
         divList.append(
             html.Div(className='card',
                 children=[
@@ -252,7 +252,7 @@ def create_new_card(new_card_clicks, create_button_clicks, cardList, fieldsList,
 
     if(curButton == 'field_create-card-button'):
         if(isValidSensor(url_plug, ip_address, sensor_name, port=port)):
-            db.SaveConfigData('temperature', sensor_name, ip_address, url_plug, 0, 100, alert)
+            db.saveConfigData('temperature', sensor_name, ip_address, url_plug, 0, 100, alert)
 
             newSensorDiv = html.Div(className='card',
                     id=sensor_name,
