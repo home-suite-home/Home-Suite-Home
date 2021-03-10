@@ -6,7 +6,11 @@ from CommandResponse import CommandResponse
 from Database import Database
 import time
 
-if sys.argv[1] == "--help":
+if len(sys.argv) < 2:
+    print("No arguments entered")
+    exit
+
+elif sys.argv[1] == "--help":
     print("Starting help menu response testing:")
     resp = CommandResponse("help")
     print(resp.get_response())
