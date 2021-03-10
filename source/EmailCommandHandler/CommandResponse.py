@@ -69,33 +69,19 @@ def help_message():
 def sensor_data_analytics(type, name, days):
     import sys
     # translates to the Home-Suite-Home/Source directory
-    sys.path.append("../Server_Component")
     sys.path.append("..")
-    from Database import Database
+    sys.path.append("../Analytics_Component")
+    import Line_Graph
     from timeKeeper import TimeStamps
-    import plotly.express as px
-
-    URL = 'localhost'
-    PORT = 27017
-
-    # instantiate database and connect
-    db = Database(URL, PORT)
-    db.connect()
 
     hours = int(days)*24
 
-    db.SendSensorData(38.0, "temp_1", "Temp")
-    db.SendSensorData(15.0, "temp_2", "Temp")
-    db.SendSensorData(37.0, "temp_1", "Temp")
-    db.SendSensorData(10.0, "temp_3", "Temp")
-
-    data = db.GetRecentSensorData(name, type, int(hours))
-
     # create line graph
-    graph = px.line(data, x='time', y='value', title = "data over time")
-    graph.show()
+    graph = Line_Graph.data_over_time(type, name, hours)
+
     # create filename
     filepath = "../../analytics/"
+    filename = "command_response_"
     filename = str(TimeStamps().getTimestamp())
     filename += ".png"
     filepath += filename
@@ -125,22 +111,23 @@ def most_recent_data():
     db = Database(url, port)
     db.connect()
 
-    ### TESTING ###
-    db.SendSensorData(38.0, "temp_1", "Temp")
-    db.SendSensorData(15.0, "temp_2", "Temp")
-    db.SendSensorData(37.0, "temp_1", "Temp")
-    db.SendSensorData(10.0, "temp_3", "Temp")
+    # only grab sensors with configs
+    config_list = db.GetConfigData()
+    name_list = []
+    type_list = []
+    for config in config_list:
+        name_list.append(config["name"])
+        type_list.append(config["type"])
 
     # retrieve data from db
-    data_list = db.GetData()
+    data_list = []
+    for i in range(len(config_list)):
+        data_list.append(db.GetRecentSensorData(name_list[i], type_list[i], 1))
 
-    # search for each sensor name and retrieve latest entry
-    name_list = []
-    sensor_list = []
-    for data_obj in reversed(data_list):
-        if data_obj["name"] not in name_list:
-            name_list.append(data_obj["name"])
-            sensor_list.append(data_obj)
+    # get most recent of these lists
+    most_recent_list = []
+    for sub_list in (data_list):
+        most_recent_list.append(sub_list[0])
 
     # html string common to all tables
     html_table = """\
@@ -177,7 +164,7 @@ def most_recent_data():
     """
 
     # create the table based on sensor_list data
-    for sensor in sensor_list:
+    for sensor in most_recent_list:
         html_table += """\
             <tr>
                 <td>{sensor[type]}</td>
@@ -193,7 +180,7 @@ def most_recent_data():
         </body>
         </html>
         """
-    text_response = str(data_list)
+    text_response = str(most_recent_list)
 
     # TESTING
     db.Clear()
