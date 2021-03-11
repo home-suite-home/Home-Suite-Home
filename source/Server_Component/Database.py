@@ -194,7 +194,7 @@ class Database:
 			report_list = []
 
 			for record in records:
-				report_list.append(record[field])
+				report_list.append(record)
 
 			return report_list
 		else:
