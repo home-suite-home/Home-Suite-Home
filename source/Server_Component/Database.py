@@ -167,6 +167,51 @@ class Database:
 			self.connect()
 			return []
 
+	# Returns the most recent value for a given sensor
+	def getMostRecentSensorData(self, name, sensor_type):
+		if self.connect_status == True:
+			db = self.client['sensorsdb']
+			collection = db['sensors']
+			record = collection.find_one(sort = [('time', -1)])
+
+			return record['value']
+		else:
+			print("Well that didn't work. Check the database address, and make sure the mongod process is running...")
+			self.connect()
+			return 0
+
+	# Returns minimum value of a sensor in a certain time frame
+	def getRecentMax(self, name, sensor_type, hours):
+		if self.connect_status == True:
+			db = self.client['sensorsdb']
+			collection = db['sensors']
+
+			# All records will have a ts value greater than this
+			time_bound = (TimeStamps().getTimestamp()) - (3600 * hours)
+			record = collection.find_one({'time' : { '$gte' : time_bound }}, sort = [('value', -1)])
+
+			return record['value']
+		else:
+			print("Well that didn't work. Check the database address, and make sure the mongod process is running...")
+			self.connect()
+			return 0
+
+	# Returns minimum value of a sensor in a certain time frame
+	def getRecentMin(self, name, sensor_type, hours):
+		if self.connect_status == True:
+			db = self.client['sensorsdb']
+			collection = db['sensors']
+
+			# All records will have a ts value greater than this
+			time_bound = (TimeStamps().getTimestamp()) - (3600 * hours)
+			record = collection.find_one({'time' : { '$gte' : time_bound }}, sort = [('value', 1)])
+
+			return record['value']
+		else:
+			print("Well that didn't work. Check the database address, and make sure the mongod process is running...")
+			self.connect()
+			return 0
+
 	# retrieves all config data
 	def getConfigData(self):
 		if self.connect_status == True:
