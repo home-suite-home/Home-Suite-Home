@@ -172,7 +172,7 @@ class Database:
 		if self.connect_status == True:
 			db = self.client['sensorsdb']
 			collection = db['sensors']
-			record = collection.find_one(sort = [('time', -1)])
+			record = collection.find_one({'name': name, 'type' : sensor_type }, sort = [('time', -1)])
 
 			return record['value']
 		else:
@@ -188,7 +188,7 @@ class Database:
 
 			# All records will have a ts value greater than this
 			time_bound = (TimeStamps().getTimestamp()) - (3600 * hours)
-			record = collection.find_one({'time' : { '$gte' : time_bound }}, sort = [('value', -1)])
+			record = collection.find_one({'name': name, 'type' : sensor_type, 'time' : { '$gte' : time_bound }}, sort = [('value', -1)])
 
 			return record['value']
 		else:
@@ -204,7 +204,7 @@ class Database:
 
 			# All records will have a ts value greater than this
 			time_bound = (TimeStamps().getTimestamp()) - (3600 * hours)
-			record = collection.find_one({'time' : { '$gte' : time_bound }}, sort = [('value', 1)])
+			record = collection.find_one({'name': name, 'type' : sensor_type,'time' : { '$gte' : time_bound }}, sort = [('value', 1)])
 
 			return record['value']
 		else:
