@@ -47,8 +47,6 @@ def getCardDivs():
 
     sensorData = db.getData()
     for sensor in db.getConfigData():
-        #print("{}, {}".format(sensor['name'], sensor['type']))
-        #print(db.getMostRecentSensorData(sensor['name'], sensor['type']))
         if(sensor != None):
             divList.append(
                 html.Div(className='card',
@@ -57,7 +55,6 @@ def getCardDivs():
                         html.Div('Type: ' + sensor['type']),
                         html.H2(
                             db.getMostRecentSensorData(sensor['name'], sensor['type']),
-                            #'',
                             id={'type': 'sensor-data', 'index': '{}-{}'.format(sensor['type'], sensor['name'])},
                         ),
                     ]
@@ -214,7 +211,6 @@ mainDivChildren = [
                         debounce=True,
                     ),
                     html.Button("Submit", id="button",),
-                    #html.Div(id='output-sensor-readings'),
                 ],
             ),
         ],
@@ -314,8 +310,6 @@ def create_new_card(new_card_clicks, create_button_clicks, sensor_type,
 
     if ctx.triggered:
         curButton = ctx.triggered[0]['prop_id'].split('.')[0]
-    print("button: " + curButton)
-    print(sensor_type)
 
     if(curButton == 'field_create-card-button'):
         if(isValidSensor(url_plug, ip_address, sensor_name, port=port)):
@@ -349,10 +343,7 @@ def create_new_card(new_card_clicks, create_button_clicks, sensor_type,
     else:
         outHolder.addReturn(('cards-container', 'children'), getCardDivs())
 
-    
-    x = outHolder.getReturns()
-
-    return x
+    return outHolder.getReturns()
 
 
 @app.callback(
@@ -363,14 +354,8 @@ def create_new_card(new_card_clicks, create_button_clicks, sensor_type,
 def live_data_update(numRefreshes, curId):
     sensorType, sensorName = curId['index'].split('-')
     data = db.getMostRecentSensorData(sensorName, sensorType)
-    #data_old = db.getRecentSensorData(sensorName, sensorType, 1)[0]['value']
-
-    print(numRefreshes)
-
-    #print('{} {} -- {} vs {}'.format(sensorName, sensorType, data, data_old))
 
     return data
-
 
 
 if __name__ == "__main__":
