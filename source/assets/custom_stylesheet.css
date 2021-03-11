@@ -1,6 +1,6 @@
 div.card {
     width: 200px;
-    height: 400px;
+    height: 450px;
     background-color: #f5f5f5;
     border: 2px solid black;
     border-radius: 15px;
@@ -8,4 +8,9 @@ div.card {
     padding: 5px; 
     display: block;
     text-align: center;
+}
+
+.field_element{
+    width: 150px;
+    display: block;
 }
