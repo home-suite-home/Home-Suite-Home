@@ -10,7 +10,6 @@ from time import sleep
 data = Database.Database()
 
 def main():
-    configs = data.getConfigData()
     loopCounter = 1;
 
     while True:
@@ -20,6 +19,7 @@ def main():
         print("LOOP: ", loopCounter)
         print("=============================")
         print()
+        configs = data.getConfigData()
         for record in configs:
             print("------------------------------")
             print()
