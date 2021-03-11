@@ -158,6 +158,7 @@ class Database:
 			time_bound = (TimeStamps().getTimestamp()) - (3600 * hours)
 			records = collection.find({'name' : name, 'type' : sensor_type, 'time': {'$gte': time_bound}}, {'_id' : 0}).sort("time", -1)
 			report_list = []
+
 			for record in records:
 				report_list.append(record)
 
@@ -173,6 +174,9 @@ class Database:
 			db = self.client['sensorsdb']
 			collection = db['sensors']
 			record = collection.find_one({'name': name, 'type' : sensor_type }, sort = [('time', -1)])
+
+			if record is None:
+				return 0
 
 			return record['value']
 		else:
@@ -190,6 +194,9 @@ class Database:
 			time_bound = (TimeStamps().getTimestamp()) - (3600 * hours)
 			record = collection.find_one({'name': name, 'type' : sensor_type, 'time' : { '$gte' : time_bound }}, sort = [('value', -1)])
 
+			if record is None:
+				return 0
+
 			return record['value']
 		else:
 			print("Well that didn't work. Check the database address, and make sure the mongod process is running...")
@@ -205,6 +212,9 @@ class Database:
 			# All records will have a ts value greater than this
 			time_bound = (TimeStamps().getTimestamp()) - (3600 * hours)
 			record = collection.find_one({'name': name, 'type' : sensor_type,'time' : { '$gte' : time_bound }}, sort = [('value', 1)])
+
+			if record is None:
+				return 0
 
 			return record['value']
 		else:
