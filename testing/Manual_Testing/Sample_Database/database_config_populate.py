@@ -32,7 +32,7 @@ def main():
 
     ### Config Structure ###
 
-    saveConfigData(sensor_type, name, category, address, port, sub_address, min_threshold, max_threshold, units, alerts)
+    # saveConfigData(sensor_type, name, category, address, port, sub_address, min_threshold, max_threshold, units, alerts)
 
 
 
