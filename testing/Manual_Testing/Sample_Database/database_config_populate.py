@@ -30,43 +30,42 @@ def main():
     # data.clearConfigData()
 
 
-    ### New Config Structure ###
+    ### Config Structure ###
 
-    # saveConfigData(Categeory, type, name, IP_Address, port, url_plug sensor_units, min_threshold, max_threshold, alerts)
-    # saveConfigData("Temperature", "temperature", "Outside Temperature", "10.0.1.60", 80, "sensor1", "Fahrenheit", min_threshold, max_threshold, alerts)
+    saveConfigData(sensor_type, name, category, address, port, sub_address, min_threshold, max_threshold, units, alerts)
 
 
 
     ##  Indoor Sensor Cluster   ##
 
     # SHT31
-    data.saveConfigData("temperature", "Room Temperature", "10.0.1.60", "temperature", -10, 50, True)
-    data.saveConfigData("humidity", "Room Humidity", "10.0.1.60", "humidity", 30, 75, True)
+    data.saveConfigData("temperature", "Room Temperature", "Indoor Sensors", "10.0.1.60", 80, "temperature", -10, 50, "celsius", True)
+    data.saveConfigData("humidity", "Room Humidity", "Indoor Sensors", "10.0.1.60", 80, "humidity", 30, 75, "percent", True)
 
     #DS18B20
-    data.saveConfigData("temperature", "Inside Temperature 1", "10.0.1.60", "sensor1", -10, 50, True)
-    data.saveConfigData("temperature", "Inside Temperature 2", "10.0.1.60", "sensor2", -10, 50, True)
-    data.saveConfigData("temperature", "Inside Temperature 3", "10.0.1.60", "sensor3", -10, 50, True)
-    data.saveConfigData("temperature", "Inside Temperature 4", "10.0.1.60", "sensor4", -10, 50, True)
+    data.saveConfigData("temperature", "Inside Temperature 1", "Indoor Sensors", "10.0.1.60", 80, "sensor1", -10, 50, "celsius", True)
+    data.saveConfigData("temperature", "Inside Temperature 2", "Indoor Sensors", "10.0.1.60", 80, "sensor2", -10, 50, "celsius", True)
+    data.saveConfigData("temperature", "Inside Temperature 3", "Indoor Sensors", "10.0.1.60", 80, "sensor3", -10, 50, "celsius", True)
+    data.saveConfigData("temperature", "Inside Temperature 4", "Indoor Sensors", "10.0.1.60", 80, "sensor4", -10, 50, "celsius", True)
 
     ##  Outdoor Sensor Cluster  ##
 
     # SHT31
-    data.saveConfigData("temperature", "Back Porch Temperature", "10.0.1.64", "temperatureSHT", -10, 50, True)
-    data.saveConfigData("humidity", "Back Porch Humidity", "10.0.1.64", "humiditySHT", 30, 90, True)
+    data.saveConfigData("temperature", "Back Porch Temperature", "Outdoor Sensors", "10.0.1.64", 80, "temperatureSHT", -10, 50, "celsius", True)
+    data.saveConfigData("humidity", "Back Porch Humidity", "Outdoor Sensors", "10.0.1.64", 80, "humiditySHT", 30, 90, "percent", True)
 
     # DS18B20
-    data.saveConfigData("temperature", "Outside Temperature 1", "10.0.1.64", "sensor1", -10, 50, True)
-    data.saveConfigData("temperature", "Outside Temperature 2", "10.0.1.64", "sensor2", -10, 50, True)
-    data.saveConfigData("temperature", "Outside Temperature 3", "10.0.1.64", "sensor3", -10, 50, True)
-    data.saveConfigData("temperature", "Outside Temperature 4", "10.0.1.64", "sensor4", -10, 50, True)
-    data.saveConfigData("temperature", "Kegerator Temperature", "10.0.1.64", "probe", -5, 40, True)
+    data.saveConfigData("temperature", "Outside Temperature 1", "Outdoor Sensors", "10.0.1.64", 80, "sensor1", -10, 50, "celsius", True)
+    data.saveConfigData("temperature", "Outside Temperature 2", "Outdoor Sensors", "10.0.1.64", 80, "sensor2", -10, 50, "celsius", True)
+    data.saveConfigData("temperature", "Outside Temperature 3", "Outdoor Sensors", "10.0.1.64", 80, "sensor3", -10, 50, "celsius", True)
+    data.saveConfigData("temperature", "Outside Temperature 4", "Outdoor Sensors", "10.0.1.64", 80, "sensor4", -10, 50, "celsius", True)
+    data.saveConfigData("temperature", "Kegerator Temperature", "Outdoor Sensors", "10.0.1.64", 80, "probe", -5, 40, "celsius", True)
 
     # DHT 22
-    data.saveConfigData("temperature", "DHT One Temperature", "10.0.1.64", "dht1temperature", -10, 50, True)
-    data.saveConfigData("humidity", "DHT One Humidity", "10.0.1.64", "dht1humidity", 30, 90, True)
-    data.saveConfigData("temperature", "DHT Two Temperature", "10.0.1.64", "dht2temperature", -10, 50, True)
-    data.saveConfigData("humidity", "DHT Two Humidity", "10.0.1.64", "dht2humidity", 30, 90, True)
+    data.saveConfigData("temperature", "DHT One Temperature", "Outdoor Sensors", "10.0.1.64", 80, "dht1temperature", -10, 50, "celsius", True)
+    data.saveConfigData("humidity", "DHT One Humidity", "Outdoor Sensors", "10.0.1.64", 80, "dht1humidity", 30, 90, "percent", True)
+    data.saveConfigData("temperature", "DHT Two Temperature", "Outdoor Sensors", "10.0.1.64", 80, "dht2temperature", -10, 50, "celsius", True)
+    data.saveConfigData("humidity", "DHT Two Humidity", "Outdoor Sensors", "10.0.1.64", 80, "dht2humidity", 30, 90, "percent", True)
 
 
 if __name__ == "__main__":
