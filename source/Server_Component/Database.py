@@ -5,7 +5,6 @@ sys.path.append("..")
 
 
 import pymongo as mongo
-import json
 from timeKeeper import TimeStamps
 
 
@@ -64,10 +63,10 @@ class Database:
 			ts = TimeStamps().getTimestamp()
 
 			dataobj = {
-                            "type": sensor_type,
-                            "name": name,
-                            "value": data,
-                            "time": ts
+                        	"type": sensor_type,
+                        	"name": name,
+                        	"value": data,
+                        	"time": ts
 			}
 
 			collection.insert_one(dataobj)
@@ -185,6 +184,24 @@ class Database:
 			print("Well that didn't work. Check the database address, and make sure the mongod process is running...")
 			self.connect()
 			return []
+
+	# returns an array of field tyes
+	def getFields(self, field):
+		if self.connect_status == True:
+			db = self.client['sensorsdb']
+			collection = db['config']
+			records = collection.find({}, {'_id' : 0}).distinct(field)
+			report_list = []
+
+			for record in records:
+				report_list.append(record[field])
+
+			return report_list
+		else:
+			print("Well that didn't work. Check the database address, and make sure the mongod process is running...")
+			self.connect()
+			return []
+
 
 	# removes a named sensor's config file
 	def deleteConfigData(self, name, sensor_type):
