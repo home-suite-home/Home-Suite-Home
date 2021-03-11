@@ -25,12 +25,15 @@
 #include <Wire.h>
 #include "Adafruit_SHT31.h"
 
+// wifi ssid and password header file
+#include "creds.h"
+
 // Declare a global object for temperature / humidity sensor
 Adafruit_SHT31 sht31 = Adafruit_SHT31();
 
 // SSID and Password of your WiFi router
-const char* ssid = "NETWORK_NAME";
-const char* password = "NETWORK_PASSWORD";
+const char* ssid = NETWORK_NAME;
+const char* password = NETWORK_PASSWORD;
 
 // Declare a global object variable from the ESP8266WebServer class
 ESP8266WebServer server(80); //Server on port 80 - Standard for HTTP
