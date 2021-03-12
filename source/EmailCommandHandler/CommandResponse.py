@@ -70,7 +70,7 @@ def sensor_data_analytics(type, name, days):
     import sys
     # translates to the Home-Suite-Home/Source directory
     sys.path.append("..")
-    sys.path.append("../Analytics_Component")
+    sys.path.append("../AnalyticsComponent")
     import LineGraph
     from timeKeeper import TimeStamps
 
