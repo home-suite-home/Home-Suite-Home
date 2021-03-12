@@ -71,18 +71,22 @@ def sensor_data_analytics(type, name, days):
     # translates to the Home-Suite-Home/Source directory
     sys.path.append("..")
     sys.path.append("../Analytics_Component")
-    import Line_Graph
+    import LineGraph
     from timeKeeper import TimeStamps
 
     hours = int(days)*24
 
     # create line graph
-    graph = Line_Graph.data_over_time(type, name, hours)
+    graph = LineGraph.data_over_time(type, name, hours)
+    # check for empty graph
+    if not graph:
+        return help_message()
 
+    ts = TimeStamps()
     # create filename
     filepath = "../../analytics/"
     filename = "command_response_"
-    filename = str(TimeStamps().getTimestamp())
+    filename += str(ts.stringToTimestamp(ts.getTimestamp()))
     filename += ".png"
     filepath += filename
     graph.write_image(filepath)

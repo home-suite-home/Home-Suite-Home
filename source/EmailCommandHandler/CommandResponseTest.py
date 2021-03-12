@@ -21,8 +21,8 @@ elif sys.argv[1] == "--mostrecent":
     # load the database
     db = Database()
     # storing config data for ONLY SENSORS 1 AND 2
-    db.saveConfigData("temperature", "temp_1", "local", "more_local", 0, 50, False)
-    db.saveConfigData("temperature", "temp_2", "local", "more_local", 0, 50, False)
+    db.saveConfigData("temperature", "temp_1", "", "", "", "",  0, 50, "", False)
+    db.saveConfigData("temperature", "temp_2", "", "", "", "",  0, 50, "", False)
 
     # storing sensor data
     db.sendSensorData(10.0, "temp_1", "temperature")
@@ -46,22 +46,22 @@ elif sys.argv[1] == "--mostrecent":
 elif sys.argv[1] =="--getsensordata":
     print("Starting get sensor data response testing:")
     # load the database
-    db = Database()
-    # storing config data for ONLY SENSORS 1 AND 2
-    db.saveConfigData("temperature", "temp_1", "local", "more_local", 0, 50, False)
-    db.saveConfigData("temperature", "temp_2", "local", "more_local", 0, 50, False)
+    import time
+    import random
 
-    # storing sensor data
-    db.sendSensorData(10.0, "temp_1", "temperature")
-    db.sendSensorData(10.0, "temp_2", "temperature")
-    db.sendSensorData(10.0, "temp_3", "temperature")
-    time.sleep(2)
-    db.sendSensorData(20.0, "temp_1", "temperature")
-    db.sendSensorData(20.0, "temp_2", "temperature")
-    db.sendSensorData(20.0, "temp_3", "temperature")
+    db = Database()
+    db.saveConfigData("temperature", "temp_1", "", "", "", "",  0, 50, "", False)
+    db.saveConfigData("temperature", "temp_2", "", "", "", "",  0, 50, "", False)
+
+    for i in range(10):
+        db.sendSensorData(random.randrange(6), "temp_1", "temperature")
+        db.sendSensorData(random.randrange(70), "temp_2", "temperature")
+        db.sendSensorData(random.randrange(10), "hum_1", "humidity")
+        print(i)
+        time.sleep(1)
 
     # call the command response
-    resp = CommandResponse("get sensor data: temperature, temp_3, 1")
+    resp = CommandResponse("get sensor data: temperature, temp_2, 1")
     print(resp.get_response())
 
     # reset databse
