@@ -30,6 +30,13 @@ This component is used to retrieve sensors data over the network. The Sensors cl
 | Class | Related User Stories (UID) |
 | --- | --- |
 | Sensor | 002, 017, 022 |
+### timeKeeper.py
+![Screenshot of timeKeeper.py class Diagram](assets/timeKeeper_class_diagram.png)
+#### Diagram Description:
+This component provides utilities for parsing and using time and date stamps. The function getTimestamp() returns an integer value representing the current time. This is useful as a format for storing the timestamp in the database. Then we can use stringToTimestamp() to convert the stored timestamp back into a readable format.
+| Class | Related User Stories (UID) |
+| --- | --- |
+| TimeStamps | 020 |
 
 # Data Design
 Much of the data stored in this database will be unstructured. Sensors like the temperature/humidity sensor won't have many relations with one another. There are some sensor types that may have relational attributes, such as the RFID sensors which will require a table of valid IDs...
