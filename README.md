@@ -113,7 +113,7 @@
 * David Crumley (daviejones) - 
 * Matthew Dowdy (dowdyma1) - 
 * Wyatt Vining (wv040) - 
-* Nathan Moulton (NathanM117) - 
+* Nathan Moulton (NathanM117) - Development and Testing for Database
 
 ## Quick Links
 * [System Source Code](source)
