@@ -65,6 +65,6 @@ class Alert:
         body_text = self.__generate_text_body()
         body_html = self.__generate_html_body()
 
-        message = email.compose_email(subject body_text, body_html)
+        message = email.compose_email(subject, body_text, body_html)
 
         email.send_email(message)
