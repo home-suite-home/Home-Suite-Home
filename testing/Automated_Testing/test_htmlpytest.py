@@ -18,8 +18,10 @@ import pytest
 from Sensors import *
 
 def test_getDegreesCelsius():
-    degrees = TemperatureSensor.getDegreesCelcius(TemperatureSensor())
+    Temp = TemperatureSensor(url_plug="temperature")
+    degrees = Temp.getDegreesCelcius()
     assert isinstance(degrees, float)
 
 def test_calculateDewPoint():
-    assert HumiditySensor.calculateDewPoint(HumiditySensor(), 50.00, 25.00) == 13.85 
+    Humid = HumiditySensor(url_plug="humidity")
+    assert Humid.calculateDewPoint(50.00, 25.00) == 13.85 
