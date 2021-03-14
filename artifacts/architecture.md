@@ -37,6 +37,13 @@ This component provides utilities for parsing and using time and date stamps. Th
 | Class | Related User Stories (UID) |
 | --- | --- |
 | TimeStamps | 020 |
+### encryption.py
+![Screenshot of timeKeeper.py class Diagram](assets/encryption_class_diagram.png)
+#### Diagram Description:
+The class encryption provides functions to generate, store and retrieve a secure key. Also, encrypt and decrypt a file using the secure key. The PiEmailCredentials class extends that functionality to specifically save and retrieve the email credentials for the Pi itself.
+| Class | Related User Stories (UID) |
+| --- | --- |
+| TimeStamps | 028 |
 
 # Data Design
 Much of the data stored in this database will be unstructured. Sensors like the temperature/humidity sensor won't have many relations with one another. There are some sensor types that may have relational attributes, such as the RFID sensors which will require a table of valid IDs...
