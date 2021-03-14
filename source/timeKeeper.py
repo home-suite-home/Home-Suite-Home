@@ -39,6 +39,9 @@ class TimeStamps:
         date_time = timestamp.strftime("%m/%d/%Y, %H:%M:%S")
         print("date and time:",date_time)
 
+    def getTimestampString():
+        return datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
+
 '''
 def main():
 
