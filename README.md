@@ -106,13 +106,13 @@
 * [Burndown Chart for Sprint 6]()
 * [System Architecture](artifacts/architecture.md)
 * [Testing](https://github.com/home-suite-home/Home-Suite-Home/tree/main/testing)
-* [Product Demonstration]()
+* [Product Demonstration](https://youtu.be/VESqYKWHarw)
 
 ## Task Allocation
-* Andres Graterol (graterollin) - Developed and updated Automated Tests / Manual Testing 
-* David Crumley (daviejones) - 
-* Matthew Dowdy (dowdyma1) - 
-* Wyatt Vining (wv040) - 
+* Andres Graterol (graterollin) - Developed and updated Automated Tests / Manual Testing
+* David Crumley (daviejones) -
+* Matthew Dowdy (dowdyma1) -
+* Wyatt Vining (wv040) -
 * Nathan Moulton (NathanM117) - Development and Testing for Database
 
 ## Quick Links
