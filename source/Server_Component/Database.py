@@ -232,7 +232,6 @@ class Database:
 
 			for record in records:
 				report_list.append(record)
-				print(record)
 
 			return report_list
 		else:
