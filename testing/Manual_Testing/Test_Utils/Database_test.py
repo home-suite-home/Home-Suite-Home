@@ -13,21 +13,22 @@ def test_db():
     # Testing the configuration functions
     print("Testing Config Collection...")
 
-    dbase.saveConfigData("temperature", "temp_1",
-                         "http: // localhost: 8080", "temperature", 10, 60, True)
-    dbase.saveConfigData("temperature", "temp_2",
-                         "http: // localhost: 8080", "temperature", 10, 60, False)
-    dbase.saveConfigData("temperature", "temp_3",
-                         "http: // localhost: 8080", "temperature", 10, 60, True)
-    dbase.saveConfigData("humidity", "humid_1",
-                         "http: // localhost: 8080", "humidity", 30, 50, False)
-    dbase.saveConfigData("humidity", "humid_2",
-                         "http: // localhost: 8080", "humidity", 30, 50, True)
-    dbase.saveConfigData("humidity", "humid_3",
-                         "http: // localhost: 8080", "humidity", 30, 50, False)
+    dbase.saveConfigData("temperature", "temp_1", "inside", 
+                         "http: // localhost", "8080", "temperature", 10, 60, "fahrenheit", True)
+    dbase.saveConfigData("temperature", "temp_2", "outside",
+                         "http: // localhost", "8080", "temperature", 10, 60, "fahrenheit", False)
+    dbase.saveConfigData("temperature", "temp_3", "inside",
+                         "http: // localhost", "8080", "temperature", 10, 60, "celsius", True)
+    dbase.saveConfigData("humidity", "humid_1", "outside"
+                         "http: // localhost", "8080", "humidity", 30, 50, "percent", False)
+    dbase.saveConfigData("humidity", "humid_2", "inside"
+                         "http: // localhost", "8080", "humidity", 30, 50, "percent", True)
+    dbase.saveConfigData("humidity", "humid_3", "outside"
+                         "http: // localhost", "8080", "humidity", 30, 50, "percent", False)
 
     # Shows record of added config
     config_list = dbase.getConfigData()
+    print(config_list)
 
     # Deleting these sensor names
     print()
@@ -36,6 +37,7 @@ def test_db():
 
     # Ensuring that new records show removal
     config_list = dbase.getConfigData()
+    print(config_list)
 
     # uncomment this whenever you wish to clear the config database:
     #dbase.clearConfigData()
@@ -60,19 +62,21 @@ def test_db():
 
     # Prints all the records of the database
     test_list = dbase.getData()
+    print(test_list)
+    print()
 
     # Checking temperature sensor data
-    tempTest_value1 = dbase.getAvgVal("temp_1", "temperature")
-    tempTest_value2 = dbase.getAvgVal("temp_2", "temperature")
-    tempTest_value3 = dbase.getAvgVal("temp_3", "temperature")
+    tempTest_value1 = dbase.getAvgVal("temp_1", "Temp")
+    tempTest_value2 = dbase.getAvgVal("temp_2", "Temp")
+    tempTest_value3 = dbase.getAvgVal("temp_3", "Temp")
     print("Average for temp_1: " + str(tempTest_value1))
     print("Average for temp_2: " + str(tempTest_value2))
     print("Average for temp_3: " + str(tempTest_value3))
 
     # Checking humidity sensor data
-    humidTest_value1 = dbase.getAvgVal("humid_1", "humidity")
-    humidTest_value2 = dbase.getAvgVal("humid_2", "humidity")
-    humidTest_value3 = dbase.getAvgVal("humid_3", "humidity")
+    humidTest_value1 = dbase.getAvgVal("humid_1", "Humid")
+    humidTest_value2 = dbase.getAvgVal("humid_2", "Humid")
+    humidTest_value3 = dbase.getAvgVal("humid_3", "Humid")
     print("Average for humid_1: " + str(humidTest_value1))
     print("Average for humid_2: " + str(humidTest_value2))
     print("Average for humid_3: " + str(humidTest_value3))
