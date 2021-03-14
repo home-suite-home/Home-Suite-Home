@@ -23,21 +23,21 @@ class TimeStamps:
 
     # demonstrates use of timestamp data
     # expects a timedate data object - output of stringToTimestamp()
-    def printTimestamp(self, timestamp):
-        year = timestamp.strftime("%Y")
-        print("year:", year)
-
-        month = timestamp.strftime("%m")
-        print("month:", month)
-
-        day = timestamp.strftime("%d")
-        print("day:", day)
-
-        time = timestamp.strftime("%H:%M:%S")
-        print("time:", time)
-
-        date_time = timestamp.strftime("%m/%d/%Y, %H:%M:%S")
-        print("date and time:",date_time)
+    # def printTimestamp(self, timestamp):
+    #     year = timestamp.strftime("%Y")
+    #     print("year:", year)
+    #
+    #     month = timestamp.strftime("%m")
+    #     print("month:", month)
+    #
+    #     day = timestamp.strftime("%d")
+    #     print("day:", day)
+    #
+    #     time = timestamp.strftime("%H:%M:%S")
+    #     print("time:", time)
+    # 
+    #     date_time = timestamp.strftime("%m/%d/%Y, %H:%M:%S")
+    #     print("date and time:",date_time)
 
     def getTimestampString():
         return datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
