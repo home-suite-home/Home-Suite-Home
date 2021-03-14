@@ -238,6 +238,9 @@ We will also need the source code:
 # encryption.py
 ## [U028] As a property manager, I want my email credentials to be encrypted so that, my password stays secure.
 
+## Description
+This procedure will demonstrate the ability of encryption.py to store and retrieve an email and username as encrypted data.
+
 ## Test Tools and Dependencies
 For this test, we are beginning with the following tools installed:
 * Linux Command Line
