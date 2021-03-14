@@ -109,7 +109,7 @@
 * [Product Demonstration]()
 
 ## Task Allocation
-* Andres Graterol (graterollin) - 
+* Andres Graterol (graterollin) - Developed and updated Automated Tests / Manual Testing 
 * David Crumley (daviejones) - 
 * Matthew Dowdy (dowdyma1) - 
 * Wyatt Vining (wv040) - 

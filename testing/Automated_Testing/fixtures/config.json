@@ -1,0 +1,85 @@
+[{
+  "_id": {
+    "$oid": "604ac8dfa7f0f9b92838d55d"
+  },
+  "type": "temperature",
+  "name": "temp_1",
+  "category": "inside",
+  "address": "http: // localhost",
+  "port": "8080",
+  "sub_address": "temperature",
+  "min_threshold": 10,
+  "max_threshold": 60,
+  "units": "fahrenheit",
+  "alerts": true
+},{
+  "_id": {
+    "$oid": "604ac8dfa7f0f9b92838d55e"
+  },
+  "type": "temperature",
+  "name": "temp_2",
+  "category": "outside",
+  "address": "http: // localhost",
+  "port": "8080",
+  "sub_address": "temperature",
+  "min_threshold": 10,
+  "max_threshold": 60,
+  "units": "fahrenheit",
+  "alerts": false
+},{
+  "_id": {
+    "$oid": "604ac8dfa7f0f9b92838d55f"
+  },
+  "type": "temperature",
+  "name": "temp_3",
+  "category": "inside",
+  "address": "http: // localhost",
+  "port": "8080",
+  "sub_address": "temperature",
+  "min_threshold": 10,
+  "max_threshold": 60,
+  "units": "celsius",
+  "alerts": true
+},{
+  "_id": {
+    "$oid": "604ac8dfa7f0f9b92838d560"
+  },
+  "type": "humidity",
+  "name": "humid_1",
+  "category": "outside",
+  "address": "http: // localhost",
+  "port": "8080",
+  "sub_address": "humidity",
+  "min_threshold": 30,
+  "max_threshold": 50,
+  "units": "percent",
+  "alerts": false
+},{
+  "_id": {
+    "$oid": "604ac8dfa7f0f9b92838d561"
+  },
+  "type": "humidity",
+  "name": "humid_2",
+  "category": "inside",
+  "address": "http: // localhost",
+  "port": "8080",
+  "sub_address": "humidity",
+  "min_threshold": 30,
+  "max_threshold": 50,
+  "units": "percent",
+  "alerts": true
+},{
+  "_id": {
+    "$oid": "604ac8dfa7f0f9b92838d562"
+  },
+  "type": "humidity",
+  "name": "humid_3",
+  "category": "outside",
+  "address": "http: // localhost",
+  "port": "8080",
+  "sub_address": "humidity",
+  "min_threshold": 30,
+  "max_threshold": 50,
+  "units": "percent",
+  "alerts": false
+}]

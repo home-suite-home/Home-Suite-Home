@@ -14,7 +14,7 @@ from subprocess import check_output
 from collections import OrderedDict
 from Server_Component.Database import Database
 
-SECONDS_PER_REFRESH = 60
+SECONDS_PER_REFRESH = 30
 
 class OutputHolder:
     def __init__(self, inList):
@@ -47,6 +47,7 @@ def getCardDivs():
 
     sensorData = db.getData()
     for sensor in db.getConfigData():
+        print(sensor)
         if(sensor != None):
             divList.append(
                 html.Div(className='card',
@@ -312,7 +313,7 @@ def create_new_card(new_card_clicks, create_button_clicks, sensor_type,
         curButton = ctx.triggered[0]['prop_id'].split('.')[0]
 
     if(curButton == 'field_create-card-button'):
-        if(isValidSensor(url_plug, ip_address, sensor_name, port=port)):
+        if(isValidSensor(sensor_type, url_plug, ip_address, sensor_name, port=port)):
             if(sensor_type == 'other-type'):
                 sensor_type = new_type
             db.saveConfigData(sensor_type, sensor_name, 'category', ip_address, port, url_plug, min_bound, max_bound, units, alert)

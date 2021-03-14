@@ -11,7 +11,7 @@ The following will be needed for this test:
 * clone the repository on to the local machine: this will ensure all necessary files are found
 
 ## Test Cases
-### [U014] As a property owner I want to receive a response from the system when a command is given over email so that the system will do what I want remotely. 
+### [U014] As a property owner I want to receive a response from the system when a command is given over email so that the system will do what I want remotely.
 ### Functional Case (help message)
 **Test Status** *PASS*</br>
 #### Test Procedures
@@ -28,7 +28,7 @@ The following will be needed for this test:
 | 1 | The terminal will reflect the operations being handled by the running program | ![terminal_response](/artifacts/assets/terminal_response.PNG) |
 | 2 | An email message will be recieved by 'home.suite.home.testing@gmail.com' | ![email_response](/artifacts/assets/email_response.PNG) |
 
-### [U003] As a property owner, I would like to view a graphic representation of sensor data over time so that I can see trends in my property. 
+### [U003] As a property owner, I would like to view a graphic representation of sensor data over time so that I can see trends in my property.
 ### Functional Case (get sensor data)
 **Test Status** *PASS*</br>
 #### Test Procedures
@@ -140,7 +140,7 @@ Before running any of the programs listed here, it is recomended to follow the p
 |  4  | Return to the *Database_test.py* file and now comment out the lines db.clearConfigData() and db.clear(). | The line should now appear commented out and it will not compile when ran in the command line. |
 |  5  | Run the testing script again. | The command line shall have a view of the config data before and after deleting elements from it. ![configDel](/artifacts/assets/config_delTest.PNG) |
 |  6  | Scroll down on the terminal. | The command line shall have have a view of all the records as a list and should also be printing the averages for each sensor. ![cmd](/artifacts/assets/cmd_dbTest.PNG) |
-|  7  | Scroll down on the terminal. | The terminal shall show 20 timestamps strings in epoch time. It will also show the 5 most recent objects passed to the database and their corresponding epoch time. ![recent](/artifacts/assets/getRecent_test.PNG)| 
+|  7  | Scroll down on the terminal. | The terminal shall show 20 timestamps strings in epoch time. It will also show the 5 most recent objects passed to the database and their corresponding epoch time. ![recent](/artifacts/assets/getRecent_test.PNG)|
 |  8  | Check the Database once again. Two collectons should be added. Click the one named *config*.  | The database should be populated with the sensor configuration data sent in the testing file! ![config](/artifacts/assets/config_db.PNG)|
 |  9  | Click the second collection named *sensors*.| The database should now be populated with the sensor data sent in the testing file. ![populated](/artifacts/assets/populated_sensorsdb.PNG)|
 
@@ -234,3 +234,27 @@ We will also need the source code:
 | 3 | Type *python3 sensor_driver.py* and press return | *sensor_driver.py* will compile and run |
 | 4 | Observe the printouts to the terminal windows | each time a sensor is accessed and recorded, a printout containing the senor name and value to record is displayed in the terminal window |
 | 5 | The script will loop every 60 seconds gathering data until we interrupt it - press *ctrl + c* to stop the script | The terminal window will return control to the user showing the test has ended |
+
+# encryption.py
+## [U028] As a property manager, I want my email credentials to be encrypted so that, my password stays secure.
+
+## Description
+This procedure will demonstrate the ability of encryption.py to store and retrieve an email and username as encrypted data.
+
+## Test Tools and Dependencies
+For this test, we are beginning with the following tools installed:
+* Linux Command Line
+
+We will also need the source code:
+* [encryption.py](/source/encryption.py)
+
+## Test Case
+**Test Status:** *PASS*
+| No. | Steps to Reproduce | Expected Behavior |
+| --- | --- | --- |
+| 1 | Open the directory containing the source file | A directory containing *encryption.py* will appear |
+| 2 | Right click in the directory containing the source file for testing and select *open in terminal* from the context menu | A terminal window with the correct file path displayed next to the user's username will appear |
+| 3 | Type *python3 encryption.py* and press return | *encryption.py* will compile and run |
+| 4 | Observe the plain text printout in the terminal of the email and username for our development email account | an email and password shall be printed indicating the system successfully saved and retrieved the user credentials |
+| 5 | Reopen the directory containing the *encryption.py* source file and observe the existence of a *.config* and *.key* file | the files with specified suffixes shall be present |
+| 6 | Open both *.config* and *.key* files and observe their contents | the contents shall be incomprehensible strings of characters indicating the data within them has been encrypted |
