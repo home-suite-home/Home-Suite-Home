@@ -175,8 +175,9 @@ class Database:
 			collection = db['sensors']
 			record = collection.find_one({'name': name, 'type' : sensor_type }, sort = [('time', -1)])
 
-			if record is None:
-				return 0
+			if record is None || str(record['value']) == 'nan':
+				return 'NaN'
+
 
 			return record['value']
 		else:
@@ -194,8 +195,8 @@ class Database:
 			time_bound = (TimeStamps().getTimestamp()) - (3600 * hours)
 			record = collection.find_one({'name': name, 'type' : sensor_type, 'time' : { '$gte' : time_bound }}, sort = [('value', -1)])
 
-			if record is None:
-				return 0
+			if record is None || str(record['value']) == 'nan':
+				return 'NaN'
 
 			return record['value']
 		else:
@@ -213,8 +214,8 @@ class Database:
 			time_bound = (TimeStamps().getTimestamp()) - (3600 * hours)
 			record = collection.find_one({'name': name, 'type' : sensor_type,'time' : { '$gte' : time_bound }}, sort = [('value', 1)])
 
-			if record is None:
-				return 0
+			if record is None || str(record['value']) == 'nan':
+				return 'NaN'
 
 			return record['value']
 		else:
