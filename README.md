@@ -110,7 +110,7 @@
 
 ## Task Allocation
 * Andres Graterol (graterollin) - Developed and updated Automated Tests / Manual Testing
-* David Crumley (daviejones) -
+* David Crumley (daviejones) - Analytics / Email Response 
 * Matthew Dowdy (dowdyma1) -
 * Wyatt Vining (wv040) - Encryption / Sensor Header Files / Manual Testing
 * Nathan Moulton (NathanM117) - Development and Testing for Database
