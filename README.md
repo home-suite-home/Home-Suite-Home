@@ -112,7 +112,7 @@
 * Andres Graterol (graterollin) - Developed and updated Automated Tests / Manual Testing
 * David Crumley (daviejones) -
 * Matthew Dowdy (dowdyma1) -
-* Wyatt Vining (wv040) -
+* Wyatt Vining (wv040) - Encryption / Sensor Header Files / Manual Testing
 * Nathan Moulton (NathanM117) - Development and Testing for Database
 
 ## Quick Links
