@@ -25,8 +25,7 @@ analytics suite that provides home-owners and property managers a platform to mo
 ![screenshot of AnalyticsComponent class diagram](assets/AnalyticsComponent_class.png)
 ### Sensors.py
 ![Screenshot of Sensors.py class Diagram](assets/Sensors_class_diagram.png)
-*Diagram Description:*
-
+#### Diagram Description:
 This component is used to retrieve sensors data over the network. The Sensors class is responsible for requesting the base data of any sensor. The TemperatureSensor and HumiditySensor classes extend the functionality of the Sensor class and provide specific units and conversions based on the type of data received.
 | Class | Related User Stories (UID) |
 | --- | --- |
