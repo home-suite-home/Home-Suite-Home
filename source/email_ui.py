@@ -14,7 +14,7 @@ from subprocess import check_output
 from collections import OrderedDict
 from Server_Component.Database import Database
 
-SECONDS_PER_REFRESH = 60
+SECONDS_PER_REFRESH = 30
 
 class OutputHolder:
     def __init__(self, inList):
