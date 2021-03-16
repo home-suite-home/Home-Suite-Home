@@ -11,7 +11,7 @@ The following will be needed for this test:
 * clone the repository on to the local machine: this will ensure all necessary files are found
 
 ## Test Cases
-### [U014] As a property owner I want to receive a response from the system when a command is given over email so that the system will do what I want remotely. 
+### [U014] As a property owner I want to receive a response from the system when a command is given over email so that the system will do what I want remotely.
 ### Functional Case (help message)
 **Test Status** *PASS*</br>
 #### Test Procedures
@@ -28,7 +28,7 @@ The following will be needed for this test:
 | 1 | The terminal will reflect the operations being handled by the running program | ![terminal_response](/artifacts/assets/terminal_response.PNG) |
 | 2 | An email message will be recieved by 'home.suite.home.testing@gmail.com' | ![email_response](/artifacts/assets/email_response.PNG) |
 
-### [U003] As a property owner, I would like to view a graphic representation of sensor data over time so that I can see trends in my property. 
+### [U003] As a property owner, I would like to view a graphic representation of sensor data over time so that I can see trends in my property.
 ### Functional Case (get sensor data)
 **Test Status** *PASS*</br>
 #### Test Procedures
@@ -140,7 +140,7 @@ Before running any of the programs listed here, it is recomended to follow the p
 |  4  | Return to the *Database_test.py* file and now comment out the lines db.clearConfigData() and db.clear(). | The line should now appear commented out and it will not compile when ran in the command line. |
 |  5  | Run the testing script again. | The command line shall have a view of the config data before and after deleting elements from it. ![configDel](/artifacts/assets/config_delTest.PNG) |
 |  6  | Scroll down on the terminal. | The command line shall have have a view of all the records as a list and should also be printing the averages for each sensor. ![cmd](/artifacts/assets/cmd_dbTest.PNG) |
-|  7  | Scroll down on the terminal. | The terminal shall show 20 timestamps strings in epoch time. It will also show the 5 most recent objects passed to the database and their corresponding epoch time. ![recent](/artifacts/assets/getRecent_test.PNG)| 
+|  7  | Scroll down on the terminal. | The terminal shall show 20 timestamps strings in epoch time. It will also show the 5 most recent objects passed to the database and their corresponding epoch time. ![recent](/artifacts/assets/getRecent_test.PNG)|
 |  8  | Check the Database once again. Two collectons should be added. Click the one named *config*.  | The database should be populated with the sensor configuration data sent in the testing file! ![config](/artifacts/assets/config_db.PNG)|
 |  9  | Click the second collection named *sensors*.| The database should now be populated with the sensor data sent in the testing file. ![populated](/artifacts/assets/populated_sensorsdb.PNG)|
 

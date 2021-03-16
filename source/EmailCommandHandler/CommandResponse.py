@@ -86,12 +86,12 @@ def sensor_data_analytics(type, name, days):
     # create filename
     filepath = "../../analytics/"
     filename = "command_response_"
-    filename += str(ts.stringToTimestamp(ts.getTimestamp()))
+    filename += str(ts.getTimestamp())
     filename += ".png"
     filepath += filename
     graph.write_image(filepath)
 
-    return(name, "None", filepath)
+    return(name, "Sensor data over time", filepath)
 
 
 

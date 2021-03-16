@@ -7,10 +7,18 @@
 //
 //  Description:
         simple script to run the EmailCommandHandler.py module
+
+    Directions:
+        1) run this file using the command: python CommandHandlerTest.py
+                - you will need to have a file named password.txt in the same folder
+        2) send an email to the address: home.suite.home.testing@gmail.com
+
+        3) check your inbox for a reply message, there should be one
 '''
 
 import sys
-sys.path.append(".")
+sys.path.append('.')
+sys.path.append('../Server_Component')
 from EmailCommandHandler import EmailCommandHandler
 
 user_email = "home.suite.home.test.user@gmail.com"

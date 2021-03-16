@@ -26,16 +26,19 @@ def data_over_time(type, name, hours):
     # all values
     x = []                      # X-coordinate
     y = []                      # Y-coordinate
-    run_avg = []                # hold a running avg of the data
-    sum = 0.                    # for calculating avg
-    cnt = 0                     # counter for loop
     ts = TimeStamps()
     for i in all_vals:
-        cnt += 1
         x.append(ts.stringToTimestamp(i['time']))
         y.append(i['value'])
-        sum += i['value']
-        run_avg.append(sum/cnt)
+
+    # get avg dataset
+    run_avg = [0]*len(y)     # hold a running avg of the data
+    sum = 0.                    # for calculating avg
+    cnt = 0                     # counter for loop
+    for i in range(len(y)-1,-1,-1):
+        cnt += 1
+        sum += y[i]
+        run_avg[i] = (sum/cnt)
 
     # data line
     fig.add_trace(go.Scatter(x=x, y=y, name='Sensor Data',
@@ -65,7 +68,6 @@ def data_over_time(type, name, hours):
     title_str += "All Data from " + str(hours) + " Hours" + " Ago" + "<br>"
     title = dict(text=title_str, font=dict(size=25, family='Helvetica'), x=0.5, xref='paper')
     fig.update_layout(title=title, xaxis_title='Date and Time',
-                                       yaxis_title=type)
+                                   yaxis_title=type)
 
-    fig.show()
     return fig
