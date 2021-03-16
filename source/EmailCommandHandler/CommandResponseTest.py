@@ -1,9 +1,11 @@
 import sys
 sys.path.append('.')
 sys.path.append('../Server_Component')
+sys.path.append('../AnalyticsComponent')
 
 from CommandResponse import CommandResponse
 from Database import Database
+from LineGraph import with_buttons
 import time
 
 if len(sys.argv) < 2:
@@ -61,7 +63,8 @@ elif sys.argv[1] =="--getsensordata":
         time.sleep(1)
 
     # call the command response
-    resp = CommandResponse("get sensor data: temperature, temp_2, 1")
+    #resp = CommandResponse("get sensor data: temperature, temp_2, 1")
+    resp = with_buttons("temperature", "temp_2")
     print(resp.get_response())
 
     # reset databse
@@ -69,6 +72,7 @@ elif sys.argv[1] =="--getsensordata":
     #db.deleteConfigData("temp_1", "temperature")
     #db.deleteConfigData("temp_2", "temperature")
     print("get sensor data response testing complete")
+
 
 
 else:
