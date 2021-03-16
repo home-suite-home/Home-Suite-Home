@@ -16,27 +16,34 @@ from Server_Component.Database import Database
 
 SECONDS_PER_REFRESH = 30
 
+# holds Output parameters as key
+# holds return value for Output as value
+# NOT actually a dictionary... list of list size two [key, val]
 class OutputHolder:
     def __init__(self, inList):
-        self.curDictHolder = OrderedDict()
+        self.curDictHolder = []
 
         for item in inList:
-            self.curDictHolder[item] = dash.no_update
+            self.curDictHolder.append([item, dash.no_update])
 
     def getObjList(self):
-        return [Output(key[0], key[1]) for key, _ in self.curDictHolder.items()]
+        return [Output(key[0][0], key[0][1]) for key in self.curDictHolder]
+
 
     def getReturns(self):
-        out = [value for _, value in self.curDictHolder.items()]
+        out = [value[1] for value in self.curDictHolder]
         self.__clearHolder()
         return out
 
     def __clearHolder(self):
-        for key, _ in self.curDictHolder.items():
-            self.curDictHolder[key] = dash.no_update
+        for i in range(len(self.curDictHolder)):
+            self.curDictHolder[i][1] = dash.no_update
 
     def addReturn(self, key, value):
-        self.curDictHolder[key] = value
+        for i in range(len(self.curDictHolder)):
+            if(self.curDictHolder[i][0] == key):
+                self.curDictHolder[i][1] = value
+                break
 
     def printDict(self):
         print(self.curDictHolder)
@@ -49,15 +56,22 @@ def getCardDivs():
     for sensor in db.getConfigData():
         print(sensor)
         if(sensor != None):
+            sensorName = sensor['name']
+            sensorType = sensor['type']
+
             divList.append(
                 html.Div(className='card',
+                    id={'type': 'card', 'index': '{}`{}'.format(sensorType, sensorName)},
                     children=[
                         html.H4(sensor['name']),
                         html.Div('Type: ' + sensor['type']),
                         html.H2(
-                            db.getMostRecentSensorData(sensor['name'], sensor['type']),
-                            id={'type': 'sensor-data', 'index': '{}-{}'.format(sensor['type'], sensor['name'])},
+                            db.getMostRecentSensorData(sensorName, sensorType),
+                            id={'type': 'sensor-data', 'index': '{}`{}'.format(sensorType, sensorName)},
                         ),
+                        html.Button('Edit Card', id={'type': 'edit-card-button', 'index': '{}`{}'.format(sensorType, sensorName)}),
+                        html.H4(),
+                        html.Button('View Graph', id={'type': 'edit-card-button', 'index': '{}`{}'.format(sensorType, sensorName)}),
                     ]
                 )
             )
@@ -70,12 +84,30 @@ def getCardDivs():
 
 def getTypesDropdownList():
     optionsList = []
+    print("db.getFields('type'):")
     for curType in db.getFields('type'):
+        print(curType)
         optionsList.append({'label': curType, 'value': curType})
 
     optionsList.append({'label': 'New Type of Sensor', 'value': 'other-type'})
 
     return optionsList
+
+
+def fieldsCardToNewCard(cardsList):
+    outHolder.addReturn(('cards-container', 'children'), cardsList)
+    outHolder.addReturn(('invalid-selection', 'style'), {'display': 'none'})
+
+    # clear the fields
+    outHolder.addReturn(('field_sensor-name', 'value'), '')
+    outHolder.addReturn(('field_new-type', 'value'), '')
+    outHolder.addReturn(('field_new-type', 'style'), {'display': 'none'})
+    outHolder.addReturn(('field_ip-address', 'value'), '')
+    outHolder.addReturn(('field_port-number', 'value'), '')
+    outHolder.addReturn(('field_url-plug', 'value'), '')
+    outHolder.addReturn(('field_alert', 'value'), False)
+
+    outHolder.addReturn(('new-card', 'style'), {'display': 'block'})
 
 
 db = Database()
@@ -89,6 +121,7 @@ new_sensor_card = html.Div(className='card',
                 )
 
 new_card_fields = [
+    html.Button('Discard', id='field_discard-button'),
     html.H4('New Sensor'),
     html.Div(
         [
@@ -258,11 +291,13 @@ def handle_email(button_timestamp, email):
 
 
 outHolder = OutputHolder([
+    #({'type': 'card', 'index': MATCH}, 'children'),
     ('cards-container', 'children'),
     ('fields-card', 'children'),
     ('fields-card', 'style'),
     ('invalid-selection', 'style'),
     ('new-card', 'style'),
+    ('field_types-dropdown', 'options'),
     ('field_sensor-name', 'value'),
     ('field_new-type', 'style'),
     ('field_new-type', 'value'),
@@ -274,12 +309,16 @@ outHolder = OutputHolder([
     ('field_alert', 'value'),
 ])
 
+outHolder.printDict()
+
 @app.callback(
         outHolder.getObjList(),
         [
             Input('new-card-button', 'n_clicks'),
             Input('field_create-card-button', 'n_clicks'),
             Input('field_types-dropdown', 'value'),
+            Input('field_discard-button', 'n_clicks'),
+            #Input({'type': 'edit-card-button', 'index': MATCH}, 'id'),
         ],
         [
             State('cards-container', 'children'),
@@ -295,7 +334,7 @@ outHolder = OutputHolder([
             State('field_alert', 'value'),
         ]
 )
-def create_new_card(new_card_clicks, create_button_clicks, sensor_type, 
+def create_new_card(new_card_clicks, create_button_clicks, sensor_type, discard_button_clicks, #edit_card_button_clicks,
         cardList, fieldsList, sensor_name, new_type, units, ip_address, port, url_plug, min_bound, max_bound, alert):
 
     ctx = dash.callback_context
@@ -318,29 +357,20 @@ def create_new_card(new_card_clicks, create_button_clicks, sensor_type,
                 sensor_type = new_type
             db.saveConfigData(sensor_type, sensor_name, 'category', ip_address, port, url_plug, min_bound, max_bound, units, alert)
 
-            
-            outHolder.addReturn(('cards-container', 'children'), getCardDivs())
-            outHolder.addReturn(('invalid-selection', 'style'), {'display': 'none'})
-
-            # clear the fields
-            outHolder.addReturn(('field_sensor-name', 'value'), '')
-            outHolder.addReturn(('field_new-type', 'value'), '')
-            outHolder.addReturn(('field_new-type', 'style'), {'display': 'none'})
-            outHolder.addReturn(('field_ip-address', 'value'), '')
-            outHolder.addReturn(('field_port-number', 'value'), '')
-            outHolder.addReturn(('field_url-plug', 'value'), '')
-            outHolder.addReturn(('field_alert', 'value'), False)
-
-            outHolder.addReturn(('new-card', 'style'), {'display': 'block'})
+            fieldsCardToNewCard(cardList)
 
         else:
             outHolder.addReturn(('invalid-selection', 'style'), {'display':'block', 'color': 'red'})
     elif(curButton == 'new-card-button'):
+        outHolder.addReturn(('field_types-dropdown', 'options'), getTypesDropdownList())
         outHolder.addReturn(('fields-card', 'style'), {'display': 'block'}),
         outHolder.addReturn(('new-card', 'style'), {'display': 'none'})
     elif(curButton == 'field_types-dropdown'):
         if(sensor_type == 'other-type'):
             outHolder.addReturn(('field_new-type', 'style'), {'display': 'block'})
+    elif(curButton == 'field_discard-button'):
+        fieldsCardToNewCard(cardList)
+        outHolder.addReturn(('fields-card', 'style'), {'display': 'none'}),
     else:
         outHolder.addReturn(('cards-container', 'children'), getCardDivs())
 
@@ -353,7 +383,7 @@ def create_new_card(new_card_clicks, create_button_clicks, sensor_type,
         State({'type': 'sensor-data', 'index': MATCH}, 'id'),
 )
 def live_data_update(numRefreshes, curId):
-    sensorType, sensorName = curId['index'].split('-')
+    sensorType, sensorName = curId['index'].split('`')
     data = db.getMostRecentSensorData(sensorName, sensorType)
 
     return data
