@@ -1,0 +1,257 @@
+[{
+  "_id": {
+    "$oid": "604ac8dfa7f0f9b92838d563"
+  },
+  "type": "Temp",
+  "name": "temp_1",
+  "value": 10,
+  "time": 1615513823
+},{
+  "_id": {
+    "$oid": "604ac8dfa7f0f9b92838d564"
+  },
+  "type": "Temp",
+  "name": "temp_2",
+  "value": 20,
+  "time": 1615513823
+},{
+  "_id": {
+    "$oid": "604ac8dfa7f0f9b92838d565"
+  },
+  "type": "Temp",
+  "name": "temp_3",
+  "value": 30,
+  "time": 1615513823
+},{
+  "_id": {
+    "$oid": "604ac8dfa7f0f9b92838d566"
+  },
+  "type": "Humid",
+  "name": "humid_1",
+  "value": 10,
+  "time": 1615513823
+},{
+  "_id": {
+    "$oid": "604ac8dfa7f0f9b92838d567"
+  },
+  "type": "Humid",
+  "name": "humid_2",
+  "value": 20,
+  "time": 1615513823
+},{
+  "_id": {
+    "$oid": "604ac8dfa7f0f9b92838d568"
+  },
+  "type": "Humid",
+  "name": "humid_3",
+  "value": 30,
+  "time": 1615513823
+},{
+  "_id": {
+    "$oid": "604ac8dfa7f0f9b92838d569"
+  },
+  "type": "Temp",
+  "name": "temp_1",
+  "value": 10,
+  "time": 1615513823
+},{
+  "_id": {
+    "$oid": "604ac8dfa7f0f9b92838d56a"
+  },
+  "type": "Temp",
+  "name": "temp_2",
+  "value": 20,
+  "time": 1615513823
+},{
+  "_id": {
+    "$oid": "604ac8dfa7f0f9b92838d56b"
+  },
+  "type": "Temp",
+  "name": "temp_3",
+  "value": 30,
+  "time": 1615513823
+},{
+  "_id": {
+    "$oid": "604ac8dfa7f0f9b92838d56c"
+  },
+  "type": "Humid",
+  "name": "humid_1",
+  "value": 10,
+  "time": 1615513823
+},{
+  "_id": {
+    "$oid": "604ac8dfa7f0f9b92838d56d"
+  },
+  "type": "Humid",
+  "name": "humid_2",
+  "value": 20,
+  "time": 1615513823
+},{
+  "_id": {
+    "$oid": "604ac8dfa7f0f9b92838d56e"
+  },
+  "type": "Humid",
+  "name": "humid_3",
+  "value": 30,
+  "time": 1615513823
+},{
+  "_id": {
+    "$oid": "604ac8dfa7f0f9b92838d56f"
+  },
+  "type": "temperature",
+  "name": "outside_1",
+  "value": 50,
+  "time": 1615513823
+},{
+  "_id": {
+    "$oid": "604ac8e0a7f0f9b92838d570"
+  },
+  "type": "temperature",
+  "name": "outside_1",
+  "value": 51,
+  "time": 1615513824
+},{
+  "_id": {
+    "$oid": "604ac8e1a7f0f9b92838d571"
+  },
+  "type": "temperature",
+  "name": "outside_1",
+  "value": 52,
+  "time": 1615513825
+},{
+  "_id": {
+    "$oid": "604ac8e2a7f0f9b92838d572"
+  },
+  "type": "temperature",
+  "name": "outside_1",
+  "value": 53,
+  "time": 1615513826
+},{
+  "_id": {
+    "$oid": "604ac8e3a7f0f9b92838d573"
+  },
+  "type": "temperature",
+  "name": "outside_1",
+  "value": 54,
+  "time": 1615513827
+},{
+  "_id": {
+    "$oid": "604ac8e4a7f0f9b92838d574"
+  },
+  "type": "temperature",
+  "name": "outside_1",
+  "value": 50,
+  "time": 1615513828
+},{
+  "_id": {
+    "$oid": "604ac8e5a7f0f9b92838d575"
+  },
+  "type": "temperature",
+  "name": "outside_1",
+  "value": 51,
+  "time": 1615513829
+},{
+  "_id": {
+    "$oid": "604ac8e6a7f0f9b92838d576"
+  },
+  "type": "temperature",
+  "name": "outside_1",
+  "value": 52,
+  "time": 1615513830
+},{
+  "_id": {
+    "$oid": "604ac8e7a7f0f9b92838d577"
+  },
+  "type": "temperature",
+  "name": "outside_1",
+  "value": 53,
+  "time": 1615513831
+},{
+  "_id": {
+    "$oid": "604ac8e8a7f0f9b92838d578"
+  },
+  "type": "temperature",
+  "name": "outside_1",
+  "value": 54,
+  "time": 1615513832
+},{
+  "_id": {
+    "$oid": "604ac8e9a7f0f9b92838d579"
+  },
+  "type": "temperature",
+  "name": "outside_1",
+  "value": 50,
+  "time": 1615513833
+},{
+  "_id": {
+    "$oid": "604ac8eaa7f0f9b92838d57a"
+  },
+  "type": "temperature",
+  "name": "outside_1",
+  "value": 51,
+  "time": 1615513834
+},{
+  "_id": {
+    "$oid": "604ac8eba7f0f9b92838d57b"
+  },
+  "type": "temperature",
+  "name": "outside_1",
+  "value": 52,
+  "time": 1615513835
+},{
+  "_id": {
+    "$oid": "604ac8eca7f0f9b92838d57c"
+  },
+  "type": "temperature",
+  "name": "outside_1",
+  "value": 53,
+  "time": 1615513836
+},{
+  "_id": {
+    "$oid": "604ac8eda7f0f9b92838d57d"
+  },
+  "type": "temperature",
+  "name": "outside_1",
+  "value": 54,
+  "time": 1615513837
+},{
+  "_id": {
+    "$oid": "604ac8eea7f0f9b92838d57e"
+  },
+  "type": "temperature",
+  "name": "outside_1",
+  "value": 50,
+  "time": 1615513838
+},{
+  "_id": {
+    "$oid": "604ac8efa7f0f9b92838d57f"
+  },
+  "type": "temperature",
+  "name": "outside_1",
+  "value": 51,
+  "time": 1615513839
+},{
+  "_id": {
+    "$oid": "604ac8f0a7f0f9b92838d580"
+  },
+  "type": "temperature",
+  "name": "outside_1",
+  "value": 52,
+  "time": 1615513840
+},{
+  "_id": {
+    "$oid": "604ac8f1a7f0f9b92838d581"
+  },
+  "type": "temperature",
+  "name": "outside_1",
+  "value": 53,
+  "time": 1615513841
+},{
+  "_id": {
+    "$oid": "604ac8f2a7f0f9b92838d582"
+  },
+  "type": "temperature",
+  "name": "outside_1",
+  "value": 54,
+  "time": 1615513842
+}]

@@ -81,7 +81,7 @@ class PiEmailCredentials(Encryption):
 
 def main():
     pi_creds = PiEmailCredentials("pi_email_creds.config", "pi_key.key")
-    # pi_creds.setPiCredentials("home.suite.home.test.user@gmail.com", "homeuser")
+    pi_creds.setPiCredentials("home.suite.home.test.user@gmail.com", "homeuser")
 
     print("Pi Email Username: ", pi_creds.getPiEmail())
     print("Pi Email Password: ", pi_creds.getPiEmailPassword())

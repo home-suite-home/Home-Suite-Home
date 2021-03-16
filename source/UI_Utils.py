@@ -1,7 +1,10 @@
 from HTTP_Component.Sensors import Sensor
 import math
 
-def isValidSensor(url_plug, ip_address, sensor_name, port='8080'):
+def isValidSensor(sensor_type, url_plug, ip_address, sensor_name, port='8080'):
+    if(sensor_type == None):
+        return False
+
 
     if(port == ''):
         port = '8080'

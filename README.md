@@ -103,20 +103,20 @@
 ## Materials
 * [Trello Board](https://trello.com/b/BFcwvt3p/project) (Backlogs and Requirements)
 * [Velocity Chart](https://docs.google.com/spreadsheets/d/1tpRyT-jUgHkrLnwx5NcxtOvh3uGg8ddGYrl60E0q6DA/edit#gid=0)
-* [Burndown Chart for Sprint 6]()
+* [Burndown Chart for Sprint 6](https://docs.google.com/spreadsheets/d/1tpRyT-jUgHkrLnwx5NcxtOvh3uGg8ddGYrl60E0q6DA/edit#gid=428674570)
 * [System Architecture](artifacts/architecture.md)
 * [Testing](https://github.com/home-suite-home/Home-Suite-Home/tree/main/testing)
-* [Product Demonstration]()
+* [Product Demonstration](https://youtu.be/VESqYKWHarw)
 
 ## Task Allocation
-* Andres Graterol (graterollin) - 
-* David Crumley (daviejones) - 
-* Matthew Dowdy (dowdyma1) - 
-* Wyatt Vining (wv040) - 
-* Nathan Moulton (NathanM117) - 
+* Andres Graterol (graterollin) - Developed and updated Automated Tests / Manual Testing
+* David Crumley (daviejones) - Analytics / Email Response 
+* Matthew Dowdy (dowdyma1) - UI / Charts
+* Wyatt Vining (wv040) - Encryption / Sensor Header Files / Manual Testing
+* Nathan Moulton (NathanM117) - Development and Testing for Database
 
 ## Quick Links
 * [System Source Code](source)
 * [Sensor Source Code](sensor_source)
 * [Testing](testing)
-* [User Interface](source/email_ui.py)
+* [User Interface](source/User_Interface.py)
