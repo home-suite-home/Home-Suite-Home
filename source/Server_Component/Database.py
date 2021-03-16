@@ -223,6 +223,19 @@ class Database:
             self.connect()
             return 0
 
+    # Retrieves config doc for a sensor
+    def getSensorConfig(self, name, sensor_type):
+        if self.connect_status == True:
+            db = self.client['sensorsdb']
+            collection = db['config']
+            record = collection.find_one({"name" : name, "type" : sensor_type})
+
+            return record
+        else:
+            print("Well that didn't work. Check the database address, and make sure the mongod process is running...")
+            self.connect()
+            return None
+
     # retrieves all config data
     def getConfigData(self):
         if self.connect_status == True:
@@ -280,7 +293,6 @@ class Database:
         else:
             print("Well that didn't work. Check the database address, and make sure the mongod process is running...")
             self.connect()
-
 
     # Deletes all records in the database
     def clear(self):
