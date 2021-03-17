@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import os
 import sys
+import json
 import dash
 import dash_daq as daq
 import dash_core_components as dcc
@@ -27,11 +28,11 @@ class OutputHolder:
             self.curDictHolder.append([item, dash.no_update])
 
     def getObjList(self):
-        return [Output(key[0][0], key[0][1]) for key in self.curDictHolder]
+        return [Output(key[0], key[1]) for key, _ in self.curDictHolder]
 
 
     def getReturns(self):
-        out = [value[1] for value in self.curDictHolder]
+        out = [value for _, value in self.curDictHolder]
         self.__clearHolder()
         return out
 
@@ -39,14 +40,17 @@ class OutputHolder:
         for i in range(len(self.curDictHolder)):
             self.curDictHolder[i][1] = dash.no_update
 
-    def addReturn(self, key, value):
+    def addReturn(self, inkey, invalue):
         for i in range(len(self.curDictHolder)):
-            if(self.curDictHolder[i][0] == key):
-                self.curDictHolder[i][1] = value
-                break
+            for item in self.curDictHolder[i][0].keys():
+                if(item == inkey):
+                    self.curDictHolder[i][1] = invalue
+                    break
 
     def printDict(self):
-        print(self.curDictHolder)
+        print('OutputHolder:')
+        for key, value in self.curDictHolder:
+            print('{}, {}: {}'.format(key[0], key[1], value))
 
 
 def getCardDivs():
@@ -191,6 +195,7 @@ new_card_fields = [
                 placeholder='Maximum bound',
             ),
             html.H4(''),
+            html.Div('False', id='isEdit', style={'display':'none'}),
             html.Button('Create', id='field_create-card-button'),
             html.H4('Invalid Selection', style={'color': 'red','display': 'none' }, id='invalid-selection'),
         ],
@@ -199,93 +204,93 @@ new_card_fields = [
 ]
 
 def populateEditCard(valuesDict):
-    edit_card_list = [
-        html.Button('Discard', id='edit_discard-button'),
+    field_card_list = [
+        html.Button('Discard', id='field_discard-button'),
         html.Div(
             [
                 dcc.Input(
-                    id='edit_sensor-name',
+                    id='field_sensor-name',
                     className='field_element',
                     autoFocus=True,
                     debounce=True,
                     placeholder='Sensor Name',
-                    value=valuesDict['edit_sensor-name'],
+                    value=valuesDict['field_sensor-name'],
                 ),
                 dcc.Dropdown(
-                    id='edit_types-dropdown',
+                    id='field_types-dropdown',
                     className='field_element',
                     options=getTypesDropdownList(),
                     placeholder='Sensor Type',
-                    value=valuesDict['edit_types-dropdown'],
+                    value=valuesDict['field_types-dropdown'],
                 ),
                 dcc.Input(
-                    id='edit_new-type',
+                    id='field_new-type',
                     className='field_element',
                     debounce=True,
                     placeholder='Name of New Type',
-                    value=valuesDict['edit_new-type'],
+                    #value=valuesDict['field_new-type'],
                     style={'display':'none'},
                 ),
                 dcc.Input(
-                    id='edit_ip-address',
+                    id='field_ip-address',
                     className='field_element',
                     debounce=True,
                     placeholder='IP Address',
-                    value=valuesDict['edit_ip-address'],
+                    value=valuesDict['field_ip-address'],
                 ),
                 dcc.Input(
-                    id='edit_port-number',
+                    id='field_port-number',
                     className='field_element',
                     debounce=True,
                     placeholder='Port Number (Optional)',
-                    value=valuesDict['edit_port-number'],
+                    value=valuesDict['field_port-number'],
                 ),
                 dcc.Input(
-                    id='edit_url-plug',
+                    id='field_url-plug',
                     className='field_element',
                     debounce=True,
                     placeholder='URL Plug',
-                    value=valuesDict['edit_url-plug'],
+                    value=valuesDict['field_url-plug'],
                 ),
                 dcc.Input(
-                    id='edit_units',
+                    id='field_units',
                     className='field_element',
                     debounce=True,
                     placeholder='Units (Optional)',
-                    value=valuesDict['edit_units'],
+                    value=valuesDict['field_units'],
                 ),
                 daq.BooleanSwitch(
-                    id='edit_alert',
+                    id='field_alert',
                     className='field_element',
-                    value=valuesDict['edit_alert'],
-                    on=False,
+                    on=valuesDict['field_alert'],
                     color='#9ad6aa',
                     label='Alerts:',
                     labelPosition='top',
                 ),
                 dcc.Input(
-                    id='edit_minimum-bound',
+                    id='field_minimum-bound',
                     className='field_element',
                     debounce=True,
                     placeholder='Minimum bound',
-                    value=valuesDict['edit_minimum-bound'],
+                    value=valuesDict['field_minimum-bound'],
                 ),
                 dcc.Input(
-                    id='edit_maximum-bound',
+                    id='field_maximum-bound',
                     className='field_element',
                     debounce=True,
                     placeholder='Maximum bound',
-                    value=valuesDict['edit_maximum-bound'],
+                    value=valuesDict['field_maximum-bound'],
                 ),
                 html.H4(''),
-                html.Button('Create', id='edit_save-button'),
-                html.H4('Invalid Selection', style={'color': 'red','display': 'none' }, id='edit_invalid-selection'),
+                html.Div('True', id='isEdit', style={'display':'none'}),
+                html.Button('Save', id='field_create-card-button'),
+                html.H4('Invalid Selection', style={'color': 'red','display': 'none' }, id='invalid-selection'),
             ],
             style={'display': 'inline-block'}
         ),
     ]
 
-    return edit_card_list
+    return field_card_list
 
 fields_card = html.Div(className='card',
                     id='fields-card',
@@ -348,7 +353,7 @@ mainDivChildren = [
             'grid-template-columns': 'repeat(auto-fill, 230px)',
 
         },
-        children=[fields_card, new_sensor_card,]
+        children=getCardDivs(),
     ),
 ]
 
@@ -382,24 +387,24 @@ def handle_email(button_timestamp, email):
 
 outHolder = OutputHolder([
     #({'type': 'card', 'index': MATCH}, 'children'),
-    ('cards-container', 'children'),
-    ('fields-card', 'children'),
-    ('fields-card', 'style'),
-    ('invalid-selection', 'style'),
-    ('new-card', 'style'),
-    ('field_types-dropdown', 'options'),
-    ('field_sensor-name', 'value'),
-    ('field_new-type', 'style'),
-    ('field_new-type', 'value'),
-    ('field_minimum-bound', 'value'),
-    ('field_maximum-bound', 'value'),
-    ('field_ip-address', 'value'),
-    ('field_port-number', 'value'),
-    ('field_url-plug', 'value'),
-    ('field_alert', 'value'),
+    ({'type':'cards-container', 'index': MATCH}, 'children'),
+    ({'type':'fields-card', 'index':MATCH}, 'children'),
+    ({'type':'fields-card', 'index':MATCH}, 'style'),
+    ({'type':'field_sensor-name', 'index': MATCH}, 'value'),
+    ({'type':'field_new-type', 'index': MATCH}, 'value'),
+    ({'type':'field_new-type', 'index': MATCH}, 'style'),
+    ({'type':'field_ip-address', 'index': MATCH}, 'value'),
+    ({'type':'field_port-number', 'index': MATCH}, 'value'),
+    ({'type':'field_url-plug', 'index': MATCH}, 'value'),
+    ({'type':'field_minimum-bound', 'index': MATCH}, 'value'),
+    ({'type':'field_maximum-bound', 'index': MATCH}, 'value'),
+    ({'type':'field_alert', 'index': MATCH}, 'value'),
+    ({'type':'invalid-selection', 'index': MATCH}, 'style'),
+    ({'type':'new-card', 'index': MATCH}, 'style'),
+    ({'type':'field_types-dropdown', 'index': MATCH}, 'options'),
 ])
 
-outHolder.printDict()
+#outHolder.printDict()
 
 @app.callback(
         outHolder.getObjList(),
@@ -411,21 +416,22 @@ outHolder.printDict()
             #Input({'type': 'edit-card-button', 'index': MATCH}, 'id'),
         ],
         [
-            State('cards-container', 'children'),
-            State('fields-card', 'children'),
-            State('field_sensor-name', 'value'),
-            State('field_new-type', 'value'),
-            State('field_units', 'value'),
-            State('field_ip-address', 'value'),
-            State('field_port-number', 'value'),
-            State('field_url-plug', 'value'),
-            State('field_minimum-bound', 'value'),
-            State('field_maximum-bound', 'value'),
-            State('field_alert', 'value'),
+            State({'type':'cards-container', 'index': MATCH}, 'children'),
+            State({'type':'fields-card', 'index':MATCH}, 'children'),
+            State({'type':'field_sensor-name', 'index': MATCH}, 'value'),
+            State({'type':'field_new-type', 'index': MATCH}, 'value'),
+            State({'type':'field_units', 'index': MATCH}, 'value'),
+            State({'type':'field_ip-address', 'index': MATCH}, 'value'),
+            State({'type':'field_port-number', 'index': MATCH}, 'value'),
+            State({'type':'field_url-plug', 'index': MATCH}, 'value'),
+            State({'type':'field_minimum-bound', 'index': MATCH}, 'value'),
+            State({'type':'field_maximum-bound', 'index': MATCH}, 'value'),
+            State({'type':'field_alert', 'index': MATCH}, 'value'),
         ]
 )
 def create_new_card(new_card_clicks, create_button_clicks, sensor_type, discard_button_clicks, #edit_card_button_clicks,
         cardList, fieldsList, sensor_name, new_type, units, ip_address, port, url_plug, min_bound, max_bound, alert):
+    print("HELLO")
 
     ctx = dash.callback_context
 
@@ -441,9 +447,10 @@ def create_new_card(new_card_clicks, create_button_clicks, sensor_type, discard_
     if ctx.triggered:
         curButton = ctx.triggered[0]['prop_id'].split('.')[0]
 
-    print(curButton)
+    print("curButton: ", curButton)
 
     if(curButton == 'field_create-card-button'):
+        print('Stuff: {} {} {}'.format(sensor_type, sensor_name, url_plug))
         if(isValidSensor(sensor_type, url_plug, ip_address, sensor_name, port=port)):
             if(sensor_type == 'other-type'):
                 sensor_type = new_type
@@ -466,8 +473,8 @@ def create_new_card(new_card_clicks, create_button_clicks, sensor_type, discard_
     else:
         outHolder.addReturn(('cards-container', 'children'), getCardDivs())
 
+    outHolder.printDict()
     x = outHolder.getReturns()
-    print(x)
     return x
 
 
@@ -489,19 +496,41 @@ def live_data_update(numRefreshes, curId):
         State({'type': 'edit-card-button', 'index': MATCH}, 'id')
 )
 def handle_edit_card(edit_card_button_clicks, curId):
-    print(curId['index'])
 
     ctx = dash.callback_context
-    curButton = '';
+    curButton = ''
 
     if ctx.triggered:
         curButton = ctx.triggered[0]['prop_id'].split('.')[0]
+        try:
+            curButton = json.loads(curButton)['type']
+        except:
+            pass
+    
+    if(curButton == 'edit-card-button'):
+        sensorName, sensorType = curId['index'].split('`')
+        config = db.getSensorConfig(sensorType, sensorName)
 
-    if(curButton != ''):
-        db.getConfigData()
-        return new_card_fields
+        fieldsMap = {}
+        fieldsMap['field_sensor-name'] = config['name']
+        fieldsMap['field_types-dropdown'] = config['type']
+        fieldsMap['field_ip-address'] = config['address']
+        fieldsMap['field_port-number'] = config['port']
+        fieldsMap['field_url-plug'] = config['sub_address']
+        fieldsMap['field_units'] = config['units']
+        fieldsMap['field_alert'] = config['alerts']
+        fieldsMap['field_minimum-bound'] = config['min_threshold']
+        fieldsMap['field_maximum-bound'] = config['max_threshold']
+
+        print('getSensorConfig({}, {}) = {}'.format(sensorType, sensorName, config))
+
+
+        x = populateEditCard(fieldsMap)
+        #print(x)
+        return x
     else:
         return dash.no_update
+
 
 
 if __name__ == "__main__":
