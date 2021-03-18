@@ -19,11 +19,14 @@
 import sys
 sys.path.append('.')
 sys.path.append('../Server_Component')
+sys.path.append('..')
+import time
 from EmailCommandHandler import EmailCommandHandler
 
-user_email = "home.suite.home.test.user@gmail.com"
-device_email = "home.suite.home.testing@gmail.com"
-command_handler = EmailCommandHandler(user_email, device_email)
+command_handler = EmailCommandHandler()
+
+POLL_RATE = 60
 
 while(True):
     command_handler.handle_email_command()
+    time.sleep(POLL_RATE)

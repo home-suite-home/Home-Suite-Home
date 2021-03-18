@@ -19,22 +19,19 @@
 '''
 import sys
 sys.path.append(".")
+sys.path.append("../Server_Component")
+from Database import Database
 
 #  device email => "home.suite.home.testing@gmail.com"
 class EmailController:
 
     # defualt parameters used for automated testing
-    def __init__(self, user_email, device_email):
+    def __init__(self, user_email):
         self.user_email = user_email
-        self.device_email = device_email
-        # attempting to read password for device email
-        try:
-            fileObj = open("password.txt", "r")
-        except:
-            print("Please add the password.txt file to your machine.")
-            return
+        creds = Database().getCredentials()
+        self.device_email = creds['email']
+        self.password = creds['password']
 
-        self.password = fileObj.read().strip('\n')
 
     def compose_email(self, subject, body_text, body_html, attachments = None):
         # necessary libraries to construct email

@@ -305,7 +305,6 @@ class Database:
             self.connect()
             return None
 
-
     # Saves user info to users collection.
     def saveUser(self, name, email):
         if self.connect_status == True:

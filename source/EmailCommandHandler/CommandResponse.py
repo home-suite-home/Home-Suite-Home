@@ -33,7 +33,8 @@ class CommandResponse:
             sensor_rqst = sensor_rqst.split(",")
             sensor_type = sensor_rqst[0].strip()
             sensor_name = sensor_rqst[1].strip()
-            sensor_time = sensor_rqst[2].strip()
+            print(sensor_name)
+            sensor_time = sensor_rqst[2].strip().split("\r\n")[0]
             return sensor_data_analytics(sensor_type, sensor_name, sensor_time)
 
 
