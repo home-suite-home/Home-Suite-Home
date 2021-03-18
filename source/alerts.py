@@ -12,19 +12,20 @@ class Alert:
         self.record = sensor_record
         self.sensor_value = sensorValue
         self.rate_limit = Settings().get_int_setting("alerts", "rate_limit")
-        if self.rate_limit >= 0:
+        if self.rate_limit <= 0:
             self.rate_limit = RATE_LIMIT_DEFAULT
 
-    def __generate_subject():
+    def __generate_subject(self):
         subject = "Out of Tollerace Alert: "
         subject += self.record["name"]
         subject += " Value: "
-        subject += self.sensor_value
+        subject += str(self.sensor_value)
+        return subject
 
-    def __generate_text_body():
-        body += "\nSensor Value Out of Tollerance\n\n"
+    def __generate_text_body(self):
+        body = "\nSensor Value Out of Tollerance\n\n"
 
-        body += TimeStamps.getTimestampString()
+        body += timeKeeper.TimeStamps().getTimestampString()
 
         body += "\n\nName: "
         body += self.record["name"]
@@ -34,7 +35,7 @@ class Alert:
         body += self.record["category"]
 
         body += "\n\nCurrent Value: "
-        body += self.sensor_value
+        body += str(self.sensor_value)
         body += "\nMax Threshold: "
         body += str(self.record["max_threshold"])
         body += "\nMin Threshold: "
@@ -56,17 +57,52 @@ class Alert:
         return body
 
     def __generate_html_body(self):
-        # TODO - modify __generate_text_body() to follow HTML format
-        return ""
+        body = """
+            <html>
+            <body>
+            """
 
-    def sendAlert(self):
+        body += "<h1>Sensor Value Out of Tollerance</h1>"
+
+        body += "<h2>"
+        body += timeKeeper.TimeStamps().getTimestampString()
+        body += "</h2>"
+
+        body += "<h2>Name: "
+        body += self.record["name"]
+        body += "<br>Current Value: "
+        body += str(self.sensor_value)
+        body += "<br>Max Threshold: "
+        body += str(self.record["max_threshold"])
+        body += "<br>Min Threshold: "
+        body += str(self.record["min_threshold"])
+        body += "</h2></p>"
+
+        body += "<p><br><h3>Sensor Configuration</h3>"
+        body += "<h4>Type: "
+        body += self.record["type"]
+        body += "<br>Category: "
+        body += self.record["category"]
+        body += "<br>IP Address: "
+        body += self.record["address"]
+        body += "<br>Port: "
+        body += str(self.record["port"])
+        body += "<br>Sub Address: /"
+        body += self.record["sub_address"]
+        body += "<br>Units: "
+        body += self.record["units"]
+        body += "<br>Alerts: "
+        body += str(self.record["alerts"])
+        body += "</h4></p></body></html>"
+
+        return body
+
+    def handleAlert(self):
         db = Database()
 
         if db.alertSent(self.record["name"], self.record["type"], self.rate_limit) is True:
             return None
         else:
-            db.saveLog(self.record["name"], self.record["type"])
-            
             subject = self.__generate_subject()
             body_text = self.__generate_text_body()
             body_html = self.__generate_html_body()
@@ -77,3 +113,6 @@ class Alert:
                 email = EmailController(user["email"], DEVICE_EMAIL)
                 message = email.compose_email(subject, body_text, body_html)
                 email.send_email(message)
+                print("email sent to: ", user["email"])
+
+            db.saveLog(self.record["name"], self.record["type"])
