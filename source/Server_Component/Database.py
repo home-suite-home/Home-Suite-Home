@@ -365,7 +365,7 @@ class Database:
                         'time' : {'$gte' : time_bound}
                         }
 
-            if collection.count_documents(filter , sort = [('value', -1)]) >= 1:
+            if collection.count_documents(filter) >= 1:
                 return True
             else:
                 return False
