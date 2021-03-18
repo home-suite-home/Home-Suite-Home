@@ -305,6 +305,24 @@ class Database:
             self.connect()
             return None
 
+    def getAllUsers(self):
+        if self.connect_status == True:
+            db = self.client['sensorsdb']
+            collection = db['users']
+            records = collection.find({}, {'_id' : 0})
+
+            report_list = []
+
+            for record in records:
+                report_list.append(record)
+
+            return report_list
+        else:
+            print("Well that didn't work. Check the database address, and make sure the mongod process is running...")
+            self.connect()
+            return []
+
+
     def deleteUser(self, email):
         if self.connect_status == True:
             db = self.client['sensorsdb']
