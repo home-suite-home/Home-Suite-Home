@@ -24,7 +24,7 @@ class Alert:
         self.max_threshold = units.convert(self.record["max_threshold"])
 
     def __generate_subject(self):
-        subject = "Out of Tollerace Alert: "
+        subject = "Out of Tolerace Alert: "
         subject += self.record["name"]
         subject += " Value: "
         subject += str(self.sensor_value)
