@@ -16,6 +16,7 @@ def main():
     sensorConfigs = db.getConfigData()
 
     poll_rate = config.get_int_setting("sensors", "poll_rate")
+    silence_alerts = config.get_bool_setting("alerts", "rate_limit")
 
     if poll_rate <= 0:
         poll_rate = POLL_RATE_DEFAULT
@@ -26,7 +27,7 @@ def main():
             sensorValue = Sensor(url_plug = record["sub_address"], domain = record["address"]).getSensorValue()
             print(record["name"], ": ", sensorValue)
 
-            if record["alerts"] is True:
+            if record["alerts"] is True and silence_alerts is False:
                 if sensorValue == "NaN":
                     Alert(record, sensorValue).handleAlert()
                     print("Error recieving sensor data")
