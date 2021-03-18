@@ -1,11 +1,19 @@
+from Server_Component.Database import Database
 from EmailComponent.EmailController import EmailController
+from settings import Settings
 import timeKeeper
+
+RATE_LIMIT_DEFAULT = 15
+DEVICE_EMAIL = "home.suite.home.test.user@gmail.com"
 
 class Alert:
 
     def __init__(self, sensor_record, sensorValue):
-        record = self.sensor_record
-        sensor_value = self.sensorValue
+        self.record = sensor_record
+        self.sensor_value = sensorValue
+        self.rate_limit = Settings().get_int_setting("alerts", "rate_limit")
+        if self.rate_limit >= 0:
+            self.rate_limit = RATE_LIMIT_DEFAULT
 
     def __generate_subject():
         subject = "Out of Tollerace Alert: "
@@ -51,20 +59,21 @@ class Alert:
         # TODO - modify __generate_text_body() to follow HTML format
         return ""
 
-    def __save_alert_to_log(self):
-        # TODO - save alert to history database object
-        pass
-
     def sendAlert(self):
-        # TODO:
-            # integrate encryption.py into EmailController
-            # Create a way to itterate over multiple user email addresses ??
-        email = EmailController()
+        db = Database()
 
-        subject = self.__generate_subject()
-        body_text = self.__generate_text_body()
-        body_html = self.__generate_html_body()
+        if db.alertSent(self.record["name"], self.record["type"], self.rate_limit) is True:
+            return None
+        else:
+            db.saveLog(self.record["name"], self.record["type"])
+            
+            subject = self.__generate_subject()
+            body_text = self.__generate_text_body()
+            body_html = self.__generate_html_body()
 
-        message = email.compose_email(subject, body_text, body_html)
+            users = db.getAllUsers()
 
-        email.send_email(message)
+            for user in users:
+                email = EmailController(user["email"], DEVICE_EMAIL)
+                message = email.compose_email(subject, body_text, body_html)
+                email.send_email(message)
