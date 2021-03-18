@@ -29,6 +29,15 @@ class Settings:
             print(e)
             return -1
 
+    def get_int_setting(self, section_name, option_name):
+        parser = ConfigParser()
+        parser.read(self.settings_file)
+        try:
+            return parser.getint(section_name, option_name)
+        except Exception as e:
+            print(e)
+            return -1
+
     # returns string value at the section, option pair
     def get_setting(self, section_name, option_name):
         parser = ConfigParser()
