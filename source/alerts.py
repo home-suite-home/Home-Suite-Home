@@ -2,6 +2,7 @@ from Server_Component.Database import Database
 from EmailComponent.EmailController import EmailController
 from settings import Settings
 import timeKeeper
+from conversions import Units
 
 RATE_LIMIT_DEFAULT = 15
 DEVICE_EMAIL = "home.suite.home.test.user@gmail.com"
@@ -10,10 +11,17 @@ class Alert:
 
     def __init__(self, sensor_record, sensorValue):
         self.record = sensor_record
+
         self.sensor_value = sensorValue
+
         self.rate_limit = Settings().get_int_setting("alerts", "rate_limit")
         if self.rate_limit <= 0:
             self.rate_limit = RATE_LIMIT_DEFAULT
+
+        units = Units(self.record["type"], self.record["units"])
+        self.sensor_value = units.convert(self.sensor_value)
+        self.min_threshold = units.convert(self.record["min_threshold"])
+        self.max_threshold = units.convert(self.record["max_threshold"])
 
     def __generate_subject(self):
         subject = "Out of Tollerace Alert: "
@@ -37,9 +45,9 @@ class Alert:
         body += "\n\nCurrent Value: "
         body += str(self.sensor_value)
         body += "\nMax Threshold: "
-        body += str(self.record["max_threshold"])
+        body += str(self.max_threshold)
         body += "\nMin Threshold: "
-        body += str(self.record["min_threshold"])
+        body += str(self.min_threshold)
 
         body += "\n\nSensor Settings:"
         body += "\nIP Address: "
@@ -73,7 +81,7 @@ class Alert:
         body += "<br>Current Value: "
         body += str(self.sensor_value)
         body += "<br>Max Threshold: "
-        body += str(self.record["max_threshold"])
+        body += str(self.max_threshold)
         body += "<br>Min Threshold: "
         body += str(self.record["min_threshold"])
         body += "</h2></p>"
