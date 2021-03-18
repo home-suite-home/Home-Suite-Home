@@ -35,12 +35,12 @@ class TimeStamps:
     #
     #     time = timestamp.strftime("%H:%M:%S")
     #     print("time:", time)
-    # 
+    #
     #     date_time = timestamp.strftime("%m/%d/%Y, %H:%M:%S")
     #     print("date and time:",date_time)
 
-    def getTimestampString():
-        return datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
+    def getTimestampString(self):
+        return datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
 
 '''
 def main():
