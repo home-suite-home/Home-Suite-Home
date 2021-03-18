@@ -5,7 +5,7 @@ import timeKeeper
 from conversions import Units
 
 RATE_LIMIT_DEFAULT = 15
-DEVICE_EMAIL = "home.suite.home.test.user@gmail.com"
+#DEVICE_EMAIL = "home.suite.home.test.user@gmail.com"
 
 class Alert:
 
@@ -31,7 +31,7 @@ class Alert:
         return subject
 
     def __generate_text_body(self):
-        body = "\nSensor Value Out of Tollerance\n\n"
+        body = "\nSensor Value Out of Tolerance\n\n"
 
         body += timeKeeper.TimeStamps().getTimestampString()
 
@@ -70,7 +70,7 @@ class Alert:
             <body>
             """
 
-        body += "<h1>Sensor Value Out of Tollerance</h1>"
+        body += "<h1>Sensor Value Out of Tolerance</h1>"
 
         body += "<h2>"
         body += timeKeeper.TimeStamps().getTimestampString()
@@ -118,7 +118,8 @@ class Alert:
             users = db.getAllUsers()
 
             for user in users:
-                email = EmailController(user["email"], DEVICE_EMAIL)
+                #email = EmailController(user["email"], DEVICE_EMAIL)
+                email = EmailController(user["email"])
                 message = email.compose_email(subject, body_text, body_html)
                 email.send_email(message)
                 print("email sent to: ", user["email"])

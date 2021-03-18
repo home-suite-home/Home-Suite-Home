@@ -7,33 +7,36 @@
 //  Contact: david_crumley@knights.ucf.edu
 //
 //  Description:
-        will read mailbox, and respond to user command with appropriate response
+        will read mailbox, and respond to all users commands with appropriate response
 '''
 
 
 import sys
-sys.path.append("../../source/EmailComponent") # for testing
 sys.path.append("../EmailComponent") # this path will change if files moved
+sys.path.append("../Server_Component") # this path will change if files moved
 sys.path.append(".")
 from EmailController import EmailController
 from CommandResponse import CommandResponse
+from Database import Database
 
 class EmailCommandHandler:
-    def __init__(self, user_email, device_email):
-        self.user_email = user_email
-        self.device_email = device_email
-        self.email_controller = EmailController(user_email, device_email)
+    def __init__(self):
+        self.user_emails = Database().getAllUsers()
+        self.email_controllers = []
+        for user in self.user_emails:
+            self.email_controllers.append(EmailController(user))
 
     def handle_email_command(self):
-        # retrieve valid email from mailbox
-        incoming_email = self.email_controller.check_mailbox()
+        for i in range(len(self.email_controllers))
+            # retrieve valid email from mailbox
+            incoming_email = self.email_controllers[i].check_mailbox()
 
-        # create response to user command
-        # response will be a tuple with first element being text and
-        # second element being html
-        if (incoming_email != None):
-            text_response, html_response, attachment = CommandResponse(incoming_email).get_response()
-            # compose and send the email to user
-            subject = "Command Response"
-            outgoing_email = self.email_controller.compose_email(subject, text_response, html_response, attachment)
-            self.email_controller.send_email(outgoing_email)
+            # create response to user command
+            # response will be a tuple with first element being text and
+            # second element being html
+            if (incoming_email != None):
+                text_response, html_response, attachment = CommandResponse(incoming_email).get_response()
+                # compose and send the email to user
+                subject = "Command Response"
+                outgoing_email = self.email_controllers[i].compose_email(subject, text_response, html_response, attachment)
+                self.email_controllers[i].send_email(outgoing_email)
