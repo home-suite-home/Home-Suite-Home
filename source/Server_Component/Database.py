@@ -270,6 +270,42 @@ class Database:
             self.connect()
             return []
 
+    # Add encryption: Saves pi credentials
+    def saveCredentials(self, email, password):
+        if self.connect_status == True:
+            db = self.client['sensorsdb']
+            collection = db['creds']
+
+            dataobj = {
+                "email": email,
+                "password" : password
+            }
+
+            # First, check if there's a record for this sensor...
+            if collection.count_documents({}) >= 1:
+                # ... and update if there's an existing record
+                collection.replace_one({}, dataobj)
+            else:
+                # Otherwise, insert the record
+                collection.insert_one(dataobj)
+        else:
+            print("Well that didn't work. Check the database address, and make sure the mongod process is running...")
+            self.connect()
+
+
+    def getCredentials(self):
+        if self.connect_status == True:
+            db = self.client['sensorsdb']
+            collection = db['creds']
+            record = collection.find_one({}, {'_id' : 0})
+
+            return record
+        else:
+            print("Well that didn't work. Check the database address, and make sure the mongod process is running...")
+            self.connect()
+            return None
+
+
     # Saves user info to users collection.
     def saveUser(self, name, email):
         if self.connect_status == True:
@@ -332,6 +368,17 @@ class Database:
         else:
             print("Well that didn't work. Check the database address, and make sure the mongod process is running...")
             self.connect()
+
+    def clearUsers(self):
+        def deleteUser(self, email):
+            if self.connect_status == True:
+                db = self.client['sensorsdb']
+                collection = db['users']
+
+                collection.delete_many({})
+            else:
+                print("Well that didn't work. Check the database address, and make sure the mongod process is running...")
+                self.connect()
 
     # Saves an entry in alert logs
     def saveLog(self, name, sensor_type):
