@@ -21,13 +21,13 @@ from Database import Database
 
 class EmailCommandHandler:
     def __init__(self):
-        self.user_emails = Database().getAllUsers()
+        user_emails = Database().getAllUsers()
         self.email_controllers = []
-        for user in self.user_emails:
-            self.email_controllers.append(EmailController(user))
+        for user in user_emails:
+            self.email_controllers.append(EmailController(user['email']))
 
     def handle_email_command(self):
-        for i in range(len(self.email_controllers))
+        for i in range(len(self.email_controllers)):
             # retrieve valid email from mailbox
             incoming_email = self.email_controllers[i].check_mailbox()
 
