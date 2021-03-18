@@ -18,7 +18,7 @@
 //      2. Standard database creation for those who do not have direct hardware access
 // 
 
-
+#include <math.h>
 
 // DS18 Libraries
 #include <OneWire.h>
@@ -43,6 +43,19 @@
 #define DHTTYPE DHT22
 #define dhtpin1 D4
 #define dhtpin2 D5
+
+// wifi username and password
+#include "creds.h"
+
+// Lux Sensor
+#define luxPin A0
+#define REF_VOLTS 3.3
+#define VOLTS_CONSTANT 0.003222656 // 3.3 / 1024
+const double k = 3.3 / 1024.0;
+const double luxFactor = 500000;
+const double R2 = 10000;
+const double B = 1.3 * pow(10.0, 7);
+const double m = -1.4;
 
 // DS18 Init
 OneWire oneWire(ONE_WIRE_BUS);
@@ -69,12 +82,15 @@ uint8_t sensor3[8] = {0x28, 0x29, 0x50, 0x07, 0xD6, 0x01, 0x3C, 0x3C};
 uint8_t sensor4[8] = {0x28, 0xCB, 0x97, 0x07, 0xD6, 0x01, 0x3C, 0x08};
 uint8_t probe[8] = {0x28, 0x9F, 0xBA, 0x07, 0xD6, 0x01, 0x3C, 0xEE};
 
+
 void setup() 
 {
     Serial.begin(57600);
 
     WiFi.begin(ssid, password);     //Connect to your WiFi router
     Serial.println("");
+
+    Serial.println(ssid);
 
     // loop until connection successful
     while (WiFi.status() != WL_CONNECTED) 
@@ -103,6 +119,7 @@ void setup()
     server.on("/dht2temperature", handleTemperatureDHT2);
     server.on("/dht1humidity", handleHumidityDHT1);
     server.on("/dht2humidity", handleHumidityDHT2);
+    server.on("/lux", handleLux);
 
     // Open the server for requests
     server.begin();
@@ -246,6 +263,25 @@ void handleHumiditySHT()
     String humidityStr = String(humidity, 2);
     server.send(200, "text/html", humidityStr); // server.send(RESPONSE(should be 200), TYPE(Arbitrary data type), STRING(to be sent))
 } 
+
+
+void handleLux()
+{
+    Serial.println("Lux Requested.");
+    String lux = String(getLux());
+    Serial.print("Lux: ");
+    Serial.println(lux);
+    server.send(200, "text/html", lux);
+}
+
+
+double getLux()
+{
+    double V2 = k * analogRead(luxPin);
+    double R1 = (REF_VOLTS / V2 - 1) * R2;
+    double lux = B * pow(R1, m);
+    return lux;
+}
 
 
 // returns the current temperature in degrees celcius
