@@ -270,6 +270,102 @@ class Database:
             self.connect()
             return []
 
+    # Saves user info to users collection.
+    def saveUser(self, name, email):
+        if self.connect_status == True:
+            db = self.client['sensorsdb']
+            collection = db['users']
+
+            dataobj = {
+                "name" : name,
+                "email": email
+            }
+
+            # First, check if there's a record for this sensor...
+            if collection.count_documents({'email' : email}) >= 1:
+                # ... and update if there's an existing record
+                collection.replace_one({'email' : email}, dataobj)
+            else:
+                # Otherwise, insert the record
+                collection.insert_one(dataobj)
+        else:
+            print("Well that didn't work. Check the database address, and make sure the mongod process is running...")
+            self.connect()
+
+    # returns dict of user doc comprised of name and email
+    def getUser(self, email):
+        if self.connect_status == True:
+            db = self.client['sensorsdb']
+            collection = db['users']
+            record = collection.find_one({"email" : email})
+
+            return record
+        else:
+            print("Well that didn't work. Check the database address, and make sure the mongod process is running...")
+            self.connect()
+            return None
+
+    def deleteUser(self, email):
+        if self.connect_status == True:
+            db = self.client['sensorsdb']
+            collection = db['users']
+
+            collection.delete_one({ "email" : sensor_type})
+        else:
+            print("Well that didn't work. Check the database address, and make sure the mongod process is running...")
+            self.connect()
+
+    # Saves an entry in alert logs
+    def saveLog(self, name, sensor_type):
+        if self.connect_status == True:
+            db = self.client['sensorsdb']
+            collection = db['logs']
+            ts = TimeStamps().getTimestamp()
+
+            dataobj = {
+                            "type": sensor_type,
+                            "name": name,
+                            "time": ts
+            }
+
+            collection.insert_one(dataobj)
+        else:
+            print("Well that didn't work. Check the database address, and make sure the mongod process is running...")
+            self.connect()
+
+    # returns True if an alert has already been sent in the user-defined
+    # time frame, and False otherwise
+    def alertSent(self, name, sensor_type, minutes):
+        if self.connect_status == True:
+            db = self.client['sensorsdb']
+            collection = db['logs']
+            time_bound = (TimeStamps().getTimestamp()) - (60 * minutes)
+
+            filter = {
+                        'name': name,
+                        'type' : sensor_type,
+                        'time' : {'$gte' : time_bound}
+                        }
+
+            if collection.count_documents(filter , sort = [('value', -1)]) >= 1:
+                return True
+            else:
+                return False
+        else:
+            print("Well that didn't work. Check the database address, and make sure the mongod process is running...")
+            self.connect()
+            return True
+
+    # clears alert log
+    def clearLog(self):
+        if self.connect_status == True:
+            db = self.client['sensorsdb']
+            collection = db['logs']
+
+            collection.delete_many({})
+        else:
+            print("Well that didn't work. Check the database address, and make sure the mongod process is running...")
+            self.connect()
 
     # removes a named sensor's config file
     def deleteConfigData(self, name, sensor_type):
