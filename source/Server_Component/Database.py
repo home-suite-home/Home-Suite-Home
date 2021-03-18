@@ -363,7 +363,7 @@ class Database:
             db = self.client['sensorsdb']
             collection = db['users']
 
-            collection.delete_one({ "email" : sensor_type})
+            collection.delete_one({ "email" : email)
         else:
             print("Well that didn't work. Check the database address, and make sure the mongod process is running...")
             self.connect()
