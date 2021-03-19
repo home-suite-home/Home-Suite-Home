@@ -27,9 +27,17 @@ def data_over_time(type, name, hours, visible=True):
     x = []                      # X-coordinate
     y = []                      # Y-coordinate
     ts = TimeStamps()
+    k = 0
     for i in all_vals:
         x.append(ts.stringToTimestamp(i['time']))
-        y.append(i['value'])
+        if (i['value'] == "NaN"):
+            if k > 0:
+                y.append(all_vals[k-1]['value'])
+            else:
+                y.append(all_vals[k+1]['value'])
+        else:
+            y.append(i['value'])
+        k += 1
 
     # get avg dataset
     run_avg = [0]*len(y)     # hold a running avg of the data
@@ -80,13 +88,13 @@ def data_over_time(type, name, hours, visible=True):
 ## with buttons for day week month year
 def with_buttons(type, name):
     import plotly.graph_objects as go
+    from timeKeeper import TimeStamps
 
 
     # create the day graph
-    day_fig = data_over_time(type, name, 24, visible=False)
+    day_fig = data_over_time(type, name, 24)
     # changing name to match the buttons
     day_fig['data'][0]['name'] = "day"
-
 
     # create the week graph
     week_fig = data_over_time(type, name, 24*7, visible=False)
@@ -99,20 +107,50 @@ def with_buttons(type, name):
     month_fig['data'][0]['name'] = "month"
 
     # create the year graph (assume all years are 365)
-    year_fig = data_over_time(type, name, 24*365)
+    year_fig = data_over_time(type, name, 24*365, visible=False)
     # changing name to match the buttons
     year_fig['data'][0]['name'] = "year"
 
     # create the frankenstein graph
     all_fig = go.Figure()
-    # add the day trace
+    '''
+    Traces: all_data: 0
+            avg_val : 1
+            max_val : 2
+            min_val : 3
+    '''
+    # add the day traces
     all_fig.add_trace(day_fig['data'][0])
+    all_fig.add_trace(day_fig['data'][1])
+    all_fig.add_trace(day_fig['data'][2])
+    all_fig.add_trace(day_fig['data'][3])
     # add the week trace
     all_fig.add_trace(week_fig['data'][0])
+    all_fig.add_trace(week_fig['data'][1])
+    all_fig.add_trace(week_fig['data'][2])
+    all_fig.add_trace(week_fig['data'][3])
     # add the month trace
     all_fig.add_trace(month_fig['data'][0])
+    all_fig.add_trace(month_fig['data'][1])
+    all_fig.add_trace(month_fig['data'][2])
+    all_fig.add_trace(month_fig['data'][3])
     # add the year trace
     all_fig.add_trace(year_fig['data'][0])
+    all_fig.add_trace(year_fig['data'][1])
+    all_fig.add_trace(year_fig['data'][2])
+    all_fig.add_trace(year_fig['data'][3])
+
+    # edit the layout
+    # current day
+    date = TimeStamps().stringToTimestamp(TimeStamps().getTimestamp())
+    title_str = "<b>Home-Suite-Home Data Analytics</b><br>"
+    title_str += "Sensor Name: " + "<b>{name}</b>".format(**locals()) + "<br>"
+    title_str += "Sensor History Recorded on: " + \
+                 "<b>{date}</b>".format(**locals()) + "<br>"
+    #title_str += "All Data from " + str(hours) + " Hours" + " Ago" + "<br>"
+    title = dict(text=title_str, font=dict(size=25, family='Helvetica'), x=0.5, y=0.98, xref='paper')
+    all_fig.update_layout(title=title, xaxis_title='Date and Time',
+                                   yaxis_title=type)
 
     # add the buttons
     all_fig.update_layout(
@@ -120,37 +158,53 @@ def with_buttons(type, name):
         dict(
             type="buttons",
             direction="right",
-            x=0.7,
-            y=1.2,
+            x=0.65,
+            y=-0.07,
+            font=dict(size=20),
+            bgcolor='lightblue',
+            bordercolor='lightslategray',
+            borderwidth=4,
             showactive=True,
             buttons=list(
                 [
                     dict(
-                        label="day",
+                        label="Day",
                         method="update",
                         args=[
-                            {"visible": [True, False, False, False]},
+                            {"visible": [True, True, True, True,
+                                         False, False, False, False,
+                                         False, False, False, False,
+                                         False, False, False, False]},
                         ],
                     ),
                     dict(
-                        label="week",
+                        label="Week",
                         method="update",
                         args=[
-                            {"visible": [False, True, False, False]},
+                            {"visible": [False, False, False, False,
+                                         True, True, True, True,
+                                         False, False, False, False,
+                                         False, False, False, False]},
                         ],
                     ),
                     dict(
-                        label="month",
+                        label="Month",
                         method="update",
                         args=[
-                            {"visible": [False, False, True, False]},
+                            {"visible": [False, False, False, False,
+                                         False, False, False, False,
+                                         True, True, True, True,
+                                        False, False, False, False]},
                         ],
                     ),
                     dict(
-                        label="year",
+                        label="Year",
                         method="update",
                         args=[
-                            {"visible": [False, False, False, True]},
+                            {"visible": [False, False, False, False,
+                                         False, False, False, False,
+                                         False, False, False, False,
+                                         True, True, True, True]},
                         ],
                     ),
                 ]
