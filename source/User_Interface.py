@@ -18,50 +18,6 @@ from Server_Component.Database import Database
 SECONDS_PER_REFRESH = 30
 NU = dash.no_update
 
-## holds Output parameters as key
-# holds return value for Output as value
-# NOT actually a dictionary... list of list size two [key, val]
-#class OutputHolder:
-#    def __init__(self, inList):
-#        self.curDictHolder = []
-#
-#        for item in inList:
-#            self.curDictHolder.append([item, dash.no_update])
-#
-#    def getObjList(self):
-#        return [Output(key[0], key[1]) for key, _ in self.curDictHolder]
-#
-#
-#    def getReturns(self):
-#        out = [value for _, value in self.curDictHolder]
-#        self.__clearHolder()
-#        return out
-#
-#    def __clearHolder(self):
-#        for i in range(len(self.curDictHolder)):
-#            self.curDictHolder[i][1] = dash.no_update
-#
-#    def addReturn(self, inkey, invalue):
-#        for i in range(len(self.curDictHolder)):
-#            if(type(self.curDictHolder[i][0][0]) == dict):
-#                for item in self.curDictHolder[i][0][0].keys():
-#                    if(item == inkey):
-#                        self.curDictHolder[i][1] = invalue
-#                        break
-#            else:
-#                print(self.curDictHolder[i])
-#                print('test: ',self.curDictHolder[i][0][1] ,inkey)
-#                if(self.curDictHolder[i][0][0] == inkey[0] and
-#                        self.curDictHolder[i][0][1] ==inkey[1]):
-#                    print('adding ',self.curDictHolder[i][0][0],invalue)
-#                    self.curDictHolder.insert(i, [self.curDictHolder[i][0][0],invalue])
-#                    print(self.curDictHolder[i][1], invalue)
-#
-#    def printDict(self):
-#        print('OutputHolder:')
-#        for key, value in self.curDictHolder:
-#            print('{}, {}: {}'.format(key[0], key[1], value))
-
 
 def getCardDivs(isField=False, isEdit=False):
     divList = []
@@ -145,7 +101,8 @@ def getFieldsAndNewAndEditCards(isField=False, isEdit=False):
     return temp_edits_card, temp_fields_card, temp_new_sensor_card
 
 
-def populateEditCard(valuesDict):
+def populateEditCard(valuesDict, curId):
+    print("(populateEditCard) " + str(curId['index']))
     edit_card_list = [
         html.Button('Discard', id='edit_discard-button'),
         html.Div(
@@ -224,6 +181,9 @@ def populateEditCard(valuesDict):
                 ),
                 html.H4(''),
                 html.Button('Save', id='edit_save-card-button'),
+                html.H4(''),
+                html.Div(curId['index'], id='edit_name-passer', style={'display':'none'}),
+                html.Button('DELETE', id='edit_delete-button'),
                 html.H4('Invalid Selection', style={'color': 'red','display': 'none' }, id='edit_invalid-selection'),
             ],
             style={'display': 'inline-block'}
@@ -382,6 +342,9 @@ edit_card_fields = [
             ),
             html.H4(''),
             html.Button('save', id='edit_save-card-button'),
+            html.H4(''),
+            html.Div('default', id='edit_name-passer', style={'display':'none'}),
+            html.Button('DELETE', id='edit_delete-button'),
             html.H4('Invalid Selection', style={'color': 'red','display': 'none' }, id='edit_invalid-selection'),
         ],
         style={'display': 'inline-block'}
@@ -413,49 +376,28 @@ colors = {"background": "343434"}
 app = dash.Dash(__name__, suppress_callback_exceptions=True)
 
 
-mainDivChildren = [
+mainPage = [
+    dcc.Location(id='url', refresh=False),
     dcc.Interval(
         id='interval-component',
         interval=SECONDS_PER_REFRESH*1000, # in ms
         n_intervals=0,
     ),
+    html.Div(id='page-content'),
+]
+
+mainDivChildren =[
     html.Div(
         id="title",
-        children=html.H1(children="Home Sensor Suite"),
-        style={"textAlign": "center"},
-    ),
-    html.Div(
-        id="major_container1",
-        style={'columnCount': 2},
         children=[
-            html.Div(
-                id="retrieve-email",
-                style={
-                    "width": "100%",
-                    "display" : "inline-block"
-                    },
-                children=[
-                    html.H3(children='Send test email'),
-                    dcc.Input(
-                        id="remote-email",
-                        placeholder="Input email for raspberry pi",
-                        type="email",
-                        value="",
-                        children=[html.Div(["Input email for raspberry pi"])],
-                        style={
-                            "width": "95%",
-                            "height": "40px",
-                            "borderWidth": "1px",
-                        },
-                        debounce=True,
-                    ),
-                    html.Button("Submit", id="button",),
-                ],
-            ),
+            html.H1(children="Home Sensor Suite"),
+            dcc.Link('Settings', href='/settings'),
         ],
+        style={"textAlign": "center"},
     ),
     html.Div(id='createCardMessenger',style={'display':'none'}),
     html.Div(id='editCardMessenger', style={'display':'none'}),
+    html.Div(id='deleteCardMessenger', style={'display':'none'}),
     html.Div(id="cards-container",
         style={
             'width': '100%',
@@ -473,11 +415,67 @@ mainDivChildren = [
     ),
 ]
 
+settingsPage = [
+    html.Div(children=[
+        html.H1(children="Settings"),
+        dcc.Link('Homepage', href='/'),
+        html.Div(
+            id="major_container1",
+            style={'columnCount': 2},
+            children=[
+                html.Div(
+                    id="retrieve-email",
+                    style={
+                        "width": "100%",
+                        "display" : "inline-block"
+                        },
+                    children=[
+                        html.H3(children='Send test email'),
+                        dcc.Input(
+                            id="remote-email",
+                            placeholder="Input email for raspberry pi",
+                            type="email",
+                            value="",
+                            children=[html.Div(["Input email for raspberry pi"])],
+                            style={
+                                "width": "95%",
+                                "height": "40px",
+                                "borderWidth": "1px",
+                            },
+                            debounce=True,
+                        ),
+                        html.Button("Submit", id="button",),
+                    ],
+                ),
+            ],
+        ),
+    ],
+    style={'textAlign':'center'},
+    )
+]
+
+errorPage = [
+    html.H1("ERROR")
+]
+
 
 app.layout = html.Div(
         style={"backgroundColor": colors["background"]},
-        children=mainDivChildren
+        children=mainPage
 )
+
+
+@app.callback(
+        Output('page-content', 'children'),
+        Input('url', 'pathname'),
+)
+def display_page(pathname):
+    if(pathname == '/'):
+        return mainDivChildren
+    if(pathname == '/settings'):
+        return settingsPage
+    else:
+        return errorPage
 
 
 # Email Entry Callback
@@ -509,12 +507,14 @@ def handle_email(button_timestamp, email):
             Input('new-card-button', 'n_clicks'),
             Input('createCardMessenger', 'children'),
             Input('editCardMessenger', 'children'),
+            Input('deleteCardMessenger', 'children'),
             Input('field_discard-button', 'n_clicks'),
             Input('edit_discard-button', 'n_clicks'),
         ]
 )
-def set_cards_container(sensor_button, createCardMessenger, editCardMessenger, field_discard_button,
-        edit_discard_button):
+def set_cards_container(sensor_button, createCardMessenger, editCardMessenger, 
+        deleteCardMessenger, 
+        field_discard_button,edit_discard_button):
     ctx = dash.callback_context
     curButton = '';
     if ctx.triggered:
@@ -528,6 +528,8 @@ def set_cards_container(sensor_button, createCardMessenger, editCardMessenger, f
     elif(curButton == 'editCardMessenger'):
         print('is editing!')
         #return getCardDivs(isEdit=True)
+        return getCardDivs()
+    elif(curButton == 'deleteCardMessenger'):
         return getCardDivs()
     elif(curButton == 'field_discard-button'):
         return getCardDivs()
@@ -560,17 +562,16 @@ def set_cards_container(sensor_button, createCardMessenger, editCardMessenger, f
             State('field_url-plug', 'value'),
             State('field_minimum-bound', 'value'),
             State('field_maximum-bound', 'value'),
-            State('field_alert', 'value'),
+            State('field_alert', 'on'),
         ]
 )
 def create_new_card(create_button, sensor_type,
         sensor_name, new_type, units, ip_address, port, url_plug, min_bound, max_bound, alert,):
 
+    print("Alert: " + str(alert))
 
     if(port == None or port == ''):
         port = '8080'
-    if(alert == None):
-        alert = False
 
     if(units == None):
         units = ''
@@ -620,8 +621,8 @@ def handle_edit_button(edit_button, curId):
     print('(handle_edit_button) curButton: ', curButton)
 
     if(curButton == 'edit-card-button'):
-        sensorName, sensorType = curId['index'].split('`')
-        config = db.getSensorConfig(sensorType, sensorName)
+        sensorType, sensorName = curId['index'].split('`')
+        config = db.getSensorConfig(sensorName, sensorType)
 
         fieldsMap = {}
         fieldsMap['edit_sensor-name'] = config['name']
@@ -636,7 +637,7 @@ def handle_edit_button(edit_button, curId):
 
         print('getSensorConfig({}, {}) = {}'.format(sensorType, sensorName, config))
 
-        return populateEditCard(fieldsMap)
+        return populateEditCard(fieldsMap, curId)
     else:
         return NU
 
@@ -660,7 +661,7 @@ def handle_edit_button(edit_button, curId):
             State('edit_url-plug', 'value'),
             State('edit_minimum-bound', 'value'),
             State('edit_maximum-bound', 'value'),
-            State('edit_alert', 'value'),
+            State('edit_alert', 'on'),
         ]
 )
 def save_edit_card(save_button, sensor_type,
@@ -689,6 +690,29 @@ def save_edit_card(save_button, sensor_type,
             return [NU, NU, {'display':'block'}]
 
     return NU
+
+
+@app.callback(
+        Output('deleteCardMessenger', 'children'),
+        Input('edit_delete-button', 'n_clicks'),
+        State('edit_name-passer', 'children'),
+)
+def handle_delete_button(delete_button, cardName):
+    ctx = dash.callback_context
+    curButton = '';
+    if ctx.triggered:
+        curButton = ctx.triggered[0]['prop_id'].split('.')[0]
+    print('(handle_delete_button) curButton: ', curButton)
+
+    if(curButton == 'edit_delete-button' and delete_button != None):
+        print(cardName)
+        sensorType, sensorName = cardName.split('`')
+        print("cardName: {} {}".format(sensorName, sensorType))
+        db.deleteConfigData(sensorName, sensorType)
+        return [html.Div()]
+    
+    return NU
+
 
 @app.callback(
         Output({'type': 'sensor-data', 'index': MATCH}, 'children'),
