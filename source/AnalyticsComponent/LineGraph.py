@@ -59,7 +59,7 @@ def data_over_time(type, name, hours, visible=True):
 
     # avg line
     fig.add_trace(go.Scatter(x=x, y=run_avg,
-                             name='Average: '+str(round(db.getAvgVal(name,type),2)),
+                             name='Average: '+str(round(run_avg[len(y)-1])),
                              visible = visible,
                              line=dict(shape='spline', color='lightblue', width=4))
     )
