@@ -93,23 +93,15 @@ def with_buttons(type, name):
 
     # create the day graph
     day_fig = data_over_time(type, name, 24)
-    # changing name to match the buttons
-    day_fig['data'][0]['name'] = "day"
 
     # create the week graph
     week_fig = data_over_time(type, name, 24*7, visible=False)
-    # changing name to match the buttons
-    week_fig['data'][0]['name'] = "week"
 
     # create the month graph (assume all months are 30 days)
     month_fig = data_over_time(type, name, 24*30, visible=False)
-    # changing name to match the buttons
-    month_fig['data'][0]['name'] = "month"
 
     # create the year graph (assume all years are 365)
     year_fig = data_over_time(type, name, 24*365, visible=False)
-    # changing name to match the buttons
-    year_fig['data'][0]['name'] = "year"
 
     # create the frankenstein graph
     all_fig = go.Figure()
