@@ -4,5 +4,6 @@ source/password.txt
 __pycache__
 source/enabled_sensors.txt
 *.old
+source/settings.config
 source/Email_Credentials/pi_email_creds.config
 source/Email_Credentials/pi_key.key
