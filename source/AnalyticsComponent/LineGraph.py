@@ -18,8 +18,8 @@ def data_over_time(type, name, hours, visible=True):
         print("Sensor not found in database")
         return None
 
-    max_val  = db.getRecentMax(name, type, int(hours))
-    min_val  = db.getRecentMin(name, type, int(hours))
+    #max_val  = db.getRecentMax(name, type, int(hours))
+    #min_val  = db.getRecentMin(name, type, int(hours))
 
 
     fig = go.Figure()
@@ -30,20 +30,27 @@ def data_over_time(type, name, hours, visible=True):
     ts = TimeStamps()
 
     for i in all_vals:
-        x.append(ts.stringToTimestamp(i['time']))
         if (math.isnan(i['value'])):
             continue
+        x.append(ts.stringToTimestamp(i['time']))
         else:
             y.append(i['value'])
 
-    # get avg dataset
-    run_avg = [0]*len(y)     # hold a running avg of the data
+    # get avg, mx and min dataset
+    max_val = 0
+    min_val = 1e9
+    run_avg = [0]*len(y)        # hold a running avg of the data
     sum = 0.                    # for calculating avg
     cnt = 0                     # counter for loop
+
     for i in range(len(y)-1,-1,-1):
         cnt += 1
         sum += y[i]
         run_avg[i] = (sum/cnt)
+        if y[i] > max_val:
+            max_val = y[i]
+        if y[i] < min_val:
+            min_val = y[i]
 
     # data line
     fig.add_trace(go.Scatter(x=x, y=y, name='Sensor Data', visible=visible,
