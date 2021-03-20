@@ -125,6 +125,7 @@ def most_recent_data():
         type_list.append(config["type"])
 
     # get most recent of these lists
+    most_recent_list=[]
     for sensor in (config_list):
         most_recent_list.append(db.getMostRecentSensorData(sensor["name"], sensor["type"]))
 
