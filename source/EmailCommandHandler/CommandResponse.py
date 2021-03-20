@@ -159,15 +159,16 @@ def most_recent_data():
     """
 
     # create the table based on sensor_list data
-    for i in range(len(most_recent_list)):
+    i = 0
+    for sensor in (config_list):
         html_table += """\
             <tr>
-                <td>{config_list[i]["type"]}</td>
-                <td>{config_list[i]["name"]}</td>
+                <td>{sensor["type"]}</td>
+                <td>{sensor["name"]}</td>
                 <td>{most_recent_list[i]}</td>
             </tr>
             """.format(**locals())
-
+        i+=1
 
     # add the html trailers
     html_table += """\
