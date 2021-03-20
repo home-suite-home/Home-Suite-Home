@@ -119,26 +119,58 @@ def with_buttons(type, name):
             max_val : 2
             min_val : 3
     '''
+    # empty trace if there is no data
+    x=[]
+    y=[]
+    empty_trace = go.Scatter(x=x, y=y, name='Sensor Data', visible=visible,
+                             line=dict(shape='spline',
+                             color='darkslateblue', width=2))
+
     # add the day traces
-    all_fig.add_trace(day_fig['data'][0])
-    all_fig.add_trace(day_fig['data'][1])
-    all_fig.add_trace(day_fig['data'][2])
-    all_fig.add_trace(day_fig['data'][3])
+    if day_fig:
+        all_fig.add_trace(day_fig['data'][0])
+        all_fig.add_trace(day_fig['data'][1])
+        all_fig.add_trace(day_fig['data'][2])
+        all_fig.add_trace(day_fig['data'][3])
+    else:
+        all_fig.add_trace(empty_trace)
+        all_fig.add_trace(empty_trace)
+        all_fig.add_trace(empty_trace)
+        all_fig.add_trace(empty_trace)
+
     # add the week trace
-    all_fig.add_trace(week_fig['data'][0])
-    all_fig.add_trace(week_fig['data'][1])
-    all_fig.add_trace(week_fig['data'][2])
-    all_fig.add_trace(week_fig['data'][3])
+    if week_fig:
+        all_fig.add_trace(week_fig['data'][0])
+        all_fig.add_trace(week_fig['data'][1])
+        all_fig.add_trace(week_fig['data'][2])
+        all_fig.add_trace(week_fig['data'][3])
+    else:
+        all_fig.add_trace(empty_trace)
+        all_fig.add_trace(empty_trace)
+        all_fig.add_trace(empty_trace)
+        all_fig.add_trace(empty_trace)
     # add the month trace
-    all_fig.add_trace(month_fig['data'][0])
-    all_fig.add_trace(month_fig['data'][1])
-    all_fig.add_trace(month_fig['data'][2])
-    all_fig.add_trace(month_fig['data'][3])
+    if month_fig:
+        all_fig.add_trace(month_fig['data'][0])
+        all_fig.add_trace(month_fig['data'][1])
+        all_fig.add_trace(month_fig['data'][2])
+        all_fig.add_trace(month_fig['data'][3])
+    else:
+        all_fig.add_trace(empty_trace)
+        all_fig.add_trace(empty_trace)
+        all_fig.add_trace(empty_trace)
+        all_fig.add_trace(empty_trace)
     # add the year trace
-    all_fig.add_trace(year_fig['data'][0])
-    all_fig.add_trace(year_fig['data'][1])
-    all_fig.add_trace(year_fig['data'][2])
-    all_fig.add_trace(year_fig['data'][3])
+    if year_fig:
+        all_fig.add_trace(year_fig['data'][0])
+        all_fig.add_trace(year_fig['data'][1])
+        all_fig.add_trace(year_fig['data'][2])
+        all_fig.add_trace(year_fig['data'][3])
+    else:
+        all_fig.add_trace(empty_trace)
+        all_fig.add_trace(empty_trace)
+        all_fig.add_trace(empty_trace)
+        all_fig.add_trace(empty_trace)
 
     # edit the layout
     # current day
