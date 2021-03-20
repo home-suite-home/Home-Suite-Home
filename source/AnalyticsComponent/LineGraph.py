@@ -5,6 +5,7 @@ def data_over_time(type, name, hours, visible=True):
     import plotly.graph_objects as go
     from Database import Database
     from timeKeeper import TimeStamps
+    import math
 
     # instantiate database and connect
     db = Database()
@@ -27,17 +28,13 @@ def data_over_time(type, name, hours, visible=True):
     x = []                      # X-coordinate
     y = []                      # Y-coordinate
     ts = TimeStamps()
-    k = 0
+
     for i in all_vals:
         x.append(ts.stringToTimestamp(i['time']))
-        if (i['value'] == "NaN"):
-            if k > 0:
-                y.append(all_vals[k-1]['value'])
-            else:
-                y.append(all_vals[k+1]['value'])
+        if (math.isnan(i['value'])):
+            continue
         else:
             y.append(i['value'])
-        k += 1
 
     # get avg dataset
     run_avg = [0]*len(y)     # hold a running avg of the data
