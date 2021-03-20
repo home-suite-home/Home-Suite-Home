@@ -9,6 +9,7 @@ import dash_html_components as html
 from dash.dependencies import Input, Output, State, MATCH, ALL
 from dash.exceptions import PreventUpdate
 from Email_Component import Email_Component
+from AnalyticsComponent import LineGraph
 from HTTP_Component.Sensors import Sensor
 from UI_Utils import *
 from subprocess import check_output
@@ -111,7 +112,7 @@ def getFieldsAndNewAndEditCards(isField=False, isEdit=False):
                         children=new_card_fields,
                         style={'display': displayFields},
                     )
-    
+
     temp_new_sensor_card = html.Div(className='card',
                         id='new-card',
                         children=[
@@ -431,11 +432,13 @@ mainDivChildren =[
 
         },
         children=[
-            edits_card, 
-            fields_card, 
+            edits_card,
+            fields_card,
             new_sensor_card
         ]
     ),
+
+
 ]
 
 
@@ -498,7 +501,7 @@ settingsPage = [
                             }
                         ),
                         html.Button(
-                            children='Add', 
+                            children='Add',
                             id='new-user-button',
                         ),
                         html.Br(),
@@ -652,7 +655,7 @@ def handle_users(add_button, dropdown_value, email):
         return [dbOptions, dbValue, NU]
 
     return NU
-        
+
 @app.callback(
         [
             Output('global-switch', 'on'),
@@ -706,15 +709,15 @@ def other_settings(switch ,rate_limit, polling):
             Input('edit_discard-button', 'n_clicks'),
         ]
 )
-def set_cards_container(sensor_button, createCardMessenger, editCardMessenger, 
-        deleteCardMessenger, 
+def set_cards_container(sensor_button, createCardMessenger, editCardMessenger,
+        deleteCardMessenger,
         field_discard_button,edit_discard_button):
     ctx = dash.callback_context
     curButton = '';
     if ctx.triggered:
         curButton = ctx.triggered[0]['prop_id'].split('.')[0]
     print('(set_cards_container) curButton: ', curButton)
-    
+
     if(curButton == 'new-card-button'):
         return getCardDivs(isField=True)
     elif(curButton == 'createCardMessenger'):
@@ -835,6 +838,27 @@ def handle_edit_button(edit_button, curId):
     else:
         return NU
 
+@app.callback(
+
+    Output({'type': 'graph-card-button', 'index': MATCH}, 'style'),
+    Input({'type': 'graph-card-button', 'index': MATCH}, 'n_clicks'),
+    State({'type': 'graph-card-button', 'index': MATCH}, 'id'),
+)
+def handle_view_graph_button(view_button, curId):
+    ctx = dash.callback_context
+    curButton = '';
+    if ctx.triggered:
+        curButton = ctx.triggered[0]['prop_id'].split('.')[0]
+        try:
+            curButton = json.loads(curButton)['type']
+        except:
+            pass
+
+
+    if(curButton == 'graph-card-button'):
+        sensorType, sensorName = curId['index'].split('`')
+        LineGraph.with_buttons(sensorType, sensorName)
+        return NU
 
 @app.callback(
         [
@@ -904,7 +928,7 @@ def handle_delete_button(delete_button, cardName):
         #print("cardName: {} {}".format(sensorName, sensorType))
         db.deleteConfigData(sensorName, sensorType)
         return [html.Div()]
-    
+
     return NU
 
 

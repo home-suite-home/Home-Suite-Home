@@ -3,7 +3,7 @@
 def data_over_time(type, name, hours, visible=True):
     #import plotly.express as px
     import plotly.graph_objects as go
-    from Database import Database
+    from Server_Component.Database import Database
     from timeKeeper import TimeStamps
     import math
 
