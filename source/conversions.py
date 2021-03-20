@@ -84,4 +84,15 @@ class Units:
             return psi
         else:
             slef.units = "Pa"
+            return value
+
+
+    def __convert_altitde(self, value):
+        if "foot" in self.units or "feet" in self.units:
+            feet = value / 0.3048
+            feet = round(feet, 2)
+            self.units = "ft"
+            return feet
+        else:
+            self.units = "m"
             return value 
