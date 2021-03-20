@@ -32,9 +32,9 @@ def data_over_time(type, name, hours, visible=True):
     for i in all_vals:
         if (math.isnan(i['value'])):
             continue
-        x.append(ts.stringToTimestamp(i['time']))
         else:
             y.append(i['value'])
+        x.append(ts.stringToTimestamp(i['time']))
 
     # get avg, mx and min dataset
     max_val = 0
