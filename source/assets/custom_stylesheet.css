@@ -10,6 +10,21 @@ div.card {
     text-align: center;
 }
 
+.settings_input{
+    width: 100%;
+    height: 40px;
+    border-width: thin;
+    display: block;
+}
+
+.settings_column{
+    width: 75%;
+    margin: 10px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .field_element{
     width: 150px;
     display: block;
