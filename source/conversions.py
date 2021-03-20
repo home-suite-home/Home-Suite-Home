@@ -9,8 +9,8 @@
 class Units:
 
     def __init__(self, type, units):
-        self.type = type
-        self.units = units
+        self.type = type.lower()
+        self.units = units.lower()
 
     def convert(self, value):
         if self.type == "temperature":
@@ -30,7 +30,7 @@ class Units:
 
 
     def __convert_temperature(self, value):
-        if self.units == "fahrenheit" or self.units == "f" or self.units == "F" or self.units == "imperial":
+        if self.units == "fahrenheit" or self.units == "f" self.units == "imperial":
             degrees_f = (value * (9.0/5.0)) + 32
             degrees_f = round(degrees_f, 2)
             self.units = "F"
@@ -54,3 +54,34 @@ class Units:
         else:
             self.units = "lx"
             return value
+
+
+    def __convert_pressure(self, value):
+        if self.units == "kpa" or "kilopascale" in self.units:
+            kpa = value / 1000
+            kap = round(kpa, 2)
+            self.units = "kPa"
+            return kpa
+        elif self.units == "bar":
+            bar = value / 100000
+            bar = round(bar, 2)
+            self.units = "bar"
+            return bar
+        elif self.units == "atm" or "atmosphere" in self.units:
+            atm = value / 101325
+            atm = round(atm, 2)
+            self.units = "atm"
+            return atm
+        elif self.units == "mmhg" or self.units == "torr":
+            mmhg = value / 133.322
+            mmhg = round(mmhg, 2)
+            self.units = "mmHg"
+            return mmhg
+        elif self.units == "psi" or self.units == "imperial":
+            psi = value / 6894.7572931783
+            psi = round(psi, 2)
+            self.units = "psi"
+            return psi
+        else:
+            slef.units = "Pa"
+            return value 
