@@ -180,6 +180,4 @@ def most_recent_data():
         """
     text_response = str(most_recent_list)
 
-    # TESTING
-    db.clear()
     return (text_response, html_table, None)
