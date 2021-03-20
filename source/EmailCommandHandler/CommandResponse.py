@@ -124,15 +124,9 @@ def most_recent_data():
         name_list.append(config["name"])
         type_list.append(config["type"])
 
-    # retrieve data from db
-    data_list = []
-    for i in range(len(config_list)):
-        data_list.append(db.getRecentSensorData(name_list[i], type_list[i], 1))
-
     # get most recent of these lists
-    most_recent_list = []
-    for sub_list in (data_list):
-        most_recent_list.append(sub_list[0])
+    for sensor in (config_list):
+        most_recent_list.append(db.getMostRecentSensorData(sensor["name"], sensor["type"]))
 
     # html string common to all tables
     html_table = """\
