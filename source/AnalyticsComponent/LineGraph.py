@@ -122,7 +122,7 @@ def with_buttons(type, name):
     # empty trace if there is no data
     x=[]
     y=[]
-    empty_trace = go.Scatter(x=x, y=y, name='Sensor Data', visible=visible,
+    empty_trace = go.Scatter(x=x, y=y, name='Sensor Data', visible=False,
                              line=dict(shape='spline',
                              color='darkslateblue', width=2))
 
