@@ -14,10 +14,12 @@ from UI_Utils import *
 from subprocess import check_output
 from collections import OrderedDict
 from Server_Component.Database import Database
+from settings import Settings
 
 SECONDS_PER_REFRESH = 30
 NU = dash.no_update
 
+settings = Settings()
 
 def getCardDivs(isField=False, isEdit=False):
     divList = []
@@ -55,14 +57,35 @@ def getCardDivs(isField=False, isEdit=False):
 
 def getTypesDropdownList():
     optionsList = []
-    print("db.getFields('type'):")
+    #print("db.getFields('type'):")
     for curType in db.getFields('type'):
-        print(curType)
+        #print(curType)
         optionsList.append({'label': curType, 'value': curType})
 
     optionsList.append({'label': 'New Type of Sensor', 'value': 'other-type'})
 
     return optionsList
+
+
+def getUsersDropdownLists(getOptions=False, getValue=False):
+    optionsDictList = []
+    optionsList = []
+
+    print('GETTING STUFF')
+
+    if(getOptions and getValue):
+        for curUser in db.getAllUsers():
+            optionsDictList.append({'label': curUser['email'], 'value': curUser['email']})
+            optionsList.append(curUser['email'])
+        return optionsDictList, optionsList
+    elif(getOptions):
+        for curUser in db.getAllUsers():
+            optionsDictList.append({'label': curUser['email'], 'value': curUser['email']})
+        return optionsDictList
+    elif(getValue):
+        for curUser in db.getAllUsers():
+            optionsList.append(curUser['email'])
+        return optionsList
 
 
 def getFieldsAndNewAndEditCards(isField=False, isEdit=False):
@@ -415,38 +438,115 @@ mainDivChildren =[
     ),
 ]
 
+
+dropdownOptions, dropdownValue = getUsersDropdownLists(getOptions=True, getValue=True)
+
 settingsPage = [
     html.Div(children=[
         html.H1(children="Settings"),
         dcc.Link('Homepage', href='/'),
         html.Div(
             id="major_container1",
-            style={'columnCount': 2},
+            style={
+                'width': '100%',
+                'height': '100%',
+                'display':'grid',
+                'grid-template-columns': '33.33% 33.33% 33.33%',
+            },
             children=[
+                html.Div(id='dump', style={'display':'none'}),
                 html.Div(
                     id="retrieve-email",
-                    style={
-                        "width": "100%",
-                        "display" : "inline-block"
-                        },
+                    className="settings_column",
                     children=[
-                        html.H3(children='Send test email'),
+                        html.H3(children='RaspberryPi Email'),
                         dcc.Input(
-                            id="remote-email",
-                            placeholder="Input email for raspberry pi",
+                            id="pi-email",
+                            placeholder="Enter a New Email for the RaspberryPi",
+                            className="settings_input",
                             type="email",
                             value="",
-                            children=[html.Div(["Input email for raspberry pi"])],
-                            style={
-                                "width": "95%",
-                                "height": "40px",
-                                "borderWidth": "1px",
-                            },
                             debounce=True,
                         ),
-                        html.Button("Submit", id="button",),
+                        dcc.Input(
+                            id='pi-password',
+                            placeholder="Enter Password for Pi's Email",
+                            type="password",
+                            className="settings_input",
+                            value="",
+                            debounce=True,
+                        ),
+                        html.Button("Submit", id="pi-button",),
                     ],
                 ),
+                html.Div(
+                    id='user-emails',
+                    className="settings_column",
+                    children=[
+                        html.H3('User Emails'),
+                        dcc.Input(
+                            id="user-email-input",
+                            placeholder="Enter a User's Email",
+                            type='email',
+                            className='settings_input',
+                            value='',
+                            debounce=True,
+                            style={
+                                'border-width': 'thin',
+                                'width': '100%',
+                                'height': '40px',
+                            }
+                        ),
+                        html.Button(
+                            children='Add', 
+                            id='new-user-button',
+                        ),
+                        html.Br(),
+                        html.Br(),
+                        html.Div('Enable Alerts for Emails:'),
+                        dcc.Dropdown(
+                            id='users-dropdown',
+                            #options=getUsersDropdownLists(getOptions=True),
+                            #value=getUsersDropdownLists(getValue=True),
+                            options=dropdownOptions,
+                            value=dropdownValue,
+                            className='settings_input',
+                            multi=True,
+                            clearable=False,
+                            style={'display':'inline-block', 'height':'auto'}
+                        ),
+                        html.Br(),
+                    ]
+                ),
+                html.Div(
+                    id='other-settings',
+                    className="settings_column",
+                    children=[
+                        html.H3('Other Settings'),
+                        html.Div('Disable ALL Email Notifications:'),
+                        daq.BooleanSwitch(
+                            id='global-switch',
+                            on=settings.get_bool_setting('alerts', 'silence_alerts'),
+                            color='#9ad6aa',
+                            labelPosition='top',
+                        ),
+                        html.Br(),
+                        html.Div('Minimum Cooldown Between Email Notifications:'),
+                        dcc.Input(
+                            id='email-rate-limit',
+                            type='number',
+                            value=settings.get_int_setting('alerts', 'rate_limit'),
+                        ),
+                        html.Br(),
+                        html.Br(),
+                        html.Div("Sensor's Polling Rate:"),
+                        dcc.Input(
+                            id='poll-rate',
+                            type='number',
+                            value=settings.get_int_setting('sensors', 'poll_rate'),
+                        )
+                    ]
+                )
             ],
         ),
     ],
@@ -480,23 +580,117 @@ def display_page(pathname):
 
 # Email Entry Callback
 @app.callback(
-        Output(component_id="remote-email", component_property="value"),
-        Input(component_id="button", component_property="n_clicks_timestamp"),
-        State(component_id="remote-email", component_property="value"),
+        [
+            Output("pi-email", "value"),
+            Output('pi-password', 'value')
+        ],
+        Input("pi-button", "n_clicks_timestamp"),
+        [
+            State("pi-email", "value"),
+            State('pi-password', 'value'),
+        ],
 )
-def handle_email(button_timestamp, email):
+def handle_email(button_timestamp, email, password):
     if(button_timestamp != None):
-        try:
-            print("Sending a test email to " + email)
-            confirmation = Email_Component(email)
+        #try:
+        #    print("Sending a test email to " + email)
+        #    confirmation = Email_Component(email)
 
-            print(confirmation.confirmation_email())
-        except:
-            print("Error: Unable to send a test email to " + email)
+        #    print(confirmation.confirmation_email())
+        #except:
+        #    print("Error: Unable to send a test email to " + email)
 
-        return ""
+        #return ""
+        db.saveCredentials(email, password)
+        return ['','']
     else:
         return dash.no_update
+
+
+@app.callback(
+        [
+            Output('users-dropdown', 'options'),
+            Output('users-dropdown', 'value'),
+            Output('user-email-input', 'value'),
+        ],
+        [
+            Input('new-user-button', 'n_clicks'),
+            Input('users-dropdown', 'value'),
+        ],
+        [
+            State('user-email-input', 'value'),
+        ]
+)
+def handle_users(add_button, dropdown_value, email):
+    ctx = dash.callback_context
+    curButton = '';
+    if ctx.triggered:
+        curButton = ctx.triggered[0]['prop_id'].split('.')[0]
+    #print('(handle_users) curButton: ', curButton)
+
+    if(curButton == 'users-dropdown'):
+        dbValue = getUsersDropdownLists(getValue=True)
+
+        dbValue = set(dbValue)
+        dropdown_value = set(dropdown_value)
+
+        if(dropdown_value != dbValue):
+            toDelete = dbValue.difference(dropdown_value)
+
+            for email in toDelete:
+                print('deleting email: ', email)
+                db.deleteUser(email)
+
+        dbOptions, dbValue = getUsersDropdownLists(getOptions=True, getValue=True)
+        return [dbOptions, dbValue, NU]
+    elif(curButton == 'new-user-button' and add_button != None):
+        db.saveUser(None, email)
+        dbOptions, dbValue = getUsersDropdownLists(getOptions=True, getValue=True)
+        return [dbOptions, dbValue, '']
+    else:
+        dbOptions, dbValue = getUsersDropdownLists(getOptions=True, getValue=True)
+        return [dbOptions, dbValue, NU]
+
+    return NU
+        
+@app.callback(
+        [
+            Output('global-switch', 'on'),
+            Output('email-rate-limit', 'value'),
+            Output('poll-rate', 'value'),
+        ],
+        [
+            Input('global-switch', 'on'),
+            Input('email-rate-limit', 'value'),
+            Input('poll-rate', 'value'),
+        ],
+)
+def other_settings(switch ,rate_limit, polling):
+    ctx = dash.callback_context
+    curButton = '';
+    if ctx.triggered:
+        curButton = ctx.triggered[0]['prop_id'].split('.')[0]
+    print('(other_settings) curButton: ', curButton)
+
+    if(curButton == 'global-switch'):
+        settings.set_setting('alerts', 'silence_alerts', str(switch))
+        return [switch, NU, NU]
+    elif(curButton == 'email-rate-limit'):
+        settings.set_setting('alerts', 'rate_limit', str(rate_limit))
+        return [NU, rate_limit, NU]
+    elif(curButton == 'poll-rate'):
+        settings.set_setting('sensors', 'poll_rate', str(polling))
+        return [NU, NU, polling]
+    else:
+        switch = settings.get_bool_setting('alerts', 'silence_alerts')
+        rate_limit = settings.get_setting('alerts', 'rate_limit')
+        polling = settings.get_setting('sensors', 'poll_rate')
+
+        return [switch, rate_limit, polling]
+
+
+    return NU
+
 
 
 # Editor of cards-container.
@@ -568,7 +762,7 @@ def set_cards_container(sensor_button, createCardMessenger, editCardMessenger,
 def create_new_card(create_button, sensor_type,
         sensor_name, new_type, units, ip_address, port, url_plug, min_bound, max_bound, alert,):
 
-    print("Alert: " + str(alert))
+    #print("Alert: " + str(alert))
 
     if(port == None or port == ''):
         port = '8080'
@@ -618,7 +812,7 @@ def handle_edit_button(edit_button, curId):
             pass
 
 
-    print('(handle_edit_button) curButton: ', curButton)
+    #print('(handle_edit_button) curButton: ', curButton)
 
     if(curButton == 'edit-card-button'):
         sensorType, sensorName = curId['index'].split('`')
@@ -670,7 +864,7 @@ def save_edit_card(save_button, sensor_type,
     curButton = '';
     if ctx.triggered:
         curButton = ctx.triggered[0]['prop_id'].split('.')[0]
-    print('(save_edit_card) curButton: ', curButton)
+    #print('(save_edit_card) curButton: ', curButton)
 
     if(curButton == 'edit_save-card-button'):
         if(isValidSensor(sensor_type, url_plug, ip_address, sensor_name, port=port)):
@@ -702,12 +896,12 @@ def handle_delete_button(delete_button, cardName):
     curButton = '';
     if ctx.triggered:
         curButton = ctx.triggered[0]['prop_id'].split('.')[0]
-    print('(handle_delete_button) curButton: ', curButton)
+    #print('(handle_delete_button) curButton: ', curButton)
 
     if(curButton == 'edit_delete-button' and delete_button != None):
-        print(cardName)
+        #print(cardName)
         sensorType, sensorName = cardName.split('`')
-        print("cardName: {} {}".format(sensorName, sensorType))
+        #print("cardName: {} {}".format(sensorName, sensorType))
         db.deleteConfigData(sensorName, sensorType)
         return [html.Div()]
     
