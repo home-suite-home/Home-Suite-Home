@@ -118,11 +118,6 @@ def most_recent_data():
 
     # only grab sensors with configs
     config_list = db.getConfigData()
-    name_list = []
-    type_list = []
-    for config in config_list:
-        name_list.append(config["name"])
-        type_list.append(config["type"])
 
     # get most recent of these lists
     most_recent_list=[]
@@ -164,12 +159,12 @@ def most_recent_data():
     """
 
     # create the table based on sensor_list data
-    for sensor in most_recent_list:
+    for i in range(len(most_recent_list)):
         html_table += """\
             <tr>
-                <td>{sensor[type]}</td>
-                <td>{sensor[name]}</td>
-                <td>{sensor[value]}</td>
+                <td>{config_list[i]["type"]}</td>
+                <td>{config_list[i]["name"]}</td>
+                <td>{most_recent_list[i]}</td>
             </tr>
             """.format(**locals())
 
