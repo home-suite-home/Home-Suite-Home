@@ -136,7 +136,7 @@
 * David Crumley (daviejones) - Email_Driver / Interactive Graphs
 * Matthew Dowdy (dowdyma1) - UI / Charts
 * Wyatt Vining (wv040) -
-* Nathan Moulton (NathanM117) -
+* Nathan Moulton (NathanM117) - Database.py / Install Scripts
 
 ## Quick Links
 * [System Source Code](source)
