@@ -14,7 +14,7 @@ def isValidSensor(sensor_type, url_plug, ip_address, sensor_name, port='8080'):
     print("mySensor: {}, type: {}".format(mySensor, type(mySensor)))
 
     try:
-        if(type(mySensor) == float and not math.isnan(mySensor)):
+        if(type(mySensor) == float):
             return True
         else:
             return False
