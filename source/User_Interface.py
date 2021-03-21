@@ -562,27 +562,26 @@ settingsPage = [
 
 
 analyticsPage = [
-    html.Div(children=[
-        html.Div(
-            id='analytics',
-            children=[
-                html.H1(children="Analytics"),
-                dcc.Link(
-                    html.Button('Homepage'),
-                    href='/'
-                ),
-                html.Div(
-                    id='graph_holder',
-                    children=[
-                        dcc.Graph(
-                            id='graph',
-                            #figure = LineGraph.with_buttons(sensor_type, sensor_name)
-                        )
-                    ]
-                )
-            ]
-        )
-    ])
+    html.H1(children="Settings"),
+    dcc.Link('Homepage', href='/'),
+    html.Div(
+        id='analytics',
+        children=[
+            html.H1(children="Analytics"),
+            dcc.Link(
+                html.Button('Homepage'),
+                href='/'
+            ),
+            html.Div(
+                id='graph_holder',
+                children=[
+                    dcc.Graph(
+                        id='graph',
+                    )
+                ]
+            )
+        ]
+    )
 ]
 
 
@@ -817,7 +816,8 @@ def create_new_card(create_button, sensor_type,
         if(isValidSensor(sensor_type, url_plug, ip_address, sensor_name, port=port)):
             if(sensor_type == 'other-type'):
                 sensor_type = new_type
-            db.saveConfigData(sensor_type, sensor_name, 'category', ip_address, port, url_plug, min_bound, max_bound, units, alert)
+
+                db.saveConfigData(sensor_type, sensor_name, 'category', ip_address, port, url_plug, min_bound, max_bound, units, alert)
 
             return [html.Div(), NU, NU]
 
@@ -921,10 +921,12 @@ def handle_view_graph_button(view_button, curId):
             State('edit_minimum-bound', 'value'),
             State('edit_maximum-bound', 'value'),
             State('edit_alert', 'on'),
+            State('edit_name-passer', 'children'),
         ]
 )
 def save_edit_card(save_button, sensor_type,
-        sensor_name, new_type, units, ip_address, port, url_plug, min_bound, max_bound, alert,):
+        sensor_name, new_type, units, ip_address, port, url_plug, min_bound, max_bound, alert,
+        type_name_pair):
     ctx = dash.callback_context
     curButton = '';
     if ctx.triggered:
@@ -935,17 +937,25 @@ def save_edit_card(save_button, sensor_type,
         if(isValidSensor(sensor_type, url_plug, ip_address, sensor_name, port=port)):
             if(sensor_type == 'other-type'):
                 sensor_type = new_type
-            #db.deleteConfigData(sensor_name, sensor_type)
-            db.saveConfigData(sensor_type, sensor_name, 'category', ip_address, port, url_plug, min_bound, max_bound, units, alert)
+
+            oldSensorType, oldSensorName = type_name_pair.split('`')
+
+            old_config = db.getSensorConfig(oldSensorName, oldSensorType)
+
+            if(old_config):
+                if(sensor_type == old_config['type'] and sensor_name == old_config['name']):
+                    db.saveConfigData(sensor_type, sensor_name, 'category', ip_address, port, url_plug, min_bound, max_bound, units, alert)
+                else:
+                    db.editConfigData(old_config, sensor_type, sensor_name, 'category', ip_address, port, url_plug, min_bound, max_bound, units, alert)
+            else:
+                db.saveConfigData(sensor_type, sensor_name, 'category', ip_address, port, url_plug, min_bound, max_bound, units, alert)
 
             return [html.Div(), NU, NU]
 
         else:
             return [NU, {'display':'block', 'color': 'red'}, NU]
     elif(curButton == 'edit_types-dropdown'):
-        print(sensor_type)
         if(sensor_type == 'other-type'):
-            print('displaying new type')
             return [NU, NU, {'display':'block'}]
 
     return NU
