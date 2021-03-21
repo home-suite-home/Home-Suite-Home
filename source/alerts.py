@@ -121,7 +121,12 @@ class Alert:
                 #email = EmailController(user["email"], DEVICE_EMAIL)
                 email = EmailController(user["email"])
                 message = email.compose_email(subject, body_text, body_html)
-                email.send_email(message)
-                print("email sent to: ", user["email"])
+                try:
+                    email.send_email(message)
+                    print("email sent to: ", user["email"])
+                except Exception as e:
+                    print("Email Failed To Send.")
+                    print(e)
+
 
             db.saveLog(self.record["name"], self.record["type"])
