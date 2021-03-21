@@ -241,4 +241,5 @@ def with_buttons(type, name):
         ]
     )
 
-    all_fig.show()
+    #all_fig.show()
+    return all_fig

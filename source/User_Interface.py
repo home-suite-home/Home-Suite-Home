@@ -43,7 +43,10 @@ def getCardDivs(isField=False, isEdit=False):
                         ),
                         html.Button('Edit Card', id={'type': 'edit-card-button', 'index': '{}`{}'.format(sensorType, sensorName)}),
                         html.H4(),
-                        html.Button('View Graph', id={'type': 'graph-card-button', 'index': '{}`{}'.format(sensorType, sensorName)}),
+                        dcc.Link(
+                            html.Button('Create Graph', id={'type': 'graph-card-button', 'index': '{}`{}'.format(sensorType, sensorName)}),
+                            href='/analytics')
+
                     ]
                 )
             )
@@ -557,6 +560,32 @@ settingsPage = [
     )
 ]
 
+
+analyticsPage = [
+    html.Div(children=[
+        html.Div(
+            id='analytics',
+            children=[
+                html.H1(children="Analytics"),
+                dcc.Link(
+                    html.Button('Homepage'),
+                    href='/'
+                ),
+                html.Div(
+                    id='graph_holder',
+                    children=[
+                        dcc.Graph(
+                            id='graph',
+                            #figure = LineGraph.with_buttons(sensor_type, sensor_name)
+                        )
+                    ]
+                )
+            ]
+        )
+    ])
+]
+
+
 errorPage = [
     html.H1("ERROR")
 ]
@@ -577,6 +606,8 @@ def display_page(pathname):
         return mainDivChildren
     if(pathname == '/settings'):
         return settingsPage
+    if(pathname == '/analytics'):
+        return analyticsPage
     else:
         return errorPage
 
@@ -605,6 +636,7 @@ def handle_email(button_timestamp, email, password):
 
         #return ""
         db.saveCredentials(email, password)
+        print("yo")
         return ['','']
     else:
         return dash.no_update
@@ -840,11 +872,19 @@ def handle_edit_button(edit_button, curId):
 
 @app.callback(
 
-    Output({'type': 'graph-card-button', 'index': MATCH}, 'style'),
-    Input({'type': 'graph-card-button', 'index': MATCH}, 'n_clicks'),
-    State({'type': 'graph-card-button', 'index': MATCH}, 'id'),
+    #Output({'type': 'graph', 'index': ALL}, 'children'),
+    [
+        #Output({'type': 'graph-card-button', 'index': ALL}, 'n_clicks'),
+        Output('graph_holder', 'children')
+    ],
+    Input('graph-card-button', 'n_clicks'),
+    #Input({'type': 'graph-card-button', 'index': MATCH}, 'n_clicks'),
+    #State({'type': 'graph-card-button', 'index': MATCH}, 'id'),
+
+    #State({'type': 'graph-card-button', 'index': MATCH}, 'id')
 )
 def handle_view_graph_button(view_button, curId):
+
     ctx = dash.callback_context
     curButton = '';
     if ctx.triggered:
@@ -854,11 +894,12 @@ def handle_view_graph_button(view_button, curId):
         except:
             pass
 
-
-    if(curButton == 'graph-card-button'):
+    if(view_button == 1):
+        print("yo")
         sensorType, sensorName = curId['index'].split('`')
-        LineGraph.with_buttons(sensorType, sensorName)
-        return NU
+        figure = LineGraph.with_buttons(sensorType, sensorName)
+        return dcc.Graph(figure=figure)
+    #return NU
 
 @app.callback(
         [
