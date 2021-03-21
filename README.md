@@ -120,3 +120,27 @@
 * [Sensor Source Code](sensor_source)
 * [Testing](testing)
 * [User Interface](source/User_Interface.py)
+
+# Sprint 7
+
+## Materials
+* [Trello Board](https://trello.com/b/BFcwvt3p/project) (Backlogs and Requirements)
+* [Velocity Chart]()
+* [Burndown Chart for Sprint 7]()
+* [System Architecture](artifacts/architecture.md)
+* [Testing](https://github.com/home-suite-home/Home-Suite-Home/tree/main/testing)
+* [Product Demonstration]()
+
+## Task Allocation
+* Andres Graterol (graterollin) - Developed and updated Automated Tests 
+* David Crumley (daviejones) -  
+* Matthew Dowdy (dowdyma1) - UI / Charts
+* Wyatt Vining (wv040) - 
+* Nathan Moulton (NathanM117) - 
+
+## Quick Links
+* [System Source Code](source)
+* [Sensor Source Code](sensor_source)
+* [Testing](testing)
+* [User Interface](source/User_Interface.py)
+
