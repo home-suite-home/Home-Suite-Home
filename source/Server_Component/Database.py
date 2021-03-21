@@ -17,18 +17,7 @@ PORT = 27017
 # expect values from the methods in Sensors.py, and
 # send them to the database as JSON payloads.
 
-# Environmental Sensors
 
-# Something Something sensors
-
-# Industrial sensors
-
-# RECENT UPDATES
-#
-# Get avg has time parameter
-#
-#
-#
 
 class Database:
     def __init__(self, url = URL, port = PORT):
@@ -139,10 +128,43 @@ class Database:
             # First, check if there's a record for this sensor...
             if collection.count_documents({'name' : name, 'type' : sensor_type}) >= 1:
                 # ... and update if there's an existing record
-                collection.replace_one({'name' : name, 'type' : sensor_type}, dataobj)
+                collection.update_one({'name' : name, 'type' : sensor_type}, {'$set' :dataobj})
             else:
                 # Otherwise, insert the record
                 collection.insert_one(dataobj)
+        else:
+            print("Well that didn't work. Check the database address, and make sure the mongod process is running...")
+            self.connect()
+
+    # Recieves old document (given by getSensorConfig or a dict) as well as the fields of the updated records
+    # And supplants them in the old record
+    def editConfigData(self, doc, sensor_type, name, category, address, port, sub_address, min_threshold, max_threshold, units, alerts):
+        if self.connect_status == True:
+
+            db = self.client['sensorsdb']
+            collection = db['config']
+
+            # Enforce unique name-type pairs
+            collection.create_index([("name", -1), ("type" , 1)], unique = True)
+
+            dataobj = {
+                            "type": sensor_type,
+                            "name": name,
+                            "category": category,
+                            "address": address,
+                            "port": port,
+                            "sub_address": sub_address,
+                            "min_threshold" : min_threshold,
+                            "max_threshold" : max_threshold,
+                            "units" : units,
+                            "alerts": alerts
+            }
+
+            try:
+                collection.update_one(doc, {'$set' : dataobj})
+            except:
+                print("Entry already exists.")
+
         else:
             print("Well that didn't work. Check the database address, and make sure the mongod process is running...")
             self.connect()
