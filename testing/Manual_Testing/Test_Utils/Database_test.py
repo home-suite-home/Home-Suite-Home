@@ -1,8 +1,14 @@
 # Manual test for Database.py
 import pytest
-from Database import *
-import time
 
+import time
+import sys
+sys.path.insert(1, "../../../source")
+from timeKeeper import TimeStamps
+sys.path.insert(1, "../../../source/HTTP_Component")
+import Sensors
+sys.path.insert(1, "../../../source/Server_Component")
+from Database import Database
 
 def test_db():
     URL = 'localhost'
@@ -10,21 +16,23 @@ def test_db():
     dbase = Database(URL, PORT)
     dbase.connect()
 
+    # saveConfigData(sensor_type, name, category, address, port, sub_address, min_threshold, max_threshold, units, alerts)
+
     # Testing the configuration functions
     print("Testing Config Collection...")
 
     dbase.saveConfigData("temperature", "temp_1", "inside", 
-                         "http: // localhost", "8080", "temperature", 10, 60, "fahrenheit", True)
+                         "localhost", 8080, "temperature", 10, 60, "fahrenheit", True)
     dbase.saveConfigData("temperature", "temp_2", "outside",
-                         "http: // localhost", "8080", "temperature", 10, 60, "fahrenheit", False)
+                         "localhost", 8080, "temperature", 10, 60, "fahrenheit", False)
     dbase.saveConfigData("temperature", "temp_3", "inside",
-                         "http: // localhost", "8080", "temperature", 10, 60, "celsius", True)
-    dbase.saveConfigData("humidity", "humid_1", "outside"
-                         "http: // localhost", "8080", "humidity", 30, 50, "percent", False)
-    dbase.saveConfigData("humidity", "humid_2", "inside"
-                         "http: // localhost", "8080", "humidity", 30, 50, "percent", True)
-    dbase.saveConfigData("humidity", "humid_3", "outside"
-                         "http: // localhost", "8080", "humidity", 30, 50, "percent", False)
+                         "localhost", 8080, "temperature", 10, 60, "celsius", True)
+    dbase.saveConfigData("humidity", "humid_1", "outside",
+                         "localhost", 8080, "humidity", 30, 50, "percent", False)
+    dbase.saveConfigData("humidity", "humid_2", "inside",
+                         "localhost", 8080, "humidity", 30, 50, "percent", True)
+    dbase.saveConfigData("humidity", "humid_3", "outside",
+                         "localhost", 8080, "humidity", 30, 50, "percent", False)
 
     # Shows record of added config
     config_list = dbase.getConfigData()
