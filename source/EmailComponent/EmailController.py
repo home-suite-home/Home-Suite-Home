@@ -18,8 +18,8 @@
 
 '''
 import sys
-sys.path.append(".")
-sys.path.append("../Server_Component")
+# sys.path.append(".")
+sys.path.insert(1, "../source/Server_Component")
 from Database import Database
 
 #  device email => "home.suite.home.testing@gmail.com"
