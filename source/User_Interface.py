@@ -929,8 +929,12 @@ def save_edit_card(save_button, sensor_type,
         curButton = ctx.triggered[0]['prop_id'].split('.')[0]
     #print('(save_edit_card) curButton: ', curButton)
 
+
     if(curButton == 'edit_save-card-button'):
-        if(isValidSensor(sensor_type, url_plug, ip_address, sensor_name, port=port)):
+        valid = isValidSensor(sensor_type, url_plug, ip_address, sensor_name, port=port)
+        print("isValidSensor: {}\nsensor_type: {}, url_plug: {}, ip_address: {}, sensor_name: {}, port: {}".
+                format(valid, sensor_type, url_plug, ip_address, sensor_name, port))
+        if(valid):
             if(sensor_type == 'other-type'):
                 sensor_type = new_type
 
