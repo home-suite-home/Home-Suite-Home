@@ -30,7 +30,7 @@ class Units:
 
 
     def __convert_temperature(self, value):
-        if self.units == "fahrenheit" or self.units == "f" self.units == "imperial":
+        if self.units == "fahrenheit" or self.units == "f" or self.units == "imperial":
             degrees_f = (value * (9.0/5.0)) + 32
             degrees_f = round(degrees_f, 2)
             self.units = "F"
@@ -95,4 +95,4 @@ class Units:
             return feet
         else:
             self.units = "m"
-            return value 
+            return value
