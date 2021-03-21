@@ -15,14 +15,14 @@ def main():
     config = Settings()
 
     poll_rate = config.get_int_setting("sensors", "poll_rate")
-    silence_alerts = config.get_bool_setting("alerts", "rate_limit")
+    silence_alerts = config.get_bool_setting("alerts", "silence_alerts")
 
     if poll_rate <= 0:
         poll_rate = POLL_RATE_DEFAULT
 
     while True:
         sensorConfigs = db.getConfigData()
-        
+
         for record in sensorConfigs:
 
             sensorValue = Sensor(url_plug = record["sub_address"], domain = record["address"]).getSensorValue()
