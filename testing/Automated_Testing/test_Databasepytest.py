@@ -66,3 +66,21 @@ def test_recentData(mongodb):
     mongodb.sensors.insert_one(dataobj_2)
     record = mongodb.sensors.find_one({"name":"humid_4", "type":"Humid"}, sort = [("time", -1)])
     assert record["value"] == 10
+
+def test_alertSent(mongodb):
+    assert 'logs' in mongodb.list_collection_names()
+    ts = TimeStamps()
+    timer = ts.getTimestamp()
+    dataobj = {
+                    "name": "Humid_5", 
+                    "type": "Humid",
+                    "time": timer
+    }
+    mongodb.logs.insert_one(dataobj)
+    sleep(2)
+    filter = {
+                    "name": "Humid_5",
+                    "type": "Humid",
+                    "time" : {"$gte" : timer-2}
+    }
+    assert(mongodb.logs.count_documents(filter) >= 1)
