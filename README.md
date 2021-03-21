@@ -110,7 +110,7 @@
 
 ## Task Allocation
 * Andres Graterol (graterollin) - Developed and updated Automated Tests / Manual Testing
-* David Crumley (daviejones) - Analytics / Email Response 
+* David Crumley (daviejones) - Analytics / Email Response
 * Matthew Dowdy (dowdyma1) - UI / Charts
 * Wyatt Vining (wv040) - Encryption / Sensor Header Files / Manual Testing
 * Nathan Moulton (NathanM117) - Development and Testing for Database
@@ -132,15 +132,14 @@
 * [Product Demonstration]()
 
 ## Task Allocation
-* Andres Graterol (graterollin) - Developed and updated Automated Tests 
-* David Crumley (daviejones) -  
+* Andres Graterol (graterollin) - Developed and updated Automated Tests
+* David Crumley (daviejones) - Email_Driver / Interactive Graphs
 * Matthew Dowdy (dowdyma1) - UI / Charts
-* Wyatt Vining (wv040) - 
-* Nathan Moulton (NathanM117) - 
+* Wyatt Vining (wv040) -
+* Nathan Moulton (NathanM117) -
 
 ## Quick Links
 * [System Source Code](source)
 * [Sensor Source Code](sensor_source)
 * [Testing](testing)
 * [User Interface](source/User_Interface.py)
-
