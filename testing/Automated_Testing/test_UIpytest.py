@@ -158,9 +158,9 @@ def test_lambdatest_todo_app():
 
     # obtaining connection to the dash server and opening chrome 
     # Note: Dash server must be running in order to obtain connection   
-    chrome_driver.get(' http://192.168.10.103:8050/')
+    chrome_driver.get('http://192.168.1.4:8050/')
     chrome_driver.maximize_window()
-    sleep(3)
+    sleep(4)
 
     # Call the function that handles interacting with the settings page
     interact_settingsPage(chrome_driver)
