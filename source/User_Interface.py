@@ -44,7 +44,7 @@ def getCardDivs(isField=False, isEdit=False):
                         html.Button('Edit Card', id={'type': 'edit-card-button', 'index': '{}`{}'.format(sensorType, sensorName)}),
                         html.H4(),
                         dcc.Link(
-                            html.Button('Create Graph', id={'type': 'graph-card-button', 'index': '{}`{}'.format(sensorType, sensorName)}),
+                            html.Button('View Graph', id={'type': 'graph-card-button', 'index': '{}`{}'.format(sensorType, sensorName)}),
                             href='/analytics/{}-{}'.format(sensorType, sensorName))
                     ]
                 )
@@ -221,26 +221,23 @@ def populateEditCard(valuesDict, curId):
 
 def getAnalyticsPage(sensorType, sensorName):
     analyticsPage = [
-        html.H1(children="Settings"),
-        dcc.Link('Homepage', href='/'),
         html.Div(
-            id='analytics',
             children=[
                 html.H1(children="Analytics"),
-                dcc.Link(
-                    html.Button('Homepage'),
-                    href='/'
-                ),
+                dcc.Link('Homepage', href='/'),
+                html.Br(),
                 html.Div(
                     id='graph_holder',
                     children=[
                         dcc.Graph(
                             id={'type':'graph', 'index':'{}-{}'.format(sensorType, sensorName)},
-                            figure=LineGraph.with_buttons(sensorType, sensorName)
+                            figure=LineGraph.with_buttons(sensorType, sensorName),
+                            style={'display':'block'},
                         )
-                    ]
+                    ],
                 )
-            ]
+            ],
+            style={'display':'block', 'textAlign':'center'}
         )
     ]
 
@@ -589,25 +586,17 @@ settingsPage = [
 
 
 analyticsPage = [
-    html.H1(children="Settings"),
+    html.H1(children="Analytics"),
     dcc.Link('Homepage', href='/'),
     html.Div(
-        id='analytics',
+        id='graph_holder',
         children=[
-            html.H1(children="Analytics"),
-            dcc.Link(
-                html.Button('Homepage'),
-                href='/'
-            ),
-            html.Div(
-                id='graph_holder',
-                children=[
-                    dcc.Graph(
-                        id='graph',
-                    )
-                ]
+            dcc.Graph(
+                id='graph',
+                style={'display':'inline-block'}
             )
-        ]
+        ],
+        style={'display':'inline-block', 'textAlign':'center'}
     )
 ]
 
@@ -636,14 +625,10 @@ def display_page(pathname):
         return settingsPage
     if(len(pathname_split) == 3):
         sensorType, sensorName = pathname_split[-1].split('-')
-        print("analytics page: {} {}".format(sensorType, sensorName))
-        x = db.getSensorConfig(sensorName, sensorType)
-        print(x)
-        if(x):
-            print('got config')
+
+        if(db.getSensorConfig(sensorName, sensorType)):
             return getAnalyticsPage(sensorType, sensorName)
         else:
-            print('no config')
             return errorPage
     else:
         return errorPage
@@ -908,33 +893,6 @@ def handle_edit_button(edit_button, curId):
     else:
         return NU
 
-'''
-@app.callback(
-    [
-        Output({'type': 'graph-card-button', 'index': MATCH}, 'n_clicks'),
-        #Output('graph_holder', 'children')
-    ],
-    Input({'type': 'graph-card-button', 'index': MATCH}, 'n_clicks'),
-)
-def handle_view_graph_button(view_button, #curId
-        ):
-
-    ctx = dash.callback_context
-    curButton = '';
-    if ctx.triggered:
-        curButton = ctx.triggered[0]['prop_id'].split('.')[0]
-        try:
-            curButton = json.loads(curButton)['type']
-        except:
-            pass
-
-    if(view_button == 1):
-        print("yo")
-        sensorType, sensorName = curId['index'].split('`')
-        figure = LineGraph.with_buttons(sensorType, sensorName)
-        return dcc.Graph(figure=figure)
-    return NU
-'''
 
 @app.callback(
         [
