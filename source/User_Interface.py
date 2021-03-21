@@ -45,8 +45,7 @@ def getCardDivs(isField=False, isEdit=False):
                         html.H4(),
                         dcc.Link(
                             html.Button('Create Graph', id={'type': 'graph-card-button', 'index': '{}`{}'.format(sensorType, sensorName)}),
-                            href='/analytics')
-
+                            href='/analytics/{}-{}'.format(sensorType, sensorName))
                     ]
                 )
             )
@@ -218,6 +217,34 @@ def populateEditCard(valuesDict, curId):
     ]
 
     return edit_card_list
+
+
+def getAnalyticsPage(sensorType, sensorName):
+    analyticsPage = [
+        html.H1(children="Settings"),
+        dcc.Link('Homepage', href='/'),
+        html.Div(
+            id='analytics',
+            children=[
+                html.H1(children="Analytics"),
+                dcc.Link(
+                    html.Button('Homepage'),
+                    href='/'
+                ),
+                html.Div(
+                    id='graph_holder',
+                    children=[
+                        dcc.Graph(
+                            id={'type':'graph', 'index':'{}-{}'.format(sensorType, sensorName)},
+                            figure=LineGraph.with_buttons(sensorType, sensorName)
+                        )
+                    ]
+                )
+            ]
+        )
+    ]
+
+    return analyticsPage
 
 
 db = Database()
@@ -601,12 +628,23 @@ app.layout = html.Div(
         Input('url', 'pathname'),
 )
 def display_page(pathname):
+    pathname_split = pathname.split('/')
+
     if(pathname == '/'):
         return mainDivChildren
     if(pathname == '/settings'):
         return settingsPage
-    if(pathname == '/analytics'):
-        return analyticsPage
+    if(len(pathname_split) == 3):
+        sensorType, sensorName = pathname_split[-1].split('-')
+        print("analytics page: {} {}".format(sensorType, sensorName))
+        x = db.getSensorConfig(sensorName, sensorType)
+        print(x)
+        if(x):
+            print('got config')
+            return getAnalyticsPage(sensorType, sensorName)
+        else:
+            print('no config')
+            return errorPage
     else:
         return errorPage
 
@@ -870,20 +908,16 @@ def handle_edit_button(edit_button, curId):
     else:
         return NU
 
+'''
 @app.callback(
-
-    #Output({'type': 'graph', 'index': ALL}, 'children'),
     [
-        #Output({'type': 'graph-card-button', 'index': ALL}, 'n_clicks'),
-        Output('graph_holder', 'children')
+        Output({'type': 'graph-card-button', 'index': MATCH}, 'n_clicks'),
+        #Output('graph_holder', 'children')
     ],
-    Input('graph-card-button', 'n_clicks'),
-    #Input({'type': 'graph-card-button', 'index': MATCH}, 'n_clicks'),
-    #State({'type': 'graph-card-button', 'index': MATCH}, 'id'),
-
-    #State({'type': 'graph-card-button', 'index': MATCH}, 'id')
+    Input({'type': 'graph-card-button', 'index': MATCH}, 'n_clicks'),
 )
-def handle_view_graph_button(view_button, curId):
+def handle_view_graph_button(view_button, #curId
+        ):
 
     ctx = dash.callback_context
     curButton = '';
@@ -899,7 +933,8 @@ def handle_view_graph_button(view_button, curId):
         sensorType, sensorName = curId['index'].split('`')
         figure = LineGraph.with_buttons(sensorType, sensorName)
         return dcc.Graph(figure=figure)
-    #return NU
+    return NU
+'''
 
 @app.callback(
         [
