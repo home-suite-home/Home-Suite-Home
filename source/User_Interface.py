@@ -836,11 +836,14 @@ def create_new_card(create_button, sensor_type,
     print('(create_new_card) curButton: ', curButton)
 
     if(curButton == 'field_create-card-button'):
+        print(isValidSensor(sensor_type, url_plug, ip_address, sensor_name, port=port))
         if(isValidSensor(sensor_type, url_plug, ip_address, sensor_name, port=port)):
+            print('adding to config')
             if(sensor_type == 'other-type'):
                 sensor_type = new_type
 
-                db.saveConfigData(sensor_type, sensor_name, 'category', ip_address, port, url_plug, min_bound, max_bound, units, alert)
+            print('adding to config')
+            db.saveConfigData(sensor_type, sensor_name, 'category', ip_address, port, url_plug, min_bound, max_bound, units, alert)
 
             return [html.Div(), NU, NU]
 
@@ -934,6 +937,8 @@ def save_edit_card(save_button, sensor_type,
             oldSensorType, oldSensorName = type_name_pair.split('`')
 
             old_config = db.getSensorConfig(oldSensorName, oldSensorType)
+
+            print("old config {}-{} vs new config {}-{}".format(oldSensorType,oldSensorName, sensor_name, sensor_type))
 
             if(old_config):
                 if(sensor_type == old_config['type'] and sensor_name == old_config['name']):
