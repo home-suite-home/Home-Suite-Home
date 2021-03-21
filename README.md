@@ -125,8 +125,8 @@
 
 ## Materials
 * [Trello Board](https://trello.com/b/BFcwvt3p/project) (Backlogs and Requirements)
-* [Velocity Chart]()
-* [Burndown Chart for Sprint 7]()
+* [Velocity Chart](https://docs.google.com/spreadsheets/d/1tpRyT-jUgHkrLnwx5NcxtOvh3uGg8ddGYrl60E0q6DA/edit#gid=0)
+* [Burndown Chart for Sprint 7](https://docs.google.com/spreadsheets/d/1tpRyT-jUgHkrLnwx5NcxtOvh3uGg8ddGYrl60E0q6DA/edit#gid=1633691467)
 * [System Architecture](artifacts/architecture.md)
 * [Testing](https://github.com/home-suite-home/Home-Suite-Home/tree/main/testing)
 * [Product Demonstration]()
