@@ -13,7 +13,6 @@ POLL_RATE_DEFAULT = 60
 def main():
     db = Database()
     config = Settings()
-    sensorConfigs = db.getConfigData()
 
     poll_rate = config.get_int_setting("sensors", "poll_rate")
     silence_alerts = config.get_bool_setting("alerts", "rate_limit")
@@ -22,6 +21,8 @@ def main():
         poll_rate = POLL_RATE_DEFAULT
 
     while True:
+        sensorConfigs = db.getConfigData()
+        
         for record in sensorConfigs:
 
             sensorValue = Sensor(url_plug = record["sub_address"], domain = record["address"]).getSensorValue()
