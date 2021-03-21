@@ -22,10 +22,8 @@ def test_helpResponse():
     response_list = help_response.get_response()
     assert(response_list[0] == "dummy help message")
 
-'''
 def test_sensorResponse():
     snsr_rqst = "get sensor data: Temp, temp_1, 20"
     snsr_response = CommandResponse(snsr_rqst)
     snsrResponse_list = snsr_response.get_response()
     assert(snsrResponse_list[2] != None)
-'''
