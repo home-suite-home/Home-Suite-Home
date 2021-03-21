@@ -171,7 +171,8 @@ def with_buttons(type, name):
     # edit the layout
     # current day
     date = TimeStamps().stringToTimestamp(TimeStamps().getTimestamp())
-    title_str = "<b>Home-Suite-Home Data Analytics</b><br>"
+    #title_str = "<b>Home-Suite-Home Data Analytics</b><br>"
+    title_str = "<br>"
     title_str += "Sensor Name: " + "<b>{name}</b>".format(**locals()) + "<br>"
     title_str += "Sensor History Recorded on: " + \
                  "<b>{date}</b>".format(**locals()) + "<br>"
