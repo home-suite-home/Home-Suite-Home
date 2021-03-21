@@ -49,6 +49,10 @@ class Database:
 
             db = self.client['sensorsdb']
             collection = db['sensors']
+
+            # ceate index to speed up common queries
+            collection.create_index([("name", -1), ("type" , 1)])
+
             ts = TimeStamps().getTimestamp()
 
             dataobj = {
@@ -143,6 +147,7 @@ class Database:
 
             db = self.client['sensorsdb']
             collection = db['config']
+            sensor_collection = db['sensors']
 
             # Enforce unique name-type pairs
             collection.create_index([("name", -1), ("type" , 1)], unique = True)
@@ -161,7 +166,12 @@ class Database:
             }
 
             try:
-                collection.update_one(doc, {'$set' : dataobj})
+                # LOL big fix for historical sensor data
+                if doc["name"] != name:
+                    collection.update_one(doc, {'$set' : dataobj})
+                    sensor_collection.update_all({doc["name"]} , {'$set' : {'name' : name}})
+                else:
+                    collection.update_one(doc, {'$set' : dataobj})
             except:
                 print("Entry already exists.")
 
