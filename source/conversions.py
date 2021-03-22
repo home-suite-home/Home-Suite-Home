@@ -11,6 +11,7 @@ class Units:
     def __init__(self, type, units):
         self.type = type.lower()
         self.units = units.lower()
+        self.units_string = units.lower()
 
     def convert(self, value):
         if self.type == "temperature":
@@ -24,8 +25,8 @@ class Units:
 
     def convert_to_string(self, value):
         converted_string = str(self.convert(value))
-        convertedString += " "
-        converted_string += self.units
+        converted_string += " "
+        converted_string += self.units_string
         return converted_string
 
 
@@ -33,10 +34,10 @@ class Units:
         if self.units == "fahrenheit" or self.units == "f" or self.units == "imperial":
             degrees_f = (value * (9.0/5.0)) + 32
             degrees_f = round(degrees_f, 2)
-            self.units = "F"
+            self.units_string = "F"
             return degrees_f
         else:
-            self.units = "C"
+            self.units_string = "C"
             return value
 
 
@@ -44,15 +45,15 @@ class Units:
         if self.units == "lumens" or self.units == "lm" or self.units == "lum" or self.units == "imperial":
             lumens = value * 0.09290304; # constant for conversion
             lumens = round(lumens, 2)
-            self.unit = "lm"
+            self.unit_string = "lm"
             return lumens
         elif self.units == "foot-candle":
             foot_candles = value / 10.764
             foot_candles = round(foot_candles, 2)
-            self.unit = "fc"
+            self.unit_string = "fc"
             return foot_candles
         else:
-            self.units = "lx"
+            self.units_string = "lx"
             return value
 
 
@@ -60,30 +61,30 @@ class Units:
         if self.units == "kpa" or "kilopascale" in self.units:
             kpa = value / 1000
             kap = round(kpa, 2)
-            self.units = "kPa"
+            self.units_string = "kPa"
             return kpa
         elif self.units == "bar":
             bar = value / 100000
             bar = round(bar, 2)
-            self.units = "bar"
+            self.units_string = "bar"
             return bar
         elif self.units == "atm" or "atmosphere" in self.units:
             atm = value / 101325
             atm = round(atm, 2)
-            self.units = "atm"
+            self.units_string = "atm"
             return atm
         elif self.units == "mmhg" or self.units == "torr":
             mmhg = value / 133.322
             mmhg = round(mmhg, 2)
-            self.units = "mmHg"
+            self.units_string = "mmHg"
             return mmhg
         elif self.units == "psi" or self.units == "imperial":
             psi = value / 6894.7572931783
             psi = round(psi, 2)
-            self.units = "psi"
+            self.units_string = "psi"
             return psi
         else:
-            slef.units = "Pa"
+            self.units_string = "Pa"
             return value
 
 
@@ -91,8 +92,8 @@ class Units:
         if "foot" in self.units or "feet" in self.units:
             feet = value / 0.3048
             feet = round(feet, 2)
-            self.units = "ft"
+            self.units_string = "ft"
             return feet
         else:
-            self.units = "m"
+            self.units_string = "m"
             return value

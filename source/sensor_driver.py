@@ -6,6 +6,7 @@ from Server_Component.Database import Database
 from EmailComponent.EmailController import EmailController
 from settings import Settings
 from alerts import Alert
+from conversions import Units
 
 
 POLL_RATE_DEFAULT = 60
@@ -25,6 +26,8 @@ def main():
 
         for record in sensorConfigs:
 
+            units = Units(record["type"], record["units"])
+
             sensorValue = Sensor(url_plug = record["sub_address"], domain = record["address"]).getSensorValue()
             print(record["name"], ": ", sensorValue)
 
@@ -32,7 +35,7 @@ def main():
                 if sensorValue == "NaN":
                     Alert(record, sensorValue).handleAlert()
                     print("Error recieving sensor data")
-                elif sensorValue > record["max_threshold"] or sensorValue < record["min_threshold"]:
+                elif units.convert(sensorValue) > record["max_threshold"] or units.convert(sensorValue) < record["min_threshold"]:
                     Alert(record, sensorValue).handleAlert()
                     print("Sensor value out of tollerance")
 
