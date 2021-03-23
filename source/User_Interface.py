@@ -3,6 +3,7 @@ import os
 import sys
 import json
 import dash
+import urllib
 import dash_daq as daq
 import dash_core_components as dcc
 import dash_html_components as html
@@ -45,7 +46,9 @@ def getCardDivs(isField=False, isEdit=False):
                         html.H4(),
                         dcc.Link(
                             html.Button('View Graph', id={'type': 'graph-card-button', 'index': '{}`{}'.format(sensorType, sensorName)}),
-                            href='/analytics/{}-{}'.format(sensorType, sensorName))
+                            href='/analytics/{}'.format(urllib.parse.urlencode(
+                                {'name': sensorName, 'type': sensorType}))
+                        )
                     ]
                 )
             )
@@ -141,20 +144,20 @@ def populateEditCard(valuesDict, curId):
                     placeholder='Sensor Name',
                     value=valuesDict['edit_sensor-name'],
                 ),
-                dcc.Dropdown(
-                    id='edit_types-dropdown',
-                    className='field_element',
-                    options=getTypesDropdownList(),
-                    placeholder='Sensor Type',
-                    value=valuesDict['edit_types-dropdown'],
-                ),
-                dcc.Input(
-                    id='edit_new-type',
-                    className='field_element',
-                    debounce=True,
-                    placeholder='Name of New Type',
-                    style={'display':'none'},
-                ),
+                #dcc.Dropdown(
+                #    id='edit_types-dropdown',
+                #    className='field_element',
+                #    options=getTypesDropdownList(),
+                #    placeholder='Sensor Type',
+                #    value=valuesDict['edit_types-dropdown'],
+                #),
+                #dcc.Input(
+                #    id='edit_new-type',
+                #    className='field_element',
+                #    debounce=True,
+                #    placeholder='Name of New Type',
+                #    style={'display':'none'},
+                #),
                 dcc.Input(
                     id='edit_ip-address',
                     className='field_element',
@@ -334,19 +337,19 @@ edit_card_fields = [
                 debounce=True,
                 placeholder='Sensor Name',
             ),
-            dcc.Dropdown(
-                id='edit_types-dropdown',
-                className='edit_element',
-                options=getTypesDropdownList(),
-                placeholder='Sensor Type',
-            ),
-            dcc.Input(
-                id='edit_new-type',
-                className='edit_element',
-                debounce=True,
-                placeholder='Name of New Type',
-                style={'display':'none'},
-            ),
+            #dcc.Dropdown(
+            #    id='edit_types-dropdown',
+            #    className='edit_element',
+            #    options=getTypesDropdownList(),
+            #    placeholder='Sensor Type',
+            #),
+            #dcc.Input(
+            #    id='edit_new-type',
+            #    className='edit_element',
+            #    debounce=True,
+            #    placeholder='Name of New Type',
+            #    style={'display':'none'},
+            #),
             dcc.Input(
                 id='edit_ip-address',
                 className='edit_element',
@@ -624,7 +627,10 @@ def display_page(pathname):
     if(pathname == '/settings'):
         return settingsPage
     if(len(pathname_split) == 3):
-        sensorType, sensorName = pathname_split[-1].split('-')
+        pair_dict = urllib.parse.parse_qs(pathname_split[-1])
+        sensorName = pair_dict['name'][0]
+        sensorType = pair_dict['type'][0]
+        print("NAME-TYPE: ", sensorName, sensorType)
 
         if(db.getSensorConfig(sensorName, sensorType)):
             return getAnalyticsPage(sensorType, sensorName)
@@ -881,7 +887,7 @@ def handle_edit_button(edit_button, curId):
 
         fieldsMap = {}
         fieldsMap['edit_sensor-name'] = config['name']
-        fieldsMap['edit_types-dropdown'] = config['type']
+        #fieldsMap['edit_types-dropdown'] = config['type']
         fieldsMap['edit_ip-address'] = config['address']
         fieldsMap['edit_port-number'] = config['port']
         fieldsMap['edit_url-plug'] = config['sub_address']
@@ -901,15 +907,14 @@ def handle_edit_button(edit_button, curId):
         [
             Output('editCardMessenger','children'),
             Output('edit_invalid-selection', 'style'),
-            Output('edit_new-type', 'style'),
         ],
         [
             Input('edit_save-card-button', 'n_clicks'),
-            Input('edit_types-dropdown', 'value'),
+            #Input('edit_types-dropdown', 'value'),
         ],
         [
             State('edit_sensor-name', 'value'),
-            State('edit_new-type', 'value'),
+            #State('edit_new-type', 'value'),
             State('edit_units', 'value'),
             State('edit_ip-address', 'value'),
             State('edit_port-number', 'value'),
@@ -920,8 +925,8 @@ def handle_edit_button(edit_button, curId):
             State('edit_name-passer', 'children'),
         ]
 )
-def save_edit_card(save_button, sensor_type,
-        sensor_name, new_type, units, ip_address, port, url_plug, min_bound, max_bound, alert,
+def save_edit_card(save_button, #sensor_type,
+        sensor_name, units, ip_address, port, url_plug, min_bound, max_bound, alert,
         type_name_pair):
     ctx = dash.callback_context
     curButton = '';
@@ -930,35 +935,28 @@ def save_edit_card(save_button, sensor_type,
     #print('(save_edit_card) curButton: ', curButton)
 
 
-    if(curButton == 'edit_save-card-button'):
-        valid = isValidSensor(sensor_type, url_plug, ip_address, sensor_name, port=port)
-        print("isValidSensor: {}\nsensor_type: {}, url_plug: {}, ip_address: {}, sensor_name: {}, port: {}".
-                format(valid, sensor_type, url_plug, ip_address, sensor_name, port))
-        if(valid):
-            if(sensor_type == 'other-type'):
-                sensor_type = new_type
+    if(curButton == 'edit_save-card-button' and save_button != None):
+        oldSensorType, oldSensorName = type_name_pair.split('`')
 
-            oldSensorType, oldSensorName = type_name_pair.split('`')
+        valid = isValidSensor(oldSensorType, url_plug, ip_address, sensor_name, port=port)
+        print("isValidSensor: {}\nsensor_type: {}, url_plug: {}, ip_address: {}, sensor_name: {}, port: {}".
+                format(valid, oldSensorType, url_plug, ip_address, sensor_name, port))
+        if(valid):
 
             old_config = db.getSensorConfig(oldSensorName, oldSensorType)
 
-            print("old config {}-{} vs new config {}-{}".format(oldSensorType,oldSensorName, sensor_name, sensor_type))
-
             if(old_config):
-                if(sensor_type == old_config['type'] and sensor_name == old_config['name']):
-                    db.saveConfigData(sensor_type, sensor_name, 'category', ip_address, port, url_plug, min_bound, max_bound, units, alert)
+                if(sensor_name == old_config['name']):
+                    db.saveConfigData(oldSensorType, sensor_name, 'category', ip_address, port, url_plug, min_bound, max_bound, units, alert)
                 else:
-                    db.editConfigData(old_config, sensor_type, sensor_name, 'category', ip_address, port, url_plug, min_bound, max_bound, units, alert)
+                    db.editConfigData(old_config, oldSensorType, sensor_name, 'category', ip_address, port, url_plug, min_bound, max_bound, units, alert)
             else:
-                db.saveConfigData(sensor_type, sensor_name, 'category', ip_address, port, url_plug, min_bound, max_bound, units, alert)
+                db.saveConfigData(oldSensorType, sensor_name, 'category', ip_address, port, url_plug, min_bound, max_bound, units, alert)
 
-            return [html.Div(), NU, NU]
+            return [html.Div(), NU, ]
 
         else:
-            return [NU, {'display':'block', 'color': 'red'}, NU]
-    elif(curButton == 'edit_types-dropdown'):
-        if(sensor_type == 'other-type'):
-            return [NU, NU, {'display':'block'}]
+            return [NU, {'display':'block', 'color': 'red'}, ]
 
     return NU
 
