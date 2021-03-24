@@ -20,6 +20,10 @@ class Units:
             return self.__convert_light(value)
         elif self.type == "barometeric" or self.type == "barometer" or self.type == "pressure":
             return self.__convert_pressure(value)
+        elif self.type == "humidity":
+            return self.__convert_humidity(value)
+        elif self.type == "leak":
+            return self.__convert_leak(value)
         else:
             return value
 
@@ -97,3 +101,13 @@ class Units:
         else:
             self.units_string = "m"
             return value
+
+
+    def __convert_humidity(self, value):
+        self.unit_string = "%"
+        return value
+
+
+    def __convert_leak(self, value):
+        self.unit_string = "ADU"
+        return value 
