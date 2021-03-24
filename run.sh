@@ -9,10 +9,13 @@ echo "CTRL-C to quit"
 # start the database
 sudo systemctl start mongodb
 
+# move to source directory
+cd source
+
 # start Driver processes
-python3 source/sensor_driver.py &
-python3 source/EmailCommandDriver.py &
-python3 source/User_Interface.py &
+python3 sensor_driver.py &
+python3 EmailCommandDriver.py &
+python3 User_Interface.py &
 
 # open the UI window
 echo "If User Interface page does not connect: wait a second and hit refresh"

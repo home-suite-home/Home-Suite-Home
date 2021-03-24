@@ -1,11 +1,11 @@
 
 
 def data_over_time(type, name, hours, visible=True):
-    #import plotly.express as px
     import plotly.graph_objects as go
     from Server_Component.Database import Database
     from timeKeeper import TimeStamps
     import math
+    from conversions import Units
 
     # instantiate database and connect
     db = Database()
@@ -29,6 +29,10 @@ def data_over_time(type, name, hours, visible=True):
     y = []                      # Y-coordinate
     ts = TimeStamps()
 
+    # create unit object for y-axis conversion
+    units = db.getSensorConfig(name, type)['units']
+    convert = Units(type, units)
+
     # get avg, mx and min dataset
     max_val = 0
     min_val = 1e9
@@ -40,7 +44,7 @@ def data_over_time(type, name, hours, visible=True):
         if (math.isnan(i['value'])):
             continue
         else:
-            y.insert(0, i['value'])
+            y.insert(0, convert.convert(i['value']))
         x.insert(0, ts.stringToTimestamp(i['time']))
 
         cnt += 1
@@ -85,7 +89,7 @@ def data_over_time(type, name, hours, visible=True):
     title_str += "All Data from " + str(hours) + " Hours" + " Ago" + "<br>"
     title = dict(text=title_str, font=dict(size=25, family='Helvetica'), x=0.5, xref='paper')
     fig.update_layout(title=title, xaxis_title='Date and Time',
-                                   yaxis_title=type)
+                                   yaxis_title=type + " " + units)
 
     return fig
 
@@ -95,7 +99,7 @@ def data_over_time(type, name, hours, visible=True):
 def with_buttons(type, name):
     import plotly.graph_objects as go
     from timeKeeper import TimeStamps
-
+    from Server_Component.Database import Database
 
     # create the day graph
     day_fig = data_over_time(type, name, 24)
@@ -179,9 +183,10 @@ def with_buttons(type, name):
     title_str += "Sensor History Recorded on: " + \
                  "<b>{date}</b>".format(**locals()) + "<br>"
     #title_str += "All Data from " + str(hours) + " Hours" + " Ago" + "<br>"
+    units = Database().getSensorConfig(name, type)['units']
     title = dict(text=title_str, font=dict(size=25, family='Helvetica'), x=0.5, y=0.98, xref='paper')
     all_fig.update_layout(title=title, xaxis_title='Date and Time',
-                                   yaxis_title=type)
+                                   yaxis_title=type + " " + units)
 
     # add the buttons
     all_fig.update_layout(
@@ -190,7 +195,7 @@ def with_buttons(type, name):
             type="buttons",
             direction="right",
             x=0.56,
-            y=-0.22,
+            y=-0.25,
             font=dict(size=20),
             bgcolor='lightblue',
             bordercolor='lightslategray',
