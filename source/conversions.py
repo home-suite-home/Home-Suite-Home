@@ -75,7 +75,7 @@ class Units:
             return kpa
         elif self.units == "mb" or "mbar" in self.units or "millibar" in self.units:
             mbar = value / 100
-            mbar = round(hpa, 2)
+            mbar = round(mbar, 2)
             self.units_string = "mbar"
             return mbar
         elif self.units == "inhg" or "inch" in self.units:
