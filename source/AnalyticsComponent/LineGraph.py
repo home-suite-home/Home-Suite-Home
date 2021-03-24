@@ -29,31 +29,30 @@ def data_over_time(type, name, hours, visible=True):
     y = []                      # Y-coordinate
     ts = TimeStamps()
 
-    for i in all_vals:
+    # get avg, mx and min dataset
+    max_val = 0
+    min_val = 1e9
+    run_avg = []        # hold a running avg of the data
+    sum = 0.                    # for calculating avg
+    cnt = 0                     # counter for loop
+
+    for i in reversed(all_vals):
         if (math.isnan(i['value'])):
             continue
         else:
-            y.append(i['value'])
-        x.append(ts.stringToTimestamp(i['time']))
+            y.insert(0, i['value'])
+        x.insert(0, ts.stringToTimestamp(i['time']))
+
+        cnt += 1
+        sum += i['value']
+        run_avg.insert(0, sum/cnt)
 
     if len(y) == 0:
         print("all NaNs")
         return None
-    # get avg, mx and min dataset
-    max_val = 0
-    min_val = 1e9
-    run_avg = [0]*len(y)        # hold a running avg of the data
-    sum = 0.                    # for calculating avg
-    cnt = 0                     # counter for loop
 
-    for i in range(len(y)-1,-1,-1):
-        cnt += 1
-        sum += y[i]
-        run_avg[i] = (sum/cnt)
-        if y[i] > max_val:
-            max_val = y[i]
-        if y[i] < min_val:
-            min_val = y[i]
+    max_val = max(y)
+    min_val = min(y)
 
     # data line
     fig.add_trace(go.Scatter(x=x, y=y, name='Sensor Data', visible=visible,
