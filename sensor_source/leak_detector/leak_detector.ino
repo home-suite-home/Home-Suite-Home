@@ -1,7 +1,7 @@
 // user configurable settings
 #include "config.h"
 
-// NodeMCU V12E Libraries 
+// NodeMCU V12E Libraries
 #include <ESP8266WiFi.h>
 #include <WiFiClient.h>
 #include <ESP8266WebServer.h>
@@ -17,7 +17,7 @@ const char* password = NETWORK_PASSWORD;
 ESP8266WebServer server(80); //Server on port 80 - Standard for HTTP
 
 
-void setup() 
+void setup()
 {
   Serial.begin(57600);
   pinMode(levelPin, INPUT);
@@ -26,9 +26,9 @@ void setup()
   Serial.println("");
 
   // loop until connection successful
-  while (WiFi.status() != WL_CONNECTED) 
+  while (WiFi.status() != WL_CONNECTED)
   {
-      delay(500); // wait half a second before retrying connection 
+      delay(500); // wait half a second before retrying connection
       Serial.print(".");
   }
 
@@ -48,7 +48,7 @@ void setup()
 
 }
 
-void loop() 
+void loop()
 {
     server.handleClient();
 }
@@ -63,27 +63,27 @@ void handleStatus()
 }
 
 double getAvgValue()
-{   
+{
     int averageValue = 0;
-    int loops = 10;
+    int loops = 5;
 
     for (int i = 0; i < loops; i++)
     {
         int rawLevel = analogRead(levelPin);
-    
+
         averageValue += rawLevel;
 
         delay(3);
     }
-    
+
     averageValue /= loops;
 
     return averageValue;
 }
 
 
-// This page will display if the ip address is accessed with no HTTP plug 
-void handleRoot() 
+// This page will display if the ip address is accessed with no HTTP plug
+void handleRoot()
 {
    Serial.println("Root page reached");
    String s = "rootPage\n";
