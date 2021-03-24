@@ -17,6 +17,7 @@ from subprocess import check_output
 from collections import OrderedDict
 from Server_Component.Database import Database
 from settings import Settings
+from conversions import Units
 
 SECONDS_PER_REFRESH = 30
 NU = dash.no_update
@@ -32,6 +33,10 @@ def getCardDivs(isField=False, isEdit=False):
             sensorName = sensor['name']
             sensorType = sensor['type']
 
+            curUnits = Units(sensorType, sensor['units'])
+            cardData = curUnits.convert_to_string(db.getMostRecentSensorData(sensorName, sensorType))
+            print(cardData)
+
             divList.append(
                 html.Div(className='card',
                     id={'type': 'div-card', 'index': '{}`{}'.format(sensorType, sensorName)},
@@ -39,7 +44,7 @@ def getCardDivs(isField=False, isEdit=False):
                         html.H4(sensor['name']),
                         html.Div('Type: ' + sensor['type']),
                         html.H2(
-                            db.getMostRecentSensorData(sensorName, sensorType),
+                            cardData,
                             id={'type': 'sensor-data', 'index': '{}`{}'.format(sensorType, sensorName)},
                         ),
                         html.Button('Edit Card', id={'type': 'edit-card-button', 'index': '{}`{}'.format(sensorType, sensorName)}),
@@ -990,9 +995,12 @@ def handle_delete_button(delete_button, cardName):
 )
 def live_data_update(numRefreshes, curId):
     sensorType, sensorName = curId['index'].split('`')
-    data = db.getMostRecentSensorData(sensorName, sensorType)
 
-    return data
+    curSensor = db.getSensorConfig(sensorName, sensorType)
+    curUnits = Units(sensorType, curSensor['units'])
+    cardData = curUnits.convert_to_string(db.getMostRecentSensorData(sensorName, sensorType))
+
+    return cardData
 
 
 if __name__ == "__main__":
