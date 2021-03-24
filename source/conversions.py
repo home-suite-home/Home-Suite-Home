@@ -104,10 +104,10 @@ class Units:
 
 
     def __convert_humidity(self, value):
-        self.unit_string = "%"
+        self.unit_string = "\%"
         return value
 
 
     def __convert_leak(self, value):
         self.unit_string = "ADU"
-        return value 
+        return value
