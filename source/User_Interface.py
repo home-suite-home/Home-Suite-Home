@@ -569,7 +569,7 @@ settingsPage = [
                             labelPosition='top',
                         ),
                         html.Br(),
-                        html.Div('Minimum Cooldown Between Email Notifications:'),
+                        html.Div('Cooldown Between Email Notifications in Minutes:'),
                         dcc.Input(
                             id='email-rate-limit',
                             type='number',
@@ -577,7 +577,7 @@ settingsPage = [
                         ),
                         html.Br(),
                         html.Br(),
-                        html.Div("Sensor's Polling Rate:"),
+                        html.Div("Sensor's Polling Rate in Seconds:"),
                         dcc.Input(
                             id='poll-rate',
                             type='number',
