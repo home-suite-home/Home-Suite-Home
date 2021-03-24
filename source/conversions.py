@@ -24,6 +24,10 @@ class Units:
             return self.__convert_humidity(value)
         elif self.type == "leak":
             return self.__convert_leak(value)
+        elif self.type == "tvoc":
+            return self.__convert_tvoc(value)
+        elif self.type == "co2":
+            return self.__convert_co2(value)
         else:
             return value
 
@@ -110,4 +114,14 @@ class Units:
 
     def __convert_leak(self, value):
         self.units_string = "ADU"
+        return value
+
+
+    def __convert_tvoc(self, value):
+        self.units_string = "ppb"
+        return value
+
+
+    def __convert_co2(self, value):
+        self.units_string = "ppm"
         return value
