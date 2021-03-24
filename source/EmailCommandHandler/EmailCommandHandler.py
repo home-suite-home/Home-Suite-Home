@@ -12,12 +12,15 @@
 
 
 import sys
+sys.path.append("..")
+'''
 sys.path.append("../EmailComponent") # this path will change if files moved
 sys.path.append("../Server_Component") # this path will change if files moved
 sys.path.append(".")
-from EmailController import EmailController
-from CommandResponse import CommandResponse
-from Database import Database
+'''
+from EmailComponent.EmailController import EmailController
+from EmailCommandHandler.CommandResponse import CommandResponse
+from Server_Component.Database import Database
 
 class EmailCommandHandler:
     def __init__(self):

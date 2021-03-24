@@ -17,11 +17,13 @@
 '''
 
 import sys
-sys.path.append('.')
+sys.path.append('..')
+'''
 sys.path.append('../Server_Component')
 sys.path.append('..')
+'''
 import time
-from EmailCommandHandler import EmailCommandHandler
+from EmailCommandHandler.EmailCommandHandler import EmailCommandHandler
 
 command_handler = EmailCommandHandler()
 
@@ -29,4 +31,5 @@ POLL_RATE = 60
 
 while(True):
     command_handler.handle_email_command()
+    print("checking mailbox")
     time.sleep(POLL_RATE)

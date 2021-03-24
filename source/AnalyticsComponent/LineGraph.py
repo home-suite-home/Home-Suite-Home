@@ -36,6 +36,9 @@ def data_over_time(type, name, hours, visible=True):
             y.append(i['value'])
         x.append(ts.stringToTimestamp(i['time']))
 
+    if len(y) == 0:
+        print("all NaNs")
+        return None
     # get avg, mx and min dataset
     max_val = 0
     min_val = 1e9
@@ -59,7 +62,7 @@ def data_over_time(type, name, hours, visible=True):
 
     # avg line
     fig.add_trace(go.Scatter(x=x, y=run_avg,
-                             name='Average: '+str(round(run_avg[len(y)-1])),
+                             name='Average: '+str(round(run_avg[-1])),
                              visible = visible,
                              line=dict(shape='spline', color='lightblue', width=4))
     )
@@ -187,8 +190,8 @@ def with_buttons(type, name):
         dict(
             type="buttons",
             direction="right",
-            x=0.65,
-            y=-0.07,
+            x=0.56,
+            y=-0.22,
             font=dict(size=20),
             bgcolor='lightblue',
             bordercolor='lightslategray',
