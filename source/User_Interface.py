@@ -19,6 +19,7 @@ from Server_Component.Database import Database
 from settings import Settings
 from conversions import Units
 
+
 SECONDS_PER_REFRESH = 30
 NU = dash.no_update
 
@@ -1002,10 +1003,15 @@ def live_data_update(numRefreshes, curId):
 
     return cardData
 
-
 if __name__ == "__main__":
     ip_address = check_output(["hostname", "-I"]).decode("utf-8").split(" ")[0]
     print("IP Address: ", ip_address)
     port = 8050
     print("Port: ", port)
+    try:
+        f = open("tmp.txt", "w")
+        f.write("http://"+str(ip_address)+":"+str(port))
+        f.close()
+    except:
+        print("Please refer to terminal for user interface address")
     app.run_server(debug=True, host=ip_address, port=port)
