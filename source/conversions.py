@@ -20,6 +20,8 @@ class Units:
             return self.__convert_light(value)
         elif self.type == "barometeric" or self.type == "barometer" or self.type == "pressure":
             return self.__convert_pressure(value)
+        elif self.type == "altitude":
+            self.__convert_altitde(value)
         elif self.type == "humidity":
             return self.__convert_humidity(value)
         elif self.type == "leak":
