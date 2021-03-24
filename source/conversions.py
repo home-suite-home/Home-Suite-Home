@@ -104,7 +104,7 @@ class Units:
 
 
     def __convert_humidity(self, value):
-        self.unit_string = "\%"
+        self.unit_string = "%%"
         return value
 
 
