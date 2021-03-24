@@ -55,12 +55,12 @@ class Units:
         if self.units == "lumens" or self.units == "lm" or self.units == "lum" or self.units == "imperial":
             lumens = value * 0.09290304; # constant for conversion
             lumens = round(lumens, 2)
-            self.unit_string = "lm"
+            self.units_string = "lm"
             return lumens
         elif self.units == "foot-candle":
             foot_candles = value / 10.764
             foot_candles = round(foot_candles, 2)
-            self.unit_string = "fc"
+            self.units_string = "fc"
             return foot_candles
         else:
             self.units_string = "lx"
@@ -73,6 +73,21 @@ class Units:
             kap = round(kpa, 2)
             self.units_string = "kPa"
             return kpa
+        elif self.units == "mb" or "mbar" in self.units or "millibar" in self.units:
+            mbar = value / 100
+            mbar = round(hpa, 2)
+            self.units_string = "mbar"
+            return mbar
+        elif self.units == "inhg" or "inch" in self.units:
+            inhg = value / 3386.3886666667
+            inhg = round(inhg, 2)
+            self.units_string = "inHg"
+            return inhg
+        elif self.units == "hpa" or "hectopascal" in self.units:
+            hpa = value / 100
+            hpa = round(hpa, 2)
+            self.units_string = "hpa"
+            return hpa
         elif self.units == "bar":
             bar = value / 100000
             bar = round(bar, 2)
