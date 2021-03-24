@@ -13,3 +13,4 @@ sudo apt install -y mongodb
 pip3 install pymongo
 pip3 install dash
 pip3 install dash_daq
+pip3 install kaleido
