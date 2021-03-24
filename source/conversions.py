@@ -21,7 +21,7 @@ class Units:
         elif self.type == "barometeric" or self.type == "barometer" or self.type == "pressure":
             return self.__convert_pressure(value)
         elif self.type == "altitude":
-            self.__convert_altitde(value)
+            return self.__convert_altitde(value)
         elif self.type == "humidity":
             return self.__convert_humidity(value)
         elif self.type == "leak":
@@ -99,7 +99,7 @@ class Units:
 
 
     def __convert_altitde(self, value):
-        if "foot" in self.units or "feet" in self.units:
+        if self.units == "foot" or self.units == "feet":
             feet = value / 0.3048
             feet = round(feet, 2)
             self.units_string = "ft"
