@@ -7,6 +7,7 @@ from EmailComponent.EmailController import EmailController
 from settings import Settings
 from alerts import Alert
 from conversions import Units
+from numbers import Number
 
 
 POLL_RATE_DEFAULT = 60
@@ -32,7 +33,7 @@ def main():
             print(record["name"], ": ", sensorValue)
 
             if record["alerts"] is True and silence_alerts is False:
-                if sensorValue == "NaN":
+                if isinstance(sensorValue, Number) is False:
                     Alert(record, sensorValue).handleAlert()
                     print("Error recieving sensor data")
                 elif units.convert(sensorValue) > record["max_threshold"] or units.convert(sensorValue) < record["min_threshold"]:
