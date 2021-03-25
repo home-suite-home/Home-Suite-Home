@@ -12,16 +12,19 @@ class Alert:
     def __init__(self, sensor_record, sensorValue):
         self.record = sensor_record
 
-        self.sensor_value = sensorValue
+        self.sensor_value_number = sensorValue
 
         self.rate_limit = Settings().get_int_setting("alerts", "rate_limit")
         if self.rate_limit <= 0:
             self.rate_limit = RATE_LIMIT_DEFAULT
 
         units = Units(self.record["type"], self.record["units"])
-        self.sensor_value = units.convert(self.sensor_value)
-        self.min_threshold = units.convert(self.record["min_threshold"])
-        self.max_threshold = units.convert(self.record["max_threshold"])
+        self.sensor_value = units.convert_to_string(self.sensor_value_number)
+        # self.max_threshold = units.convert_to_string(float(self.record["max_threshold"]))
+        # self.min_threshold = units.convert_to_string(float(self.record["min_threshold"]))
+        self.max_threshold = str(self.record["max_threshold"])
+        self.min_threshold = str(self.record["min_threshold"])
+
 
     def __generate_subject(self):
         subject = "Out of Tolerace Alert: "
@@ -45,9 +48,9 @@ class Alert:
         body += "\n\nCurrent Value: "
         body += str(self.sensor_value)
         body += "\nMax Threshold: "
-        body += str(self.max_threshold)
+        body += self.max_threshold
         body += "\nMin Threshold: "
-        body += str(self.min_threshold)
+        body += self.min_threshold
 
         body += "\n\nSensor Settings:"
         body += "\nIP Address: "
@@ -79,11 +82,11 @@ class Alert:
         body += "<h2>Name: "
         body += self.record["name"]
         body += "<br>Current Value: "
-        body += str(self.sensor_value)
+        body += self.sensor_value
         body += "<br>Max Threshold: "
-        body += str(self.max_threshold)
+        body += self.max_threshold
         body += "<br>Min Threshold: "
-        body += str(self.record["min_threshold"])
+        body += self.min_threshold
         body += "</h2></p>"
 
         body += "<p><br><h3>Sensor Configuration</h3>"
@@ -121,7 +124,12 @@ class Alert:
                 #email = EmailController(user["email"], DEVICE_EMAIL)
                 email = EmailController(user["email"])
                 message = email.compose_email(subject, body_text, body_html)
-                email.send_email(message)
-                print("email sent to: ", user["email"])
+                try:
+                    email.send_email(message)
+                    print("email sent to: ", user["email"])
+                except Exception as e:
+                    print("Email Failed To Send.")
+                    print(e)
+
 
             db.saveLog(self.record["name"], self.record["type"])

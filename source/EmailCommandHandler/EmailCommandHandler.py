@@ -12,12 +12,15 @@
 
 
 import sys
+sys.path.append("..")
+'''
 sys.path.append("../EmailComponent") # this path will change if files moved
 sys.path.append("../Server_Component") # this path will change if files moved
 sys.path.append(".")
-from EmailController import EmailController
-from CommandResponse import CommandResponse
-from Database import Database
+'''
+from EmailComponent.EmailController import EmailController
+from EmailCommandHandler.CommandResponse import CommandResponse
+from Server_Component.Database import Database
 
 class EmailCommandHandler:
     def __init__(self):
@@ -25,6 +28,7 @@ class EmailCommandHandler:
         self.email_controllers = []
         for user in user_emails:
             self.email_controllers.append(EmailController(user['email']))
+            print("checking all users")
 
     def handle_email_command(self):
         for i in range(len(self.email_controllers)):

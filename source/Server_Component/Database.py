@@ -170,10 +170,11 @@ class Database:
                 # LOL big fix for historical sensor data
                 if doc["name"] != name:
                     collection.update_one(doc, {'$set' : dataobj})
-                    sensor_collection.update_all({doc["name"]} , {'$set' : {'name' : name}})
+                    sensor_collection.update_many({"name" : doc["name"]} , {'$set' : {'name' : name}})
                 else:
                     collection.update_one(doc, {'$set' : dataobj})
-            except:
+            except Exception as e:
+                print("Error in db: ", e)
                 print("Entry already exists.")
 
         else:

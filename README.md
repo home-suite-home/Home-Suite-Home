@@ -129,14 +129,14 @@
 * [Burndown Chart for Sprint 7](https://docs.google.com/spreadsheets/d/1tpRyT-jUgHkrLnwx5NcxtOvh3uGg8ddGYrl60E0q6DA/edit#gid=1633691467)
 * [System Architecture](artifacts/architecture.md)
 * [Testing](https://github.com/home-suite-home/Home-Suite-Home/tree/main/testing)
-* [Product Demonstration]()
+* [Product Demonstration](https://youtu.be/Fo_0uUr3R5Y)
 
 ## Task Allocation
 * Andres Graterol (graterollin) - Developed and updated Automated Tests
 * David Crumley (daviejones) - Email_Driver / Interactive Graphs
 * Matthew Dowdy (dowdyma1) - UI / Charts
-* Wyatt Vining (wv040) -
-* Nathan Moulton (NathanM117) -
+* Wyatt Vining (wv040) - Sensor Email Alerts / Conversions / Global Settings / Sensor Creation and Modeling / Demo Video
+* Nathan Moulton (NathanM117) - Database.py / Install Scripts
 
 ## Quick Links
 * [System Source Code](source)
