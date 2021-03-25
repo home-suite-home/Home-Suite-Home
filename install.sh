@@ -3,6 +3,9 @@
 # update libraries
 sudo apt-get update
 
+# python3 just in case and firefox for UI just in case
+sudo apt-get install python3 firefox
+
 # get pip
 sudo apt-get -y install python3-pip
 

@@ -86,7 +86,7 @@ def data_over_time(type, name, hours, visible=True):
 
     # edit the layout
     title_str = "<b>Sensor Name: </b>" + "<b>{name}</b>".format(**locals()) + "<br>"
-    title_str += "All Data from " + str(hours) + " Hours" + " Ago" + "<br>"
+    title_str += "All Data from " + str(int(hours/24)) + " Hours" + " Ago" + "<br>"
     title = dict(text=title_str, font=dict(size=25, family='Helvetica'), x=0.5, xref='paper')
     fig.update_layout(title=title, xaxis_title='Date and Time',
                                    yaxis_title=type + " " + units)

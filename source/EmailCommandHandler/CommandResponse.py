@@ -21,7 +21,7 @@ import sys
 # translates to the Home-Suite-Home/Source directory
 sys.path.append("..")
 from Server_Component.Database import Database
-from AnalyticsComponent.LineGraph import *
+from AnalyticsComponent import LineGraph
 from timeKeeper import TimeStamps
 from settings import Settings
 
@@ -162,7 +162,7 @@ def sensor_data_analytics(type, name, days):
 
     ts = TimeStamps()
     # create filename
-    filepath = "../../analytics/"
+    filepath = "analytics/"
     filename = "command_response_"
     filename += str(ts.getTimestamp())
     filename += ".png"

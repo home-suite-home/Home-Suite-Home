@@ -27,7 +27,7 @@ from EmailCommandHandler.EmailCommandHandler import EmailCommandHandler
 
 command_handler = EmailCommandHandler()
 
-POLL_RATE = 60
+POLL_RATE = 30
 
 while(True):
     command_handler.handle_email_command()
