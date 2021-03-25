@@ -25,6 +25,9 @@ def main():
     while True:
         sensorConfigs = db.getConfigData()
 
+        if sensorConfigs is []:
+            continue
+        
         for record in sensorConfigs:
 
             units = Units(record["type"], record["units"])
