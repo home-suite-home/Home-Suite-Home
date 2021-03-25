@@ -839,6 +839,15 @@ def create_new_card(create_button, sensor_type,
     if(units == None):
         units = ''
 
+    try:
+        min_bound = float(min_bound)
+    except:
+        pass
+    try:
+        max_bound = float(max_bound)
+    except:
+        pass
+
     ctx = dash.callback_context
     curButton = '';
 
@@ -940,6 +949,14 @@ def save_edit_card(save_button, #sensor_type,
         curButton = ctx.triggered[0]['prop_id'].split('.')[0]
     #print('(save_edit_card) curButton: ', curButton)
 
+    try:
+        min_bound = float(min_bound)
+    except:
+        pass
+    try:
+        max_bound = float(max_bound)
+    except:
+        pass
 
     if(curButton == 'edit_save-card-button' and save_button != None):
         oldSensorType, oldSensorName = type_name_pair.split('`')
