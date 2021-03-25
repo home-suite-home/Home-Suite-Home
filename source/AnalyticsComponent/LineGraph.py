@@ -48,7 +48,7 @@ def data_over_time(type, name, hours, visible=True):
         x.insert(0, ts.stringToTimestamp(i['time']))
 
         cnt += 1
-        sum += i['value']
+        sum += convert.convert(i['value'])
         run_avg.insert(0, sum/cnt)
 
     if len(y) == 0:
