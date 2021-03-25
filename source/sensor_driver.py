@@ -8,6 +8,7 @@ from settings import Settings
 from alerts import Alert
 from conversions import Units
 from numbers import Number
+import math
 
 
 POLL_RATE_DEFAULT = 60
@@ -39,7 +40,7 @@ def main():
                 print("record name: ", record["name"])
                 print("max_threshold: ", record["max_threshold"])
                 print("converted units: ", units.convert(sensorValue))
-                if isinstance(sensorValue, Number) is False:
+                if isinstance(sensorValue, Number) is False or math.isnan(sensorValue) is True:
                     Alert(record, sensorValue).handleAlert()
                     print("Error recieving sensor data")
                 elif units.convert(sensorValue) > record["max_threshold"] or units.convert(sensorValue) < record["min_threshold"]:
