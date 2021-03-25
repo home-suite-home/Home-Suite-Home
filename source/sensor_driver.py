@@ -27,7 +27,7 @@ def main():
 
         if sensorConfigs is []:
             continue
-        
+
         for record in sensorConfigs:
 
             units = Units(record["type"], record["units"])
@@ -36,6 +36,9 @@ def main():
             print(record["name"], ": ", sensorValue)
 
             if record["alerts"] is True and silence_alerts is False:
+                print("record name: ", record["name"])
+                print("max_threshold: ", record["max_threshold"])
+                print("converted units: ", units.convert(sensorValue))
                 if isinstance(sensorValue, Number) is False:
                     Alert(record, sensorValue).handleAlert()
                     print("Error recieving sensor data")
