@@ -1,11 +1,11 @@
 
 
 def data_over_time(type, name, hours, visible=True):
-    #import plotly.express as px
     import plotly.graph_objects as go
     from Server_Component.Database import Database
     from timeKeeper import TimeStamps
     import math
+    from conversions import Units
 
     # instantiate database and connect
     db = Database()
@@ -29,31 +29,34 @@ def data_over_time(type, name, hours, visible=True):
     y = []                      # Y-coordinate
     ts = TimeStamps()
 
-    for i in all_vals:
+    # create unit object for y-axis conversion
+    units = db.getSensorConfig(name, type)['units']
+    convert = Units(type, units)
+
+    # get avg, mx and min dataset
+    max_val = 0
+    min_val = 1e9
+    run_avg = []        # hold a running avg of the data
+    sum = 0.                    # for calculating avg
+    cnt = 0                     # counter for loop
+
+    for i in reversed(all_vals):
         if (math.isnan(i['value'])):
             continue
         else:
-            y.append(i['value'])
-        x.append(ts.stringToTimestamp(i['time']))
+            y.insert(0, convert.convert(i['value']))
+        x.insert(0, ts.stringToTimestamp(i['time']))
+
+        cnt += 1
+        sum += i['value']
+        run_avg.insert(0, sum/cnt)
 
     if len(y) == 0:
         print("all NaNs")
         return None
-    # get avg, mx and min dataset
-    max_val = 0
-    min_val = 1e9
-    run_avg = [0]*len(y)        # hold a running avg of the data
-    sum = 0.                    # for calculating avg
-    cnt = 0                     # counter for loop
 
-    for i in range(len(y)-1,-1,-1):
-        cnt += 1
-        sum += y[i]
-        run_avg[i] = (sum/cnt)
-        if y[i] > max_val:
-            max_val = y[i]
-        if y[i] < min_val:
-            min_val = y[i]
+    max_val = max(y)
+    min_val = min(y)
 
     # data line
     fig.add_trace(go.Scatter(x=x, y=y, name='Sensor Data', visible=visible,
@@ -83,10 +86,10 @@ def data_over_time(type, name, hours, visible=True):
 
     # edit the layout
     title_str = "<b>Sensor Name: </b>" + "<b>{name}</b>".format(**locals()) + "<br>"
-    title_str += "All Data from " + str(hours) + " Hours" + " Ago" + "<br>"
+    title_str += "All Data from " + str(int(hours/24)) + " Hours" + " Ago" + "<br>"
     title = dict(text=title_str, font=dict(size=25, family='Helvetica'), x=0.5, xref='paper')
     fig.update_layout(title=title, xaxis_title='Date and Time',
-                                   yaxis_title=type)
+                                   yaxis_title=type + " " + units)
 
     return fig
 
@@ -96,7 +99,7 @@ def data_over_time(type, name, hours, visible=True):
 def with_buttons(type, name):
     import plotly.graph_objects as go
     from timeKeeper import TimeStamps
-
+    from Server_Component.Database import Database
 
     # create the day graph
     day_fig = data_over_time(type, name, 24)
@@ -180,9 +183,10 @@ def with_buttons(type, name):
     title_str += "Sensor History Recorded on: " + \
                  "<b>{date}</b>".format(**locals()) + "<br>"
     #title_str += "All Data from " + str(hours) + " Hours" + " Ago" + "<br>"
+    units = Database().getSensorConfig(name, type)['units']
     title = dict(text=title_str, font=dict(size=25, family='Helvetica'), x=0.5, y=0.98, xref='paper')
     all_fig.update_layout(title=title, xaxis_title='Date and Time',
-                                   yaxis_title=type)
+                                   yaxis_title=type + " " + units)
 
     # add the buttons
     all_fig.update_layout(
@@ -191,7 +195,7 @@ def with_buttons(type, name):
             type="buttons",
             direction="right",
             x=0.56,
-            y=-0.22,
+            y=-0.25,
             font=dict(size=20),
             bgcolor='lightblue',
             bordercolor='lightslategray',
