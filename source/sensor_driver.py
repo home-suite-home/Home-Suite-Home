@@ -43,7 +43,7 @@ def main():
                 if isinstance(sensorValue, Number) is False or math.isnan(sensorValue) is True:
                     Alert(record, sensorValue).handleAlert()
                     print("Error recieving sensor data")
-                elif units.convert(sensorValue) > record["max_threshold"] or units.convert(sensorValue) < record["min_threshold"]:
+                elif units.convert(sensorValue) > float(record["max_threshold"]) or units.convert(sensorValue) < float(record["min_threshold"]):
                     Alert(record, sensorValue).handleAlert()
                     print("Sensor value out of tollerance")
 
