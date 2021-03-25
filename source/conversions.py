@@ -35,6 +35,8 @@ class Units:
             return value
 
     def convert_to_string(self, value):
+        if isinstance(value, Number) is False:
+            return "No Data"
         converted_string = str(self.convert(value))
         converted_string += " "
         converted_string += self.units_string
