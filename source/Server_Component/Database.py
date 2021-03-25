@@ -50,8 +50,9 @@ class Database:
             db = self.client['sensorsdb']
             collection = db['sensors']
 
-            # ceate index to speed up common queries
+            # ceate indexes to speed up common queries
             collection.create_index([("name", -1), ("type" , 1)])
+            collection.create_index([("name", -1), ("type" , 1), ("time" , -1)])
 
             ts = TimeStamps().getTimestamp()
 
