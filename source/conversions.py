@@ -5,6 +5,7 @@
 #   For all supported sensors - Need to add a private conversion Function
 #   For all unsupported sensors - default is to just return the value
 #
+from numbers import Number
 
 class Units:
 
@@ -14,6 +15,8 @@ class Units:
         self.units_string = units.lower()
 
     def convert(self, value):
+        if isinstance(value, Number) is False:
+            return value
         if self.type == "temperature":
             return self.__convert_temperature(value)
         elif self.type == "light":
