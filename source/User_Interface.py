@@ -2,6 +2,7 @@
 import os
 import sys
 import json
+import time
 import dash
 import urllib
 import dash_daq as daq
@@ -36,7 +37,7 @@ def getCardDivs(isField=False, isEdit=False):
 
             curUnits = Units(sensorType, sensor['units'])
             cardData = curUnits.convert_to_string(db.getMostRecentSensorData(sensorName, sensorType))
-            print(cardData)
+            print("{}-{}: {}".format(sensorType, sensorName, cardData))
 
             divList.append(
                 html.Div(className='card',
@@ -48,12 +49,35 @@ def getCardDivs(isField=False, isEdit=False):
                             cardData,
                             id={'type': 'sensor-data', 'index': '{}`{}'.format(sensorType, sensorName)},
                         ),
-                        html.Button('Edit Card', id={'type': 'edit-card-button', 'index': '{}`{}'.format(sensorType, sensorName)}),
+                        html.Button('Edit Card', id={
+                            'type': 'edit-card-button', 
+                            'index': '{}`{}'.format(sensorType, sensorName)
+                            }
+                        ),
                         html.H4(),
                         dcc.Link(
-                            html.Button('View Graph', id={'type': 'graph-card-button', 'index': '{}`{}'.format(sensorType, sensorName)}),
+                            html.Button('View Graph', id={
+                                'type': 'graph-card-button', 
+                                'index': '{}`{}'.format(sensorType, sensorName)}
+                            ),
                             href='/analytics/{}'.format(urllib.parse.urlencode(
                                 {'name': sensorName, 'type': sensorType}))
+                        ),
+                        html.Br(),
+                        html.Br(),
+                        html.Br(),
+                        dcc.Loading(
+                            id={
+                                'type': 'graph-loading-container', 
+                                'index': '{}`{}'.format(sensorType, sensorName)
+                            },
+                            children=html.Div(
+                                id={
+                                    'type': 'graph-loading', 
+                                    'index': '{}`{}'.format(sensorType, sensorName)
+                                }
+                            ),
+                            style={'display':'none'}
                         )
                     ]
                 )
@@ -69,9 +93,7 @@ def getCardDivs(isField=False, isEdit=False):
 
 def getTypesDropdownList():
     optionsList = []
-    #print("db.getFields('type'):")
     for curType in db.getFields('type'):
-        #print(curType)
         optionsList.append({'label': curType, 'value': curType})
 
     optionsList.append({'label': 'New Type of Sensor', 'value': 'other-type'})
@@ -82,8 +104,6 @@ def getTypesDropdownList():
 def getUsersDropdownLists(getOptions=False, getValue=False):
     optionsDictList = []
     optionsList = []
-
-    print('GETTING STUFF')
 
     if(getOptions and getValue):
         for curUser in db.getAllUsers():
@@ -137,7 +157,6 @@ def getFieldsAndNewAndEditCards(isField=False, isEdit=False):
 
 
 def populateEditCard(valuesDict, curId):
-    print("(populateEditCard) " + str(curId['index']))
     edit_card_list = [
         html.Button('Discard', id='edit_discard-button'),
         html.Div(
@@ -150,20 +169,6 @@ def populateEditCard(valuesDict, curId):
                     placeholder='Sensor Name',
                     value=valuesDict['edit_sensor-name'],
                 ),
-                #dcc.Dropdown(
-                #    id='edit_types-dropdown',
-                #    className='field_element',
-                #    options=getTypesDropdownList(),
-                #    placeholder='Sensor Type',
-                #    value=valuesDict['edit_types-dropdown'],
-                #),
-                #dcc.Input(
-                #    id='edit_new-type',
-                #    className='field_element',
-                #    debounce=True,
-                #    placeholder='Name of New Type',
-                #    style={'display':'none'},
-                #),
                 dcc.Input(
                     id='edit_ip-address',
                     className='field_element',
@@ -219,7 +224,10 @@ def populateEditCard(valuesDict, curId):
                 html.H4(''),
                 html.Div(curId['index'], id='edit_name-passer', style={'display':'none'}),
                 html.Button('DELETE', id='edit_delete-button'),
-                html.H4('Invalid Selection', style={'color': 'red','display': 'none' }, id='edit_invalid-selection'),
+                html.H4('Invalid Selection', 
+                        style={'color': 'red','display': 'none' }, 
+                        id='edit_invalid-selection'
+                ),
             ],
             style={'display': 'inline-block'}
         ),
@@ -326,7 +334,10 @@ new_card_fields = [
             ),
             html.H4(''),
             html.Button('Create', id='field_create-card-button'),
-            html.H4('Invalid Selection', style={'color': 'red','display': 'none' }, id='invalid-selection'),
+            html.H4('Invalid Selection', 
+                    style={'color': 'red','display': 'none' }, 
+                    id='invalid-selection'
+            ),
         ],
         style={'display': 'inline-block'}
     ),
@@ -343,19 +354,6 @@ edit_card_fields = [
                 debounce=True,
                 placeholder='Sensor Name',
             ),
-            #dcc.Dropdown(
-            #    id='edit_types-dropdown',
-            #    className='edit_element',
-            #    options=getTypesDropdownList(),
-            #    placeholder='Sensor Type',
-            #),
-            #dcc.Input(
-            #    id='edit_new-type',
-            #    className='edit_element',
-            #    debounce=True,
-            #    placeholder='Name of New Type',
-            #    style={'display':'none'},
-            #),
             dcc.Input(
                 id='edit_ip-address',
                 className='edit_element',
@@ -405,7 +403,10 @@ edit_card_fields = [
             html.H4(''),
             html.Div('default', id='edit_name-passer', style={'display':'none'}),
             html.Button('DELETE', id='edit_delete-button'),
-            html.H4('Invalid Selection', style={'color': 'red','display': 'none' }, id='edit_invalid-selection'),
+            html.H4('Invalid Selection', 
+                    style={'color': 'red','display': 'none' }, 
+                    id='edit_invalid-selection'
+            ),
         ],
         style={'display': 'inline-block'}
     ),
@@ -473,10 +474,7 @@ mainDivChildren =[
             new_sensor_card
         ]
     ),
-
-
 ]
-
 
 dropdownOptions, dropdownValue = getUsersDropdownLists(getOptions=True, getValue=True)
 
@@ -545,8 +543,6 @@ settingsPage = [
                         html.Div('Enable Alerts for Emails:'),
                         dcc.Dropdown(
                             id='users-dropdown',
-                            #options=getUsersDropdownLists(getOptions=True),
-                            #value=getUsersDropdownLists(getValue=True),
                             options=dropdownOptions,
                             value=dropdownValue,
                             className='settings_input',
@@ -595,7 +591,7 @@ settingsPage = [
 
 
 analyticsPage = [
-    html.H1(children="Analytics"),
+    html.H1(children="Analytics", id='analytics-title'),
     dcc.Link('Homepage', href='/'),
     html.Div(
         id='graph_holder',
@@ -609,11 +605,9 @@ analyticsPage = [
     )
 ]
 
-
 errorPage = [
     html.H1("ERROR")
 ]
-
 
 app.layout = html.Div(
         style={"backgroundColor": colors["background"]},
@@ -636,7 +630,6 @@ def display_page(pathname):
         pair_dict = urllib.parse.parse_qs(pathname_split[-1])
         sensorName = pair_dict['name'][0]
         sensorType = pair_dict['type'][0]
-        print("NAME-TYPE: ", sensorName, sensorType)
 
         if(db.getSensorConfig(sensorName, sensorType)):
             return getAnalyticsPage(sensorType, sensorName)
@@ -660,17 +653,7 @@ def display_page(pathname):
 )
 def handle_email(button_timestamp, email, password):
     if(button_timestamp != None):
-        #try:
-        #    print("Sending a test email to " + email)
-        #    confirmation = Email_Component(email)
-
-        #    print(confirmation.confirmation_email())
-        #except:
-        #    print("Error: Unable to send a test email to " + email)
-
-        #return ""
         db.saveCredentials(email, password)
-        print("yo")
         return ['','']
     else:
         return dash.no_update
@@ -695,7 +678,6 @@ def handle_users(add_button, dropdown_value, email):
     curButton = '';
     if ctx.triggered:
         curButton = ctx.triggered[0]['prop_id'].split('.')[0]
-    #print('(handle_users) curButton: ', curButton)
 
     if(curButton == 'users-dropdown'):
         dbValue = getUsersDropdownLists(getValue=True)
@@ -722,6 +704,7 @@ def handle_users(add_button, dropdown_value, email):
 
     return NU
 
+
 @app.callback(
         [
             Output('global-switch', 'on'),
@@ -739,7 +722,6 @@ def other_settings(switch ,rate_limit, polling):
     curButton = '';
     if ctx.triggered:
         curButton = ctx.triggered[0]['prop_id'].split('.')[0]
-    print('(other_settings) curButton: ', curButton)
 
     if(curButton == 'global-switch'):
         settings.set_setting('alerts', 'silence_alerts', str(switch))
@@ -759,7 +741,6 @@ def other_settings(switch ,rate_limit, polling):
 
 
     return NU
-
 
 
 # Editor of cards-container.
@@ -782,15 +763,12 @@ def set_cards_container(sensor_button, createCardMessenger, editCardMessenger,
     curButton = '';
     if ctx.triggered:
         curButton = ctx.triggered[0]['prop_id'].split('.')[0]
-    print('(set_cards_container) curButton: ', curButton)
 
     if(curButton == 'new-card-button'):
         return getCardDivs(isField=True)
     elif(curButton == 'createCardMessenger'):
         return getCardDivs()
     elif(curButton == 'editCardMessenger'):
-        print('is editing!')
-        #return getCardDivs(isEdit=True)
         return getCardDivs()
     elif(curButton == 'deleteCardMessenger'):
         return getCardDivs()
@@ -831,8 +809,6 @@ def set_cards_container(sensor_button, createCardMessenger, editCardMessenger,
 def create_new_card(create_button, sensor_type,
         sensor_name, new_type, units, ip_address, port, url_plug, min_bound, max_bound, alert,):
 
-    #print("Alert: " + str(alert))
-
     if(port == None or port == ''):
         port = '8080'
 
@@ -854,16 +830,11 @@ def create_new_card(create_button, sensor_type,
     if ctx.triggered:
         curButton = ctx.triggered[0]['prop_id'].split('.')[0]
 
-    print('(create_new_card) curButton: ', curButton)
-
     if(curButton == 'field_create-card-button'):
-        print(isValidSensor(sensor_type, url_plug, ip_address, sensor_name, port=port))
         if(isValidSensor(sensor_type, url_plug, ip_address, sensor_name, port=port)):
-            print('adding to config')
             if(sensor_type == 'other-type'):
                 sensor_type = new_type
 
-            print('adding to config')
             db.saveConfigData(sensor_type, sensor_name, 'category', ip_address, port, url_plug, min_bound, max_bound, units, alert)
 
             return [html.Div(), NU, NU]
@@ -893,16 +864,12 @@ def handle_edit_button(edit_button, curId):
         except:
             pass
 
-
-    #print('(handle_edit_button) curButton: ', curButton)
-
     if(curButton == 'edit-card-button'):
         sensorType, sensorName = curId['index'].split('`')
         config = db.getSensorConfig(sensorName, sensorType)
 
         fieldsMap = {}
         fieldsMap['edit_sensor-name'] = config['name']
-        #fieldsMap['edit_types-dropdown'] = config['type']
         fieldsMap['edit_ip-address'] = config['address']
         fieldsMap['edit_port-number'] = config['port']
         fieldsMap['edit_url-plug'] = config['sub_address']
@@ -910,8 +877,6 @@ def handle_edit_button(edit_button, curId):
         fieldsMap['edit_alert'] = config['alerts']
         fieldsMap['edit_minimum-bound'] = config['min_threshold']
         fieldsMap['edit_maximum-bound'] = config['max_threshold']
-
-        print('getSensorConfig({}, {}) = {}'.format(sensorType, sensorName, config))
 
         return populateEditCard(fieldsMap, curId)
     else:
@@ -925,11 +890,9 @@ def handle_edit_button(edit_button, curId):
         ],
         [
             Input('edit_save-card-button', 'n_clicks'),
-            #Input('edit_types-dropdown', 'value'),
         ],
         [
             State('edit_sensor-name', 'value'),
-            #State('edit_new-type', 'value'),
             State('edit_units', 'value'),
             State('edit_ip-address', 'value'),
             State('edit_port-number', 'value'),
@@ -940,14 +903,12 @@ def handle_edit_button(edit_button, curId):
             State('edit_name-passer', 'children'),
         ]
 )
-def save_edit_card(save_button, #sensor_type,
-        sensor_name, units, ip_address, port, url_plug, min_bound, max_bound, alert,
-        type_name_pair):
+def save_edit_card(save_button, 
+        sensor_name, units, ip_address, port, url_plug, min_bound, max_bound, alert, type_name_pair):
     ctx = dash.callback_context
     curButton = '';
     if ctx.triggered:
         curButton = ctx.triggered[0]['prop_id'].split('.')[0]
-    #print('(save_edit_card) curButton: ', curButton)
 
     try:
         min_bound = float(min_bound)
@@ -962,19 +923,51 @@ def save_edit_card(save_button, #sensor_type,
         oldSensorType, oldSensorName = type_name_pair.split('`')
 
         valid = isValidSensor(oldSensorType, url_plug, ip_address, sensor_name, port=port)
-        print("isValidSensor: {}\nsensor_type: {}, url_plug: {}, ip_address: {}, sensor_name: {}, port: {}".
-                format(valid, oldSensorType, url_plug, ip_address, sensor_name, port))
+
         if(valid):
 
             old_config = db.getSensorConfig(oldSensorName, oldSensorType)
 
             if(old_config):
                 if(sensor_name == old_config['name']):
-                    db.saveConfigData(oldSensorType, sensor_name, 'category', ip_address, port, url_plug, min_bound, max_bound, units, alert)
+                    db.saveConfigData(
+                            oldSensorType, 
+                            sensor_name, 
+                            'category', 
+                            ip_address, 
+                            port, 
+                            url_plug, 
+                            min_bound, 
+                            max_bound, 
+                            units, 
+                            alert
+                    )
                 else:
-                    db.editConfigData(old_config, oldSensorType, sensor_name, 'category', ip_address, port, url_plug, min_bound, max_bound, units, alert)
+                    db.editConfigData(
+                            old_config, 
+                            oldSensorType, 
+                            sensor_name, 
+                            'category', 
+                            ip_address, 
+                            port, 
+                            url_plug, 
+                            min_bound, 
+                            max_bound, 
+                            units, 
+                            alert
+                    )
             else:
-                db.saveConfigData(oldSensorType, sensor_name, 'category', ip_address, port, url_plug, min_bound, max_bound, units, alert)
+                db.saveConfigData(oldSensorType, 
+                        sensor_name, 
+                        'category', 
+                        ip_address, 
+                        port, 
+                        url_plug, 
+                        min_bound, 
+                        max_bound, 
+                        units, 
+                        alert
+                )
 
             return [html.Div(), NU, ]
 
@@ -994,14 +987,52 @@ def handle_delete_button(delete_button, cardName):
     curButton = '';
     if ctx.triggered:
         curButton = ctx.triggered[0]['prop_id'].split('.')[0]
-    #print('(handle_delete_button) curButton: ', curButton)
 
     if(curButton == 'edit_delete-button' and delete_button != None):
-        #print(cardName)
         sensorType, sensorName = cardName.split('`')
-        #print("cardName: {} {}".format(sensorName, sensorType))
         db.deleteConfigData(sensorName, sensorType)
         return [html.Div()]
+
+    return NU
+
+
+@app.callback(
+        Output({'type': 'graph-loading-container', 'index': MATCH}, 'style'),
+        Input({'type': 'graph-card-button', 'index': MATCH}, 'n_clicks'),
+)
+def handle_graph_visibility(button):
+    ctx = dash.callback_context
+    curButton = '';
+    if ctx.triggered:
+        curButton = ctx.triggered[0]['prop_id'].split('.')[0]
+        try:
+            curButton = json.loads(curButton)['type']
+        except:
+            pass
+
+    if(curButton == 'graph-card-button'):
+        return {'display':'block'}
+
+    return NU
+
+
+@app.callback(
+        Output({'type': 'graph-loading', 'index': MATCH}, 'children'),
+        Input({'type': 'graph-card-button', 'index': MATCH}, 'n_clicks'),
+)
+def handle_graph_loading(button):
+    ctx = dash.callback_context
+    curButton = '';
+    if ctx.triggered:
+        curButton = ctx.triggered[0]['prop_id'].split('.')[0]
+        try:
+            curButton = json.loads(curButton)['type']
+        except:
+            pass
+
+    if(curButton == 'graph-card-button'):
+        time.sleep(30)
+        return button
 
     return NU
 
