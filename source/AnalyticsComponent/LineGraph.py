@@ -1,11 +1,10 @@
+import plotly.graph_objects as go
+from Server_Component.Database import Database
+from timeKeeper import TimeStamps
+import math
+from conversions import Units
 
-
-def data_over_time(type, name, hours, visible=True):
-    import plotly.graph_objects as go
-    from Server_Component.Database import Database
-    from timeKeeper import TimeStamps
-    import math
-    from conversions import Units
+def get_dataset(type, name, hours):
 
     # instantiate database and connect
     db = Database()
@@ -16,15 +15,8 @@ def data_over_time(type, name, hours, visible=True):
     # check for emty set
     if len(all_vals) == 0:
         print("Sensor not found in database")
-        return None
+        return None, None, None, None, None
 
-    #max_val  = db.getRecentMax(name, type, int(hours))
-    #min_val  = db.getRecentMin(name, type, int(hours))
-
-
-    fig = go.Figure()
-    # create datasets for the graph lines and add to graph
-    # all values
     x = []                      # X-coordinate
     y = []                      # Y-coordinate
     ts = TimeStamps()
@@ -53,10 +45,30 @@ def data_over_time(type, name, hours, visible=True):
 
     if len(y) == 0:
         print("all NaNs")
-        return None
+        return None, None, None, None, None
 
     max_val = max(y)
     min_val = min(y)
+    max_line = [max_val for i in range(len(y))]
+    min_line = [min_val for i in range(len(y))]
+
+    return x, y, run_avg, max_line, min_line
+
+
+def data_over_time(type, name, hours, visible=True):
+
+    fig = go.Figure()
+    # create datasets for the graph lines and add to graph
+    # all values
+    x = []                      # X-coordinate
+    y = []                      # Y-coordinate
+    ts = TimeStamps()
+
+    # create unit object for y-axis conversion
+
+    x, y, run_avg, max_val, min_val = get_dataset(type, name, hours)
+    if x == None:
+        return None
 
     # data line
     fig.add_trace(go.Scatter(x=x, y=y, name='Sensor Data', visible=visible,
@@ -71,20 +83,19 @@ def data_over_time(type, name, hours, visible=True):
     )
 
     # Max line
-    y = [max_val for i in range(len(y))]  # change y to all max_val
-    fig.add_trace(go.Scatter(x=x, y=y, name='Max : '+str(max_val),
+    fig.add_trace(go.Scatter(x=x, y=max_val, name='Max : '+str(round(max_val[0])),
                   visible=visible,
                   line=dict(color='maroon', width=4, dash='dash'))
     )
 
     # Min line
-    y = [min_val for i in range(len(y))]    # change y to all min_val
-    fig.add_trace(go.Scatter(x=x, y=y, name='Min : '+str(min_val),
+    fig.add_trace(go.Scatter(x=x, y=min_val, name='Min : '+str(round(min_val[0])),
                   visible=visible,
                   line=dict(color='forestgreen', width=4, dash='dash'))
     )
 
     # edit the layout
+    units = Database().getSensorConfig(name, type)['units']
     title_str = "<b>Sensor Name: </b>" + "<b>{name}</b>".format(**locals()) + "<br>"
     title_str += "All Data from " + str(int(hours/24)) + " Hours" + " Ago" + "<br>"
     title = dict(text=title_str, font=dict(size=25, family='Helvetica'), x=0.5, xref='paper')
@@ -101,9 +112,7 @@ def with_buttons(type, name):
     from timeKeeper import TimeStamps
     from Server_Component.Database import Database
 
-    # create the day graph
-    day_fig = data_over_time(type, name, 24)
-
+    '''
     # create the week graph
     week_fig = data_over_time(type, name, 24*7, visible=False)
 
@@ -112,7 +121,7 @@ def with_buttons(type, name):
 
     # create the year graph (assume all years are 365)
     year_fig = data_over_time(type, name, 24*365, visible=False)
-
+    '''
     # create the frankenstein graph
     all_fig = go.Figure()
     '''
@@ -128,18 +137,43 @@ def with_buttons(type, name):
                              line=dict(shape='spline',
                              color='darkslateblue', width=2))
 
+    # get datasets
+    day_x, day_y, day_avg, day_max, day_min = get_dataset(type, name, 24)
+    week_x, week_y, week_avg, week_max, week_min = get_dataset(type, name, 24*7)
+    month_x, month_y, month_avg, month_max, month_min  = get_dataset(type, name, 24*30)
+    year_x, year_y, year_avg, year_max, year_min  = get_dataset(type, name, 24*365)
+
     # add the day traces
-    if day_fig:
-        all_fig.add_trace(day_fig['data'][0])
-        all_fig.add_trace(day_fig['data'][1])
-        all_fig.add_trace(day_fig['data'][2])
-        all_fig.add_trace(day_fig['data'][3])
+    if day_x:
+        # data line
+        all_fig.add_trace(go.Scatter(x=year_x, y=day_y, name='Sensor Data',
+                                 line=dict(shape='spline',
+                                 color='darkslateblue', width=2)))
+
+        # avg line
+        all_fig.add_trace(go.Scatter(x=year_x, y=day_avg,
+                                 name='Average: '+str(round(day_avg[-1])),
+                                 line=dict(shape='spline', color='lightblue', width=4))
+        )
+
+        # Max line
+        all_fig.add_trace(go.Scatter(x=year_x, y=day_max, name='Max : '+str(round(day_max[0])),
+                      line=dict(color='maroon', width=4, dash='dash'))
+        )
+
+        # Min line
+        all_fig.add_trace(go.Scatter(x=year_x, y=day_min, name='Min : '+str(round(day_min[0])),
+                      line=dict(color='forestgreen', width=4, dash='dash'))
+        )
     else:
         all_fig.add_trace(empty_trace)
         all_fig.add_trace(empty_trace)
         all_fig.add_trace(empty_trace)
         all_fig.add_trace(empty_trace)
 
+    # add empty traces as placeholders
+
+    '''
     # add the week trace
     if week_fig:
         all_fig.add_trace(week_fig['data'][0])
@@ -173,6 +207,9 @@ def with_buttons(type, name):
         all_fig.add_trace(empty_trace)
         all_fig.add_trace(empty_trace)
         all_fig.add_trace(empty_trace)
+    '''
+
+
 
     # edit the layout
     # current day
@@ -188,6 +225,65 @@ def with_buttons(type, name):
     all_fig.update_layout(title=title, xaxis_title='Date and Time',
                                    yaxis_title=type + " " + units)
 
+
+    # add the buttons
+    all_fig.update_layout(
+        updatemenus=[
+        dict(
+            type="buttons",
+            direction="right",
+            x=0.56,
+            y=-0.25,
+            font=dict(size=20),
+            bgcolor='lightblue',
+            bordercolor='lightslategray',
+            borderwidth=4,
+            showactive=True,
+            buttons=list(
+                [
+                    dict(
+                        label="Day",
+                        method="restyle",
+                        args=[
+                            #{"x": [day_x, day_x, day_x, day_x]},
+                            {"y": [day_y, day_avg, day_max, day_min]}
+                        ],
+                    ),
+                    dict(
+                        label="Week",
+                        method="restyle",
+                        args=[
+                            #{"x": [week_x, week_x, week_x, week_x]},
+                            {"y": [week_y, week_avg, week_max, week_min]}
+
+                        ],
+                    ),
+                    dict(
+                        label="Month",
+                        method="restyle",
+                        args=[
+                            #{"x": [month_x, month_x, month_x, month_x]},
+                            {"y": [month_y, month_avg, month_max, month_min]}
+
+                        ],
+                    ),
+                    dict(
+                        label="Year",
+                        method="restyle",
+                        args=[
+                            #{"x": [year_x, year_x, year_x, year_x]},
+                            {"y": [year_y, year_avg, year_max, year_min]}
+                        ],
+                    ),
+                ]
+            ),
+        )
+        ]
+    )
+
+
+
+    '''
     # add the buttons
     all_fig.update_layout(
         updatemenus=[
@@ -248,6 +344,6 @@ def with_buttons(type, name):
         )
         ]
     )
-
+    '''
     #all_fig.show()
     return all_fig
