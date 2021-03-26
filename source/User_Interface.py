@@ -29,7 +29,6 @@ settings = Settings()
 def getCardDivs(isField=False, isEdit=False):
     divList = []
 
-    sensorData = db.getData()
     for sensor in db.getConfigData():
         if(sensor != None):
             sensorName = sensor['name']
@@ -757,8 +756,7 @@ def other_settings(switch ,rate_limit, polling):
         ]
 )
 def set_cards_container(sensor_button, createCardMessenger, editCardMessenger,
-        deleteCardMessenger,
-        field_discard_button,edit_discard_button):
+        deleteCardMessenger, field_discard_button,edit_discard_button):
     ctx = dash.callback_context
     curButton = '';
     if ctx.triggered:
