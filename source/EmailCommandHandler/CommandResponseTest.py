@@ -54,7 +54,6 @@ elif sys.argv[1] =="--getsensordata":
     resp.show()
 
     # reset databse
-    db.clear()
     #db.deleteConfigData("temp_1", "temperature")
     #db.deleteConfigData("temp_2", "temperature")
     print("get sensor data response testing complete")
