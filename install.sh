@@ -10,7 +10,12 @@ sudo apt-get install python3 firefox
 sudo apt-get -y install python3-pip
 
 # install mongodb
-sudo apt install -y mongodb
+#starting the database
+DB="mongod"
+if ! dpkg -s $DB > /dev/null 2>&1
+then
+    sudo apt install -y mongodb
+fi
 
 # install python libraries
 pip3 install pymongo
