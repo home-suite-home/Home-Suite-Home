@@ -434,7 +434,7 @@ edits_card = html.Div(className='card',
 
 
 colors = {"background": "343434"}
-app = dash.Dash(__name__, suppress_callback_exceptions=True)
+app = dash.Dash(__name__, title='Home-Suite-Home')
 
 
 mainPage = [
@@ -1062,4 +1062,4 @@ if __name__ == "__main__":
         f.close()
     except:
         print("Please refer to terminal for user interface address")
-    app.run_server(debug=True, host=ip_address, port=port)
+    app.run_server(debug=False, host=ip_address, port=port)
