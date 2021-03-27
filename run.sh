@@ -8,7 +8,7 @@ goaway()
     echo "Shutting down Home-Suite-Home ..."
     echo ""
     echo "stopping database process"
-    sudo systemctl stop $DB
+    #sudo systemctl stop mongodb
 
     echo "stopping user interface: Please close browser window"
     kill $(pgrep -f  'User_Interface.py') > /dev/null 2>&1
@@ -42,16 +42,16 @@ echo "[CTRL-C to quit]"
 echo ""
 
 #starting the database
-DB="mongodb"
+DB="mongodb-org"
 if dpkg -s $DB > /dev/null 2>&1
 then
-    DB="mongod"
-else
     DB="mongodb"
+else
+    DB="mongod"
 fi
 echo "Starting $DB ..."
-sudo systemctl start $DB
-sudo systemctl status $DB &
+sudo systemctl start mongodb
+sudo systemctl status mongodb &
 
 # Moving to source directory
 cd source
