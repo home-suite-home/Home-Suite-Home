@@ -17,13 +17,14 @@ def main():
     db = Database()
     config = Settings()
 
-    poll_rate = config.get_int_setting("sensors", "poll_rate")
-    silence_alerts = config.get_bool_setting("alerts", "silence_alerts")
-
-    if poll_rate <= 0:
-        poll_rate = POLL_RATE_DEFAULT
-
     while True:
+        
+        poll_rate = config.get_int_setting("sensors", "poll_rate")
+        silence_alerts = config.get_bool_setting("alerts", "silence_alerts")
+
+        if poll_rate <= 0:
+            poll_rate = POLL_RATE_DEFAULT
+
         sensorConfigs = db.getConfigData()
 
         if sensorConfigs is []:
