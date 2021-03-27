@@ -42,12 +42,12 @@ echo "[CTRL-C to quit]"
 echo ""
 
 #starting the database
-DB="mongodb"
+DB="mongodb-org"
 if dpkg -s $DB > /dev/null 2>&1
 then
-    DB="mongod"
-else
     DB="mongodb"
+else
+    DB="mongod"
 fi
 echo "Starting $DB ..."
 sudo systemctl start $DB
