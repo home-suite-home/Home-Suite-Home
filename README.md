@@ -143,3 +143,27 @@
 * [Sensor Source Code](sensor_source)
 * [Testing](testing)
 * [User Interface](source/User_Interface.py)
+
+# Sprint 8
+
+## Materials
+* [Trello Board](https://trello.com/b/BFcwvt3p/project) (Backlogs and Requirements)
+* [Velocity Chart]()
+* [Burndown Chart for Sprint 8]()
+* [System Architecture](artifacts/architecture.md)
+* [Testing](https://github.com/home-suite-home/Home-Suite-Home/tree/main/testing)
+* [Product Demonstration]()
+
+## Task Allocation
+* Andres Graterol (graterollin) - Automated Unit Tests / Project Presentation PowerPoint 
+* David Crumley (daviejones) -
+* Matthew Dowdy (dowdyma1) - 
+* Wyatt Vining (wv040) - 
+* Nathan Moulton (NathanM117) - 
+
+## Quick Links
+* [System Source Code](source)
+* [Sensor Source Code](sensor_source)
+* [Testing](testing)
+* [User Interface](source/User_Interface.py)
+
