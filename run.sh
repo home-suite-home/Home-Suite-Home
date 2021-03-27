@@ -42,7 +42,7 @@ echo "[CTRL-C to quit]"
 echo ""
 
 #starting the database
-DB="mongod"
+DB="mongodb"
 if dpkg -s $DB > /dev/null 2>&1
 then
     DB="mongod"
