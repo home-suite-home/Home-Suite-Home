@@ -176,17 +176,22 @@ def most_recent_data():
      - TODO: add enabled_sensors.txt functionality
              - only want to display sensors that are enabled
     '''
-    # instantiate database and connect
-    db = Database(url, port)
-    db.connect()
+# instantiate database and connect
+db = Database(url, port)
+db.connect()
 
-    # only grab sensors with configs
-    config_list = db.getConfigData()
+# only grab sensors with configs
+config_list = db.getConfigData()
 
-    # get most recent of these lists
-    most_recent_list=[]
-    for sensor in (config_list):
-        most_recent_list.append(db.getMostRecentSensorData(sensor["name"], sensor["type"]))
+# get most recent of these lists
+most_recent_list=[]
+i = 0
+for sensor in (config_list):
+    most_recent_list.append(db.getMostRecentSensorData(sensor["name"], sensor["type"]))
+    sensor = most_recent_list[i]
+    units = db.getSensorConfig(name, type)['units']
+    convert = Units(sensor["type"], units)
+    most_recent_list[i] = convert.convert_to_string(sensor)
 
     # html string common to all tables
     html_table = """\
