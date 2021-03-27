@@ -246,7 +246,8 @@ def with_buttons(type, name):
                         method="restyle",
                         args=[
                             #{"x": [day_x, day_x, day_x, day_x]},
-                            {"y": [day_y, day_avg, day_max, day_min]}
+                            {"y": [day_y, day_avg, day_max, day_min]},
+                            {"name": ["Sensor Data", 'Average : '+str(round(day_avg[-1], 2)), 'Max : '+str(round(day_max[0], 2)), 'Min' : '+str(round(day_min[0], 2))]}
                         ],
                     ),
                     dict(
@@ -254,7 +255,8 @@ def with_buttons(type, name):
                         method="restyle",
                         args=[
                             #{"x": [week_x, week_x, week_x, week_x]},
-                            {"y": [week_y, week_avg, week_max, week_min]}
+                            {"y": [week_y, week_avg, week_max, week_min]},
+                            {"name": ["Sensor Data", 'Average : '+str(round(week_avg[-1], 2)), 'Max : '+str(round(week_max[0], 2)), 'Min' : '+str(round(week_min[0], 2))]}
 
                         ],
                     ),
@@ -263,7 +265,8 @@ def with_buttons(type, name):
                         method="restyle",
                         args=[
                             #{"x": [month_x, month_x, month_x, month_x]},
-                            {"y": [month_y, month_avg, month_max, month_min]}
+                            {"y": [month_y, month_avg, month_max, month_min]},
+                            {"name": ["Sensor Data", 'Average : '+str(round(month_avg[-1], 2)), 'Max : '+str(round(month_max[0], 2)), 'Min' : '+str(round(month_min[0], 2))]}
 
                         ],
                     ),
@@ -272,7 +275,8 @@ def with_buttons(type, name):
                         method="restyle",
                         args=[
                             #{"x": [year_x, year_x, year_x, year_x]},
-                            {"y": [year_y, year_avg, year_max, year_min]}
+                            {"y": [year_y, year_avg, year_max, year_min]},
+                            {"name": ["Sensor Data", 'Average : '+str(round(year_avg[-1], 2)), 'Max : '+str(round(year_max[0], 2)), 'Min' : '+str(round(year_min[0], 2))]}
                         ],
                     ),
                 ]
