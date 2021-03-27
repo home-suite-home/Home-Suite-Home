@@ -30,10 +30,8 @@ command_handler = EmailCommandHandler()
 POLL_RATE = 30
 
 while(True):
-    try:
-        command_handler.handle_email_command()
-        print("checking mailbox")
-        time.sleep(POLL_RATE)
-    except:
-        print("Unable to check inbox")
-        break
+
+    command_handler.handle_email_command()
+    print("checking mailbox")
+    time.sleep(POLL_RATE)
+
