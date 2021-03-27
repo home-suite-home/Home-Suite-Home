@@ -112,7 +112,8 @@ def with_buttons(type, name):
     from timeKeeper import TimeStamps
     from Server_Component.Database import Database
 
-    '''
+    day_fig = data_over_time(type, name, 24, visible=True)
+
     # create the week graph
     week_fig = data_over_time(type, name, 24*7, visible=False)
 
@@ -121,7 +122,7 @@ def with_buttons(type, name):
 
     # create the year graph (assume all years are 365)
     year_fig = data_over_time(type, name, 24*365, visible=False)
-    '''
+   
     # create the frankenstein graph
     all_fig = go.Figure()
     '''
@@ -137,11 +138,16 @@ def with_buttons(type, name):
                              line=dict(shape='spline',
                              color='darkslateblue', width=2))
 
+    '''
     # get datasets
     day_x, day_y, day_avg, day_max, day_min = get_dataset(type, name, 24)
     week_x, week_y, week_avg, week_max, week_min = get_dataset(type, name, 24*7)
     month_x, month_y, month_avg, month_max, month_min  = get_dataset(type, name, 24*30)
     year_x, year_y, year_avg, year_max, year_min  = get_dataset(type, name, 24*365)
+
+
+    print(day_min[0])
+    print(week_min[0])
 
     # add the day traces
     if day_x:
@@ -172,8 +178,19 @@ def with_buttons(type, name):
         all_fig.add_trace(empty_trace)
 
     # add empty traces as placeholders
-
     '''
+   
+    # add the week trace
+    if day_fig:
+        all_fig.add_trace(day_fig['data'][0])
+        all_fig.add_trace(day_fig['data'][1])
+        all_fig.add_trace(day_fig['data'][2])
+        all_fig.add_trace(day_fig['data'][3])
+    else:
+        all_fig.add_trace(empty_trace)
+        all_fig.add_trace(empty_trace)
+        all_fig.add_trace(empty_trace)
+        all_fig.add_trace(empty_trace)
     # add the week trace
     if week_fig:
         all_fig.add_trace(week_fig['data'][0])
@@ -207,7 +224,7 @@ def with_buttons(type, name):
         all_fig.add_trace(empty_trace)
         all_fig.add_trace(empty_trace)
         all_fig.add_trace(empty_trace)
-    '''
+    
 
 
 
@@ -225,7 +242,7 @@ def with_buttons(type, name):
     all_fig.update_layout(title=title, xaxis_title='Date and Time',
                                    yaxis_title=type + " " + units)
 
-
+    '''
     # add the buttons
     all_fig.update_layout(
         updatemenus=[
@@ -247,8 +264,7 @@ def with_buttons(type, name):
                         args=[
                             #{"x": [day_x, day_x, day_x, day_x]},
                             {"y": [day_y, day_avg, day_max, day_min]},
-                            {"name": ["Sensor Data", 'Average : '+str(round(day_avg[-1], 2)), 'Max : '+str(round(day_max[0], 2)), 'Min : '+str(round(day_min[0], 2))]}
-                        ],
+                            ]
                     ),
                     dict(
                         label="Week",
@@ -256,7 +272,8 @@ def with_buttons(type, name):
                         args=[
                             #{"x": [week_x, week_x, week_x, week_x]},
                             {"y": [week_y, week_avg, week_max, week_min]},
-                            {"name": ["Sensor Data", 'Average : '+str(round(week_avg[-1], 2)), 'Max : '+str(round(week_max[0], 2)), 'Min : '+str(round(week_min[0], 2))]}
+                            {"name": ["week", 'Average : '+str(round(week_avg[-1], 2)), 'Max : '+str(round(week_max[0], 2)), 'Min : '+str(round(week_min[0], 2))]}
+
 
                         ],
                     ),
@@ -268,7 +285,7 @@ def with_buttons(type, name):
                             {"y": [month_y, month_avg, month_max, month_min]},
                             {"name": ["Sensor Data", 'Average : '+str(round(month_avg[-1], 2)), 'Max : '+str(round(month_max[0], 2)), 'Min : '+str(round(month_min[0], 2))]}
 
-                        ],
+                            ],
                     ),
                     dict(
                         label="Year",
@@ -284,10 +301,10 @@ def with_buttons(type, name):
         )
         ]
     )
-
-
-
     '''
+
+
+   
     # add the buttons
     all_fig.update_layout(
         updatemenus=[
@@ -348,6 +365,6 @@ def with_buttons(type, name):
         )
         ]
     )
-    '''
+   
     #all_fig.show()
     return all_fig
