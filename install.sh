@@ -11,7 +11,7 @@ sudo apt-get -y install python3-pip
 
 # install mongodb
 #starting the database
-DB="mongod"
+DB="mongodb"
 if ! dpkg -s $DB > /dev/null 2>&1
 then
     sudo apt install -y mongodb

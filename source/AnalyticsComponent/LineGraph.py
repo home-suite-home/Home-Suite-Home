@@ -83,13 +83,13 @@ def data_over_time(type, name, hours, visible=True):
     )
 
     # Max line
-    fig.add_trace(go.Scatter(x=x, y=max_val, name='Max : '+str(round(max_val[0])),
+    fig.add_trace(go.Scatter(x=x, y=max_val, name='Max : '+str(round(max_val[0], 2)),
                   visible=visible,
                   line=dict(color='maroon', width=4, dash='dash'))
     )
 
     # Min line
-    fig.add_trace(go.Scatter(x=x, y=min_val, name='Min : '+str(round(min_val[0])),
+    fig.add_trace(go.Scatter(x=x, y=min_val, name='Min : '+str(round(min_val[0], 2)),
                   visible=visible,
                   line=dict(color='forestgreen', width=4, dash='dash'))
     )
@@ -157,12 +157,12 @@ def with_buttons(type, name):
         )
 
         # Max line
-        all_fig.add_trace(go.Scatter(x=year_x, y=day_max, name='Max : '+str(round(day_max[0])),
+        all_fig.add_trace(go.Scatter(x=year_x, y=day_max, name='Max : '+str(round(day_max[0], 2)),
                       line=dict(color='maroon', width=4, dash='dash'))
         )
 
         # Min line
-        all_fig.add_trace(go.Scatter(x=year_x, y=day_min, name='Min : '+str(round(day_min[0])),
+        all_fig.add_trace(go.Scatter(x=year_x, y=day_min, name='Min : '+str(round(day_min[0], 2)),
                       line=dict(color='forestgreen', width=4, dash='dash'))
         )
     else:
