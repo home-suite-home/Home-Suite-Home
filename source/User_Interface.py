@@ -547,7 +547,7 @@ settingsPage = [
                             className='settings_input',
                             multi=True,
                             clearable=False,
-                            style={'display':'inline-block', 'height':'auto'}
+                            style={'display':'inline-block', 'height':'auto', 'width':'100%'}
                         ),
                         html.Br(),
                     ]
