@@ -433,7 +433,7 @@ edits_card = html.Div(className='card',
 
 
 colors = {"background": "343434"}
-app = dash.Dash(__name__, title='Home-Suite-Home')
+app = dash.Dash(__name__, title='Home-Suite-Home', suppress_callback_exceptions=True)
 
 
 mainPage = [
