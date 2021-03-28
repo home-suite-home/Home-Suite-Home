@@ -26,9 +26,11 @@ class EmailCommandHandler:
     def __init__(self):
         user_emails = Database().getAllUsers()
         self.email_controllers = []
+        print(user_emails)
         for user in user_emails:
             self.email_controllers.append(EmailController(user['email']))
             print("checking all users")
+            print(user)
 
     def handle_email_command(self):
         for i in range(len(self.email_controllers)):
