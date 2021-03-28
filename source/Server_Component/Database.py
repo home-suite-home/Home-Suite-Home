@@ -6,6 +6,7 @@ sys.path.append("..")
 
 import pymongo as mongo
 from timeKeeper import TimeStamps
+from Security import Security
 
 
 URL = 'localhost'
@@ -31,6 +32,9 @@ class Database:
             print("Well that didn't work. Check the database address, and make sure the mongod process is running...")
         else:
             self.client = mongo.MongoClient()
+
+        self.secure = Security(self.client)
+        self.secure.setup()
 
     def connect(self):
         if self.connect_status == False:
@@ -310,9 +314,12 @@ class Database:
             db = self.client['sensorsdb']
             collection = db['creds']
 
+            crypt = self.client['encryption']['__homeSuiteKeyVault']
+            crypt.drop()
+
             dataobj = {
                 "email": email,
-                "password" : password
+                "password" : self.secure.getEncryptedField(password, 1)
             }
 
             # First, check if there's a record for this sensor...
@@ -332,7 +339,8 @@ class Database:
             db = self.client['sensorsdb']
             collection = db['creds']
             record = collection.find_one({}, {'_id' : 0})
-
+            password = record['password']
+            record['password'] = self.secure.getDecryptedField(password)
             return record
         else:
             print("Well that didn't work. Check the database address, and make sure the mongod process is running...")
