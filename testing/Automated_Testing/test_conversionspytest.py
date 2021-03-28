@@ -55,10 +55,30 @@ def test_pressureConvert():
     assert(unit_10.convert(420) == 420)
 
 def test_altitudeConvert():
-    unit = Units("length", "foot")
-    unit_2 = Units("distance", "feet")
-    unit_3 = Units("length", "meters")
+    unit = Units("altitude", "foot")
+    unit_2 = Units("altitude", "feet")
+    unit_3 = Units("altitude", "meters")
 
-    assert(unit._Units__convert_altitude(12) == 39.37)
-    assert(unit_2._Units__convert_altitude(28) == 91.86)
-    assert(unit_3._Units__convert_altitude(16) == 16)
+    assert(unit.convert(12) == 39.37)
+    assert(unit_2.convert(28) == 91.86)
+    assert(unit_3.convert(16) == 16)
+
+def test_humidityConvert():
+    unit = Units("humidity", "percent")
+
+    assert(unit.convert(52) == 52) 
+
+def test_leakConvert():
+    unit = Units("leak", "ADU")
+
+    assert(unit.convert(14) == 14)
+
+def test_tvocConvert():
+    unit = Units("tvoc", "ppb")
+
+    assert(unit.convert(17) == 17)
+
+def test_co2Convert():
+    unit = Units("co2", "ppm")
+
+    assert(unit.convert(28) == 28)
