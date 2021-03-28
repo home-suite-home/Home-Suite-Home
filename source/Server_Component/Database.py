@@ -6,7 +6,7 @@ sys.path.append("..")
 
 import pymongo as mongo
 from timeKeeper import TimeStamps
-from Security import Security
+from Server_Component.Security import Security
 
 
 URL = 'localhost'
@@ -339,8 +339,7 @@ class Database:
             db = self.client['sensorsdb']
             collection = db['creds']
             record = collection.find_one({}, {'_id' : 0})
-
-            if record == None:
+            if not record:
                 return None
             password = record['password']
             record['password'] = self.secure.getDecryptedField(password)

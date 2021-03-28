@@ -24,14 +24,18 @@ sys.path.append('..')
 '''
 import time
 from EmailCommandHandler.EmailCommandHandler import EmailCommandHandler
-
-command_handler = EmailCommandHandler()
+from Server_Component.Database import Database
 
 POLL_RATE = 30
+
+while not Database().getCredentials():
+    print("Device Email Not Setup")
+    time.sleep(POLL_RATE)
+
+command_handler = EmailCommandHandler()
 
 while(True):
 
     command_handler.handle_email_command()
     print("checking mailbox")
     time.sleep(POLL_RATE)
-
