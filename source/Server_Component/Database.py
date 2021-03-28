@@ -339,6 +339,9 @@ class Database:
             db = self.client['sensorsdb']
             collection = db['creds']
             record = collection.find_one({}, {'_id' : 0})
+
+            if record == None:
+                return None
             password = record['password']
             record['password'] = self.secure.getDecryptedField(password)
             return record
