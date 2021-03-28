@@ -42,16 +42,12 @@ echo "[CTRL-C to quit]"
 echo ""
 
 #starting the database
-DB="mongodb-org"
-if dpkg -s $DB > /dev/null 2>&1
-then
-    DB="mongodb"
-else
-    DB="mongod"
-fi
+DB="mongodb"
+
 echo "Starting $DB ..."
-sudo systemctl start mongodb
-sudo systemctl status mongodb &
+sudo systemctl start $DB
+wait
+sudo systemctl status $DB &
 
 # Moving to source directory
 cd source

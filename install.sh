@@ -1,5 +1,14 @@
 #!/bin/sh
 
+
+
+# install mongodb
+#starting the database
+DB="mongodb-org"
+if ! dpkg -s $DB > /dev/null 2>&1
+then
+    sudo apt-get install -y mongodb
+fi
 # update libraries
 sudo apt-get update
 
@@ -8,14 +17,6 @@ sudo apt-get install python3 firefox
 
 # get pip
 sudo apt-get -y install python3-pip
-
-# install mongodb
-#starting the database
-DB="mongodb"
-if ! dpkg -s $DB > /dev/null 2>&1
-then
-    sudo apt install -y mongodb
-fi
 
 # install python libraries
 pip3 install pymongo
