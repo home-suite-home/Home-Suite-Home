@@ -8,3 +8,4 @@ tmp.txt
 source/settings.config
 source/Email_Credentials/pi_email_creds.config
 source/Email_Credentials/pi_key.key
+source/Server_Component/lmk.txt
