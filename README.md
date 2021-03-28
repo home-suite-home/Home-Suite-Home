@@ -158,7 +158,7 @@
 * Andres Graterol (graterollin) - Automated Unit Tests / Project Presentation PowerPoint 
 * David Crumley (daviejones) -
 * Matthew Dowdy (dowdyma1) - 
-* Wyatt Vining (wv040) - 
+* Wyatt Vining (wv040) - Sensor 3D Models / Sensor Arduino Code / Bug Fixes / Product Demo Video
 * Nathan Moulton (NathanM117) - 
 
 ## Quick Links
