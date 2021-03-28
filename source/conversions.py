@@ -73,7 +73,7 @@ class Units:
     def __convert_pressure(self, value):
         if self.units == "kpa" or "kilopascale" in self.units:
             kpa = value / 1000
-            kap = round(kpa, 2)
+            kpa = round(kpa, 2)
             self.units_string = "kPa"
             return kpa
         elif self.units == "mb" or "mbar" in self.units or "millibar" in self.units:
