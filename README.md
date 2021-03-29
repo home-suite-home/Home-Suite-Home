@@ -152,7 +152,7 @@
 * [Burndown Chart for Sprint 8](https://docs.google.com/spreadsheets/d/1tpRyT-jUgHkrLnwx5NcxtOvh3uGg8ddGYrl60E0q6DA/edit#gid=335631044)
 * [System Architecture](artifacts/architecture.md)
 * [Testing](https://github.com/home-suite-home/Home-Suite-Home/tree/main/testing)
-* [Product Demonstration](https://youtu.be/1CKiKr9hcsc)
+* [Product Demonstration](https://youtu.be/5nkZvYmcQeU)
 
 ## Task Allocation
 * Andres Graterol (graterollin) - Automated Unit Tests / Project Presentation PowerPoint 
