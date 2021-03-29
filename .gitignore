@@ -5,7 +5,7 @@ __pycache__
 source/enabled_sensors.txt
 *.old
 tmp.txt
+lmk.txt
 source/settings.config
 source/Email_Credentials/pi_email_creds.config
 source/Email_Credentials/pi_key.key
-source/Server_Component/lmk.txt
