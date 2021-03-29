@@ -156,7 +156,7 @@
 
 ## Task Allocation
 * Andres Graterol (graterollin) - Automated Unit Tests / Project Presentation PowerPoint 
-* David Crumley (daviejones) -
+* David Crumley (daviejones) - installation and run script / Bug Fixes
 * Matthew Dowdy (dowdyma1) - UI / Charts
 * Wyatt Vining (wv040) - Sensor 3D Models / Sensor Arduino Code / Bug Fixes / Product Demo Video
 * Nathan Moulton (NathanM117) - Database + Testing
