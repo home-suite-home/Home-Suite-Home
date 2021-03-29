@@ -159,7 +159,7 @@
 * David Crumley (daviejones) -
 * Matthew Dowdy (dowdyma1) - UI / Charts
 * Wyatt Vining (wv040) - Sensor 3D Models / Sensor Arduino Code / Bug Fixes / Product Demo Video
-* Nathan Moulton (NathanM117) - 
+* Nathan Moulton (NathanM117) - Database + Testing
 
 ## Quick Links
 * [System Source Code](source)
