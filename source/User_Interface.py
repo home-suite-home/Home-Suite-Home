@@ -1,6 +1,4 @@
 #!/usr/bin/env python
-import os
-import sys
 import json
 import time
 import dash
@@ -8,14 +6,12 @@ import urllib
 import dash_daq as daq
 import dash_core_components as dcc
 import dash_html_components as html
-from dash.dependencies import Input, Output, State, MATCH, ALL
-from dash.exceptions import PreventUpdate
+from dash.dependencies import Input, Output, State, MATCH
 from Email_Component import Email_Component
 from AnalyticsComponent import LineGraph
 from HTTP_Component.Sensors import Sensor
 from UI_Utils import *
 from subprocess import check_output
-from collections import OrderedDict
 from Server_Component.Database import Database
 from settings import Settings
 from conversions import Units
@@ -29,6 +25,7 @@ settings = Settings()
 def getCardDivs(isField=False, isEdit=False):
     divList = []
 
+    print("-- getCardDivs: --")
     for sensor in db.getConfigData():
         if(sensor != None):
             sensorName = sensor['name']
@@ -218,9 +215,10 @@ def populateEditCard(valuesDict, curId):
                     placeholder='Maximum bound',
                     value=valuesDict['edit_maximum-bound'],
                 ),
-                html.H4(''),
+                html.Br(),
                 html.Button('Save', id='edit_save-card-button'),
-                html.H4(''),
+                html.Br(),
+                html.Br(),
                 html.Div(curId['index'], id='edit_name-passer', style={'display':'none'}),
                 html.Button('DELETE', id='edit_delete-button'),
                 html.H4('Invalid Selection', 
@@ -273,6 +271,7 @@ new_card_fields = [
                 autoFocus=True,
                 debounce=True,
                 placeholder='Sensor Name',
+                value='',
             ),
             dcc.Dropdown(
                 id='field_types-dropdown',
@@ -286,42 +285,35 @@ new_card_fields = [
                 debounce=True,
                 placeholder='Name of New Type',
                 style={'display':'none'},
+                value='',
             ),
             dcc.Input(
                 id='field_ip-address',
                 className='field_element',
                 debounce=True,
                 placeholder='IP Address',
+                value='',
             ),
             dcc.Input(
                 id='field_port-number',
                 className='field_element',
                 debounce=True,
                 placeholder='Port Number (Optional)',
+                value='',
             ),
             dcc.Input(
                 id='field_url-plug',
                 className='field_element',
                 debounce=True,
                 placeholder='URL Plug',
+                value='',
             ),
             dcc.Input(
                 id='field_units',
                 className='field_element',
                 debounce=True,
                 placeholder='Units (Optional)',
-            ),
-            dcc.Input(
-                id='field_minimum-bound',
-                className='field_element',
-                debounce=True,
-                placeholder='Minimum bound',
-            ),
-            dcc.Input(
-                id='field_maximum-bound',
-                className='field_element',
-                debounce=True,
-                placeholder='Maximum bound',
+                value='',
             ),
             daq.BooleanSwitch(
                 id='field_alert',
@@ -331,7 +323,21 @@ new_card_fields = [
                 label='Alerts:',
                 labelPosition='top',
             ),
-            html.H4(''),
+            dcc.Input(
+                id='field_minimum-bound',
+                className='field_element',
+                debounce=True,
+                placeholder='Minimum bound',
+                value='',
+            ),
+            dcc.Input(
+                id='field_maximum-bound',
+                className='field_element',
+                debounce=True,
+                placeholder='Maximum bound',
+                value='',
+            ),
+            html.Br(),
             html.Button('Create', id='field_create-card-button'),
             html.H4('Invalid Selection', 
                     style={'color': 'red','display': 'none' }, 
@@ -397,9 +403,9 @@ edit_card_fields = [
                 label='Alerts:',
                 labelPosition='top',
             ),
-            html.H4(''),
+            html.Br(),
             html.Button('save', id='edit_save-card-button'),
-            html.H4(''),
+            html.Br(),
             html.Div('default', id='edit_name-passer', style={'display':'none'}),
             html.Button('DELETE', id='edit_delete-button'),
             html.H4('Invalid Selection', 
@@ -786,6 +792,7 @@ def set_cards_container(sensor_button, createCardMessenger, editCardMessenger,
             Output('createCardMessenger', 'children'),
             Output('invalid-selection', 'style'),
             Output('field_new-type', 'style'),
+            Output('field_types-dropdown', 'options'),
         ],
         [
 
@@ -808,7 +815,7 @@ def create_new_card(create_button, sensor_type,
         sensor_name, new_type, units, ip_address, port, url_plug, min_bound, max_bound, alert,):
 
     if(port == None or port == ''):
-        port = '8080'
+        port = '80'
 
     if(units == None):
         units = ''
@@ -832,16 +839,19 @@ def create_new_card(create_button, sensor_type,
         if(isValidSensor(sensor_type, url_plug, ip_address, sensor_name, port=port)):
             if(sensor_type == 'other-type'):
                 sensor_type = new_type
-
-            db.saveConfigData(sensor_type, sensor_name, 'category', ip_address, port, url_plug, min_bound, max_bound, units, alert)
-
-            return [html.Div(), NU, NU]
+                db.saveConfigData(sensor_type, sensor_name, 'category', ip_address, port, url_plug, min_bound, max_bound, units, alert)
+                return [html.Div(), NU, NU, getTypesDropdownList()]
+            else:
+                db.saveConfigData(sensor_type, sensor_name, 'category', ip_address, port, url_plug, min_bound, max_bound, units, alert)
+                return [html.Div(), NU, NU, NU]
 
         else:
-            return [NU, {'display':'block', 'color': 'red'}, NU]
+            return [NU, {'display':'block', 'color': 'red'}, NU, NU]
     elif(curButton == 'field_types-dropdown'):
         if(sensor_type == 'other-type'):
-            return [NU, NU, {'display':'block'}]
+            return [NU, NU, {'display':'block'}, NU]
+        else:
+            return [NU, NU, NU, getTypesDropdownList()]
 
     return NU
 
@@ -1060,4 +1070,4 @@ if __name__ == "__main__":
         f.close()
     except:
         print("Please refer to terminal for user interface address")
-    app.run_server(debug=False, host=ip_address, port=port)
+    app.run_server(debug=True, host=ip_address, port=port)
