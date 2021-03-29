@@ -23,3 +23,4 @@ pip3 install pymongo
 pip3 install dash
 pip3 install dash_daq
 pip3 install kaleido
+python3 -m pip install 'pymongo[encryption]'
