@@ -1,22 +1,25 @@
 from HTTP_Component.Sensors import Sensor
+from Server_Component.Database import Database
 import math
 
-def isValidSensor(sensor_type, url_plug, ip_address, sensor_name, port='8080'):
+db = Database()
+
+def isValidSensor(sensor_type, url_plug, ip_address, sensor_name, port='80'):
+    #print("{}:{}/{}".format(ip_address, port, url_plug))
+
     if(sensor_type == None):
         return False
 
+    if(db.getSensorConfig(sensor_name, sensor_type)):
+        return False
 
     if(port == ''):
-        port = '8080'
+        port = '80'
 
-    print("{}:{}/{}".format(ip_address, port, url_plug))
     mySensor = Sensor(url_plug, domain=ip_address, port=port).getSensorValue()
-    print("mySensor: {}, type: {}".format(mySensor, type(mySensor)))
+    #print("mySensor: {}, type: {}".format(mySensor, type(mySensor)))
 
-    try:
-        if(type(mySensor) == float):
-            return True
-        else:
-            return False
-    except:
+    if(math.isnan(mySensor)):
         return False
+
+    return True
