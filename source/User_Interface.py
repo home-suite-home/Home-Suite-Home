@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+import sys
 import json
 import time
 import dash
@@ -1070,4 +1071,9 @@ if __name__ == "__main__":
         f.close()
     except:
         print("Please refer to terminal for user interface address")
-    app.run_server(debug=True, host=ip_address, port=port)
+
+    haveDebugging = False
+    if(len(sys.argv) == 2):
+        haveDebugging = True
+
+    app.run_server(debug=haveDebugging, host=ip_address, port=port)
