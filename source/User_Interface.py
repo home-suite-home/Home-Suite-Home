@@ -837,7 +837,7 @@ def create_new_card(create_button, sensor_type,
         curButton = ctx.triggered[0]['prop_id'].split('.')[0]
 
     if(curButton == 'field_create-card-button'):
-        if(isValidSensor(sensor_type, url_plug, ip_address, sensor_name, port=port)):
+        if(isValidSensor(sensor_type, url_plug, ip_address, sensor_name, min_bound, max_bound, alert, port=port)):
             if(sensor_type == 'other-type'):
                 sensor_type = new_type
                 db.saveConfigData(sensor_type, sensor_name, 'category', ip_address, port, url_plug, min_bound, max_bound, units, alert)
@@ -931,7 +931,8 @@ def save_edit_card(save_button,
     if(curButton == 'edit_save-card-button' and save_button != None):
         oldSensorType, oldSensorName = type_name_pair.split('`')
 
-        valid = isValidSensor(oldSensorType, url_plug, ip_address, sensor_name, port=port)
+        valid = isValidSensor(oldSensorType, url_plug, ip_address, sensor_name, 
+                min_bound, max_bound, alert, oldName=oldSensorName, port=port)
 
         if(valid):
 
