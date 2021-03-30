@@ -4,14 +4,25 @@ import math
 
 db = Database()
 
-def isValidSensor(sensor_type, url_plug, ip_address, sensor_name, port='80'):
+def isValidSensor(sensor_type, url_plug, ip_address, newName, min_bound, max_bound, alert, 
+        oldName='', port='80'):
     #print("{}:{}/{}".format(ip_address, port, url_plug))
+
+    newNameExists = db.getSensorConfig(newName, sensor_type) != None
+
+    if(newNameExists and oldName != newName):
+        return False
 
     if(sensor_type == None):
         return False
 
-    if(db.getSensorConfig(sensor_name, sensor_type)):
-        return False
+    print(alert)
+    if(alert):
+        if(type(min_bound) == str or type(max_bound) == str):
+            return False
+        if(min_bound >= max_bound):
+            return False
+
 
     if(port == ''):
         port = '80'
